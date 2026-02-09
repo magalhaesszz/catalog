@@ -3,316 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Catálogo Online</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* === CORES === */
         :root {
-            --verde-escuro: #064e3b;
-            --verde-principal: #10b981;
+            --verde-topo: #064e3b;
+            --verde-ativo: #10b981;
             --verde-zap: #25d366;
-            --dourado: #f59e0b;
-            --fundo-overlay: rgba(6, 78, 59, 0.75);
-            --texto: #f0fdf4;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --fundo: #f0fdf4;
+            --texto: #1f2937;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--fundo);
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            background: linear-gradient(var(--fundo-overlay), var(--fundo-overlay)),
-                        url('https://images.unsplash.com/photo-1601016160334-9891bfd3006c?q=80&w=1200&auto=format&fit=crop') center/cover fixed;
-            color: white;
-            overflow-x: hidden;
+            color: var(--texto);
+            -webkit-tap-highlight-color: transparent;
         }
 
+        /* === CABEÇALHO === */
         header {
-            background: rgba(6, 78, 59, 0.7);
-            backdrop-filter: blur(12px);
-            padding: 30px 15px 40px;
+            background: linear-gradient(180deg, var(--verde-topo) 0%, #047857 100%);
+            color: white;
+            padding: 30px 10px 25px;
             text-align: center;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 10;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
+        
+        header h1 { margin: 0; font-size: 1.6rem; letter-spacing: -0.5px; }
 
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
+        /* === MENU DE ABAS (FILTROS) === */
         .filtros {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-top: 25px;
+            gap: 8px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
         .btn-filtro {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-filtro::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            top: 0; left: 0;
-            transform: translateX(-100%);
-            transition: transform 0.5s;
-        }
-
-        .btn-filtro:hover::after, .btn-filtro.ativo::after {
-            transform: translateX(100%);
+            transition: all 0.3s;
         }
 
         .btn-filtro.ativo {
             background: white;
-            color: var(--verde-escuro);
+            color: var(--verde-topo);
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
-        }
-
-        .card:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-        }
-
-        .tag-tipo {
-            position: absolute;
-            top: 12px; left: 12px;
-            background: linear-gradient(135deg, var(--dourado), #d97706);
-            color: white;
-            font-size: 0.7rem;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-weight: 600;
-            z-index: 3;
+            border-color: white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
+        /* === GRADE DE PRODUTOS === */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto 40px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            gap: 15px;
+        }
+
+        /* === CARD === */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.1s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .card:active { transform: scale(0.96); }
+
+        /* Tag de categoria no card */
+        .tag-tipo {
+            position: absolute;
+            top: 10px; left: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            z-index: 2;
+        }
+
         .card-img-box {
-            height: 180px;
+            background-color: #f3f4f6;
+            border-radius: 15px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
             overflow: hidden;
             position: relative;
         }
 
-        .card-img-box::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(transparent 50%, rgba(0,0,0,0.4));
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .card-nome { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; line-height: 1.2; }
+        .card-preco { color: var(--verde-ativo); font-weight: 700; font-size: 1.1rem; }
+        .ver-detalhes { margin-top: 8px; background: #f3f4f6; color: #666; font-size: 0.7rem; padding: 6px; border-radius: 8px; font-weight: 600; text-align: center;}
 
-        .card:hover .card-img-box::after {
-            opacity: 1;
-        }
-
-        .card-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .card:hover .card-img-box img {
-            transform: scale(1.15);
-        }
-
-        .card-content {
-            padding: 15px;
-            text-align: center;
-        }
-
-        .card-nome {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--verde-escuro);
-            margin-bottom: 8px;
-        }
-
-        .card-preco {
-            color: var(--verde-principal);
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        .ver-detalhes {
-            background: rgba(16,185,129,0.1);
-            color: var(--verde-principal);
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* === MODAL (JANELA) === */
         .modal-overlay {
             display: none;
             position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
             z-index: 9999;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            box-sizing: border-box;
+            backdrop-filter: blur(5px);
         }
 
         .modal-box {
             background: white;
             width: 100%;
-            max-width: 420px;
-            border-radius: 28px;
+            max-width: 380px;
+            border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            animation: modalScale 0.4s ease;
+            animation: surgir 0.3s;
+            position: relative;
+            display: flex; flex-direction: column;
         }
 
-        @keyframes modalScale {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        @keyframes surgir { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .modal-img-top {
-            height: 280px;
-            overflow: hidden;
-        }
-
-        .modal-img-top img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-content {
-            padding: 25px;
-            color: #111;
-        }
-
-        .fechar {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .modal-titulo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--verde-escuro);
-            margin-bottom: 8px;
-        }
-
-        .modal-preco {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--verde-principal);
-            margin: 10px 0 20px;
-        }
-
-        .modal-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #444;
-            margin-bottom: 30px;
-        }
-
-        .btn-comprar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--verde-zap);
-            color: white;
-            padding: 18px;
-            border-radius: 18px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            box-shadow: 0 8px 25px rgba(37,211,102,0.4);
-            transition: all 0.3s;
-        }
-
-        .btn-comprar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(37,211,102,0.5);
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-        }
-
-        /* Animação de entrada dos cards */
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        /* ... até o último */
+        .modal-img-top { width: 100%; height: 250px; background-color: #eee; }
+        .modal-img-top img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .modal-content { padding: 20px; }
+        .fechar { position: absolute; top: 15px; right: 15px; background: white; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10; }
+        
+        .modal-titulo { font-size: 1.4rem; font-weight: 700; color: var(--verde-topo); margin-top: 0; line-height: 1.2; }
+        .modal-preco { font-size: 2rem; font-weight: 700; color: var(--verde-ativo); margin: 5px 0 15px; }
+        .modal-desc { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 25px; }
+        
+        .btn-comprar { display: flex; align-items: center; justify-content: center; width: 100%; background-color: var(--verde-zap); color: white; padding: 16px; border-radius: 15px; text-decoration: none; font-weight: 700; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); box-sizing: border-box; }
+        
+        footer { text-align: center; padding: 40px; color: #9ca3af; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Catálogo Premium</h1>
+        <h1>Catálogo Online</h1>
+        
         <div class="filtros">
             <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
             <button class="btn-filtro" onclick="filtrar('hibrida', this)">Híbrida</button>
@@ -323,102 +179,367 @@
     </header>
 
     <div class="container">
-        <!-- Todos os seus cards permanecem iguais, só atualizei classes e estrutura mínima -->
-        <!-- Exemplo de um card (os outros são idênticos ao original, só com classes novas) -->
-        <div class="card" data-categoria="hibrida" onclick="abrirModal('Jeeter Juice Live Resin - Mac & Cookies | Hybrid', '190.00', 'Uma fusão cremosa de notas amanteigadas e de biscoito. Garante um efeito equilibrado que acalma a mente enquanto relaxa os músculos.', 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg')">
-            <span class="tag-tipo">Híbrida</span>
+
+        <div class="card" data-categoria="hibrida" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Mac & Cookies | Hybrid', 
+            '190.00', 
+            'Uma fusão cremosa de notas amanteigadas e de biscoito. Garante um efeito equilibrado que acalma a mente enquanto relaxa os músculos.', 
+            'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg'
+        )">
+            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
             <div class="card-img-box">
                 <img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg" alt="Mac & Cookies">
             </div>
-            <div class="card-content">
-                <div class="card-nome">Jeeter Juice Mac & Cookies</div>
-                <div class="card-preco">R$ 190,00</div>
-                <div class="ver-detalhes">Ver Detalhes</div>
-            </div>
+            <div class="card-nome">Jeeter Juice Mac & Cookies</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <!-- Cole aqui todos os outros cards do seu código original (mantendo a mesma estrutura onclick e data-categoria) -->
-        <!-- Não vou repetir todos aqui para não ficar gigante, mas você só copia e cola os seus -->
+        <div class="card" data-categoria="hibrida" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Kush Mintz | Hybrid', 
+            '190.00', 
+            'Perfil refrescante de menta com um fundo terroso e picante. Oferece um relaxamento potente e é ideal para quem busca conforto físico intenso.', 
+            'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg'
+        )">
+            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg" alt="Kush Mintz">
+            </div>
+            <div class="card-nome">Jeeter Juice Kush Mintz</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="hibrida" onclick="abrirModal(
+            'Jeeter Juice Live Resin - GSC | Hybrid', 
+            '190.00', 
+            'Um clássico absoluto com notas de menta e chocolate doce. É famosa por elevar o humor e proporcionar um relaxamento profundo em todo o corpo.', 
+            'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg'
+        )">
+            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/fLP00rjv/IMG-2556.jpg" alt="GSC">
+            </div>
+            <div class="card-nome">Jeeter Juice GSC</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="hibrida" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Sugar Melon | Hybrid', 
+            '190.00', 
+            'Sabor doce de melão maduro com notas de açúcar. Esta híbrida garante uma sensação de bem-estar duradoura e um relaxamento muito agradável.', 
+            'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg'
+        )">
+            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg" alt="Sugar Melon">
+            </div>
+            <div class="card-nome">Jeeter Juice Sugar Melon</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="hibrida" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Lemon Drop | Hybrid', 
+            '190.00', 
+            'Aroma cítrico e refrescante que lembra balas de limão. Proporciona uma euforia leve e revigorante, perfeita para manter o foco e a produtividade.', 
+            'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg'
+        )">
+            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg" alt="Lemon Drop">
+            </div>
+            <div class="card-nome">Jeeter Juice Lemon Drop</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="hibrida" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Blueberry Tornado | Hybrid', 
+            '190.00', 
+            'Uma mistura potente com sabor intenso de mirtilo fresco e um toque doce. Oferece o equilíbrio ideal entre um relaxamento corporal suave e clareza mental.', 
+            'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg'
+        )">
+            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg" alt="Blueberry Tornado">
+            </div>
+            <div class="card-nome">Jeeter Juice Blueberry Tornado</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Ice Cream Banana | Indica', 
+            '190.00', 
+            'Sobremesa pura. Une a cremosidade do sorvete com o doce da banana madura para um relaxamento intenso e sensação de bem-estar.', 
+            'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg" alt="Ice Cream Banana">
+            </div>
+            <div class="card-nome">Jeeter Juice Ice Cream Banana</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Do-Si-Lato | Indica', 
+            '190.00', 
+            'Combinação floral e de biscoito. Resulta em um relaxamento potente que acalma corpo e mente de forma equilibrada.', 
+            'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/4db6kR7K/IMG-2522.jpg" alt="Do-Si-Lato">
+            </div>
+            <div class="card-nome">Jeeter Juice Do-Si-Lato</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="sativa" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Super Silver Haze | Sativa', 
+            '190.00', 
+            'Clássico premiado com aroma cítrico e terroso. Oferece efeitos revigorantes e é excelente para socializar e elevar o ânimo.', 
+            'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg'
+        )">
+            <span class="tag-tipo">Sativa</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg" alt="Super Silver Haze">
+            </div>
+            <div class="card-nome">Jeeter Juice Super Silver Haze</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Peach Rings | Indica', 
+            '190.00', 
+            'Sabor nostálgico de balas de pêssego. Esta Indica proporciona um relaxamento corporal profundo, sendo perfeita para relaxar no final da tarde.', 
+            'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg" alt="Peach Rings">
+            </div>
+            <div class="card-nome">Jeeter Juice Peach Rings</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Forbidden Gelato | Indica', 
+            '190.00', 
+            'Mix exótico de frutas silvestres e notas cremosas. A escolha certa para aliviar o estresse com um perfil de sabor doce e inesquecível.', 
+            'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg" alt="Forbidden Gelato">
+            </div>
+            <div class="card-nome">Jeeter Juice Forbidden Gelato</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="sativa" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Chocolope Cookies | Sativa', 
+            '190.00', 
+            'Mistura sofisticada de café, chocolate e o doce de biscoitos recém-saídos do forno. Uma Sativa que estimula a mente com muito sabor.', 
+            'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg'
+        )">
+            <span class="tag-tipo">Sativa</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg" alt="Chocolope Cookies">
+            </div>
+            <div class="card-nome">Jeeter Juice Chocolope Cookies</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="sativa" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Durban Poison | Sativa', 
+            '190.00', 
+            'O espresso das Sativas. Possui um aroma picante e doce de anis, garantindo energia extra e clareza mental para dias produtivos.', 
+            'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg'
+        )">
+            <span class="tag-tipo">Sativa</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg" alt="Durban Poison">
+            </div>
+            <div class="card-nome">Jeeter Juice Durban Poison</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Harambe | Indica', 
+            '190.00', 
+            'Perfil de sabor encorpado e potente com notas de diesel e terra. Focada no relaxamento profundo e ideal para quem busca desligar totalmente.', 
+            'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg" alt="Harambe">
+            </div>
+            <div class="card-nome">Jeeter Juice Harambe</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Churros | Indica', 
+            '190.00', 
+            'Aroma de massa frita com açúcar e canela. Proporciona noites de descanso tranquilo.', 
+            'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/sgNymF1T/IMG-2526.jpg" alt="Churros">
+            </div>
+            <div class="card-nome">Jeeter Juice Churros</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Rainbow Belts | Indica', 
+            '190.00', 
+            'Explosão de balas de goma ácidas. Excelente para aliviar a tensão física.', 
+            'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg" alt="Rainbow Belts">
+            </div>
+            <div class="card-nome">Jeeter Juice Rainbow Belts</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="sativa" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Maui Wowie | Sativa', 
+            '190.00', 
+            'Clássico havaiano com notas de abacaxi. Traz euforia e energia vibrante.', 
+            'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg'
+        )">
+            <span class="tag-tipo">Sativa</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg" alt="Maui Wowie">
+            </div>
+            <div class="card-nome">Jeeter Juice Maui Wowie</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Blue Zkz | Indica', 
+            '190.00', 
+            'Uma mistura rica de mirtilos (blueberries) e notas de doces cítricos. Oferece uma experiência sedativa e calmante.', 
+            'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg'
+        )">
+            <span class="tag-tipo">Indica</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg" alt="Jeeter Blue Zkz">
+            </div>
+            <div class="card-nome">Jeeter Juice Blue Zkz</div>
+            <div class="card-preco">R$ 190,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
+
+        <div class="card" data-categoria="sativa" onclick="abrirModal(
+            'Jeeter Juice Live Resin - Honeydew | Sativa', 
+            '190.00', 
+            'Refrescante e leve, com o sabor característico do melão doce. High limpo e energizante.', 
+            'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg'
+        )">
+            <span class="tag-tipo">Sativa</span>
+            <div class="card-img-box">
+                <img src="https://i.postimg.cc/d08KRhCB/IMG-2530.jpg" alt="Jeeter Honeydew">
+            </div>
+            <div class="card-nome">Jeeter Juice Honeydew</div>
+            <div class="card-preco">R$ 190,00</div> 
+            <div class="ver-detalhes">Ver Detalhes</div>
+        </div>
 
         <div class="card" data-categoria="essencia" onclick="abrirModal('Essência Mint Ice', '35.00', 'Sabor de menta extra forte e gelada. Frasco de 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop')">
-            <span class="tag-tipo">Essência</span>
+            <span class="tag-tipo" style="background:#2563eb">Essência</span>
             <div class="card-img-box">
-                <img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop" alt="Mint Ice">
+                <img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop" alt="Foto">
             </div>
-            <div class="card-content">
-                <div class="card-nome">Essência Mint Ice</div>
-                <div class="card-preco">R$ 35,00</div>
-                <div class="ver-detalhes">Ver Detalhes</div>
-            </div>
+            <div class="card-nome">Essência Mint Ice</div>
+            <div class="card-preco">R$ 35,00</div>
+            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
+
     </div>
 
     <footer>
-        <p>&copy; 2026 Catálogo Premium - Todos os direitos reservados</p>
+        <p>&copy; 2026 Catálogo Online</p>
     </footer>
 
     <div class="modal-overlay" id="janela" onclick="fecharSeClicarFora(event)">
         <div class="modal-box">
-            <button class="fechar" onclick="fecharModal()">×</button>
+            <button class="fechar" onclick="fecharModal()">&times;</button>
             <div class="modal-img-top">
-                <img src="" id="m-img" alt="Produto">
+                <img src="" id="m-img" alt="Detalhe">
             </div>
             <div class="modal-content">
                 <div class="modal-titulo" id="m-nome">Nome</div>
                 <div class="modal-preco" id="m-preco">R$ 0,00</div>
-                <div class="modal-desc" id="m-desc">Descrição</div>
-                <a href="#" id="link-zap" class="btn-comprar" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Comprar no WhatsApp
-                </a>
+                <div class="modal-desc" id="m-desc">Desc</div>
+                <a href="#" id="link-zap" class="btn-comprar" target="_blank">Comprar no WhatsApp</a>
             </div>
         </div>
     </div>
 
     <script>
-        var telefone = "5562996084455";
+        // === SEU NÚMERO ===
+        var telefone = "5562996084455"; 
 
+        // === FILTROS ===
         function filtrar(categoria, botaoClicado) {
-            document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
+            var botoes = document.getElementsByClassName('btn-filtro');
+            for (var i = 0; i < botoes.length; i++) {
+                botoes[i].classList.remove('ativo');
+            }
             botaoClicado.classList.add('ativo');
 
-            document.querySelectorAll('.card').forEach(card => {
-                const tipo = card.getAttribute('data-categoria');
-                card.style.display = (categoria === 'todos' || tipo === categoria) ? 'block' : 'none';
-                if (card.style.display === 'block') {
-                    card.style.animation = 'none';
-                    setTimeout(() => card.style.animation = 'fadeInUp 0.6s ease forwards', 10);
+            var cards = document.getElementsByClassName('card');
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
+                var tipoDoCard = card.getAttribute('data-categoria');
+
+                if (categoria === 'todos' || tipoDoCard === categoria) {
+                    card.style.display = 'block'; 
+                } else {
+                    card.style.display = 'none'; 
                 }
-            });
+            }
         }
 
+        // === JANELA MODAL ===
         function abrirModal(nome, preco, descricao, imagemLink) {
             document.getElementById('m-nome').innerText = nome;
             document.getElementById('m-desc').innerText = descricao;
             document.getElementById('m-img').src = imagemLink;
             
-            const precoFormatado = "R$ " + parseFloat(preco).toFixed(2).replace(".", ",");
+            var precoFormatado = "R$ " + parseFloat(preco).toFixed(2).replace(".", ",");
             document.getElementById('m-preco').innerText = precoFormatado;
 
-            const mensagem = `Olá! Tenho interesse no *${nome}* (${precoFormatado}).`;
-            document.getElementById('link-zap').href = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem);
+            var mensagem = "Olá! Tenho interesse no *" + nome + "* (" + precoFormatado + ").";
+            var linkFinal = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem);
+            document.getElementById('link-zap').href = linkFinal;
 
             document.getElementById('janela').style.display = 'flex';
         }
 
-        function fecharModal() {
-            document.getElementById('janela').style.display = 'none';
-        }
-
-        function fecharSeClicarFora(e) {
-            if (e.target.id === 'janela') fecharModal();
-        }
-
-        // Animação inicial dos cards
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.card').forEach((card, i) => {
-                card.style.animationDelay = `${i * 0.05}s`;
-            });
-        });
+        function fecharModal() { document.getElementById('janela').style.display = 'none'; }
+        function fecharSeClicarFora(e) { if (e.target.id == 'janela') { fecharModal(); } }
     </script>
+
 </body>
 </html>
