@@ -2,483 +2,487 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Online</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jeeter Juice Exclusive</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* === CORES === */
+        /* === TEMA FUTURISTA === */
         :root {
-            --verde-topo: #064e3b;
-            --verde-ativo: #10b981;
-            --verde-zap: #25d366;
-            --fundo: #f0fdf4;
-            --texto: #1f2937;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sec: #94a3b8;
+            
+            /* Cores das Strains */
+            --sativa: #f59e0b; /* Laranja */
+            --indica: #8b5cf6; /* Roxo */
+            --hibrida: #10b981; /* Verde */
+            --essencia: #06b6d4; /* Azul Gelo */
+            
+            --zap-color: #25d366;
         }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--fundo);
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 100%);
             margin: 0;
             padding: 0;
-            color: var(--texto);
-            -webkit-tap-highlight-color: transparent;
+            color: var(--text-main);
+            min-height: 100vh;
         }
 
-        /* === CABEÇALHO === */
+        /* === CABEÇALHO FLUTUANTE === */
         header {
-            background: linear-gradient(180deg, var(--verde-topo) 0%, #047857 100%);
-            color: white;
-            padding: 30px 10px 25px;
-            text-align: center;
-            border-bottom-left-radius: 25px;
-            border-bottom-right-radius: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 20px 20px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
         }
         
-        header h1 { margin: 0; font-size: 1.6rem; letter-spacing: -0.5px; }
+        header h1 { 
+            margin: 0; 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            background: linear-gradient(90deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
 
-        /* === MENU DE ABAS (FILTROS) === */
+        /* === FILTROS (SCROLL HORIZONTAL) === */
+        .filtros-container {
+            overflow-x: auto;
+            padding: 15px 0;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        .filtros-container::-webkit-scrollbar { display: none; }
+
         .filtros {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            display: inline-flex;
+            gap: 10px;
+            padding: 0 20px; /* Margem lateral para scroll */
         }
 
         .btn-filtro {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-sec);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-filtro.ativo {
-            background: white;
-            color: var(--verde-topo);
-            font-weight: 700;
-            border-color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: #ffffff;
+            color: #000;
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
 
-        /* === GRADE DE PRODUTOS === */
+        /* === GRADE PRODUTOS === */
         .container {
-            max-width: 1000px;
-            margin: 20px auto 40px;
-            padding: 0 20px;
+            max-width: 1200px;
+            margin: 20px auto 80px;
+            padding: 0 15px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
             gap: 15px;
         }
 
-        /* === CARD === */
+        /* === CARD FUTURISTA === */
         .card {
-            background: white;
+            background: var(--glass);
+            border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.1s;
-            cursor: pointer;
+            overflow: hidden;
             position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeIn 0.6s ease forwards;
+            backdrop-filter: blur(5px);
         }
-        
-        .card:active { transform: scale(0.96); }
 
-        /* Tag de categoria no card */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card:active { transform: scale(0.98); background: rgba(255,255,255,0.1); }
+
+        /* Tag Colorida */
         .tag-tipo {
             position: absolute;
             top: 10px; left: 10px;
-            background: rgba(0,0,0,0.6);
-            color: white;
             font-size: 0.6rem;
-            padding: 3px 8px;
-            border-radius: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 800;
             text-transform: uppercase;
-            font-weight: 600;
+            color: #000; /* Texto preto pra contraste */
             z-index: 2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .card-img-box {
-            background-color: #f3f4f6;
-            border-radius: 15px;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            overflow: hidden;
+            height: 160px;
+            width: 100%;
             position: relative;
         }
+        
+        .card-img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s;
+        }
 
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-nome { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; line-height: 1.2; }
-        .card-preco { color: var(--verde-ativo); font-weight: 700; font-size: 1.1rem; }
-        .ver-detalhes { margin-top: 8px; background: #f3f4f6; color: #666; font-size: 0.7rem; padding: 6px; border-radius: 8px; font-weight: 600; text-align: center;}
+        .card-info { padding: 15px; text-align: left; }
 
-        /* === MODAL (JANELA) === */
+        .card-nome { 
+            font-weight: 700; 
+            font-size: 0.9rem; 
+            margin-bottom: 5px; 
+            line-height: 1.3;
+            color: #fff;
+        }
+        
+        .card-preco { 
+            font-weight: 400; 
+            font-size: 1.1rem; 
+            color: var(--hibrida); /* Verde neon padrão para preço */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-btn-mini {
+            font-size: 1.2rem;
+            background: rgba(255,255,255,0.1);
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+        }
+
+        /* === MODAL DE LUXO === */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 9999;
-            align-items: center;
+            align-items: end; /* Mobile: Bottom Sheet */
             justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .modal-box {
-            background: white;
+            background: #1e293b;
             width: 100%;
-            max-width: 380px;
-            border-radius: 25px;
+            max-width: 500px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
             overflow: hidden;
-            animation: surgir 0.3s;
+            animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             position: relative;
-            display: flex; flex-direction: column;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            border-top: 1px solid var(--border);
         }
 
-        @keyframes surgir { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @media (min-width: 600px) {
+            .modal-overlay { align-items: center; }
+            .modal-box { border-radius: 30px; }
+        }
 
-        .modal-img-top { width: 100%; height: 250px; background-color: #eee; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .modal-img-top { 
+            width: 100%; 
+            height: 300px; 
+            position: relative;
+        }
+        
         .modal-img-top img { width: 100%; height: 100%; object-fit: cover; }
         
-        .modal-content { padding: 20px; }
-        .fechar { position: absolute; top: 15px; right: 15px; background: white; border: none; width: 35px; height: 35px; border-radius: 50%; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10; }
+        /* Gradiente sobre a foto para o texto ler melhor */
+        .modal-gradient {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to top, #1e293b, transparent);
+        }
+
+        .modal-content { padding: 25px; position: relative; }
         
-        .modal-titulo { font-size: 1.4rem; font-weight: 700; color: var(--verde-topo); margin-top: 0; line-height: 1.2; }
-        .modal-preco { font-size: 2rem; font-weight: 700; color: var(--verde-ativo); margin: 5px 0 15px; }
-        .modal-desc { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 25px; }
+        .fechar { 
+            position: absolute; 
+            top: 20px; right: 20px; 
+            background: rgba(0,0,0,0.5); 
+            border: none; 
+            width: 40px; height: 40px; 
+            border-radius: 50%; 
+            color: #fff; 
+            font-size: 1.5rem;
+            cursor: pointer; 
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: #000;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .modal-titulo { font-size: 1.8rem; font-weight: 800; margin: 0; line-height: 1.1; margin-bottom: 5px; }
+        .modal-preco { font-size: 2rem; font-weight: 300; color: #fff; margin-bottom: 20px; display: block; }
+        .modal-desc { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 30px; font-weight: 400; }
         
-        .btn-comprar { display: flex; align-items: center; justify-content: center; width: 100%; background-color: var(--verde-zap); color: white; padding: 16px; border-radius: 15px; text-decoration: none; font-weight: 700; text-align: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); box-sizing: border-box; }
+        .btn-comprar { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white; 
+            padding: 18px; 
+            border-radius: 18px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
         
-        footer { text-align: center; padding: 40px; color: #9ca3af; font-size: 0.8rem; }
+        footer { text-align: center; padding: 40px; color: var(--border); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;}
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Catálogo Online</h1>
+        <h1>Jeeter Exclusive</h1>
         
-        <div class="filtros">
-            <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
-            <button class="btn-filtro" onclick="filtrar('hibrida', this)">Híbrida</button>
-            <button class="btn-filtro" onclick="filtrar('indica', this)">Indica</button>
-            <button class="btn-filtro" onclick="filtrar('sativa', this)">Sativa</button>
-            <button class="btn-filtro" onclick="filtrar('essencia', this)">Essências</button>
+        <div class="filtros-container">
+            <div class="filtros">
+                <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
+                <button class="btn-filtro" onclick="filtrar('hibrida', this)">Híbrida</button>
+                <button class="btn-filtro" onclick="filtrar('indica', this)">Indica</button>
+                <button class="btn-filtro" onclick="filtrar('sativa', this)">Sativa</button>
+                <button class="btn-filtro" onclick="filtrar('essencia', this)">Essências</button>
+            </div>
         </div>
     </header>
 
     <div class="container">
 
-        <div class="card" data-categoria="hibrida" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Mac & Cookies | Hybrid', 
-            '190.00', 
-            'Uma fusão cremosa de notas amanteigadas e de biscoito. Garante um efeito equilibrado que acalma a mente enquanto relaxa os músculos.', 
-            'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg'
-        )">
-            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg" alt="Mac & Cookies">
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Mac & Cookies', '190.00', 'Uma fusão cremosa de notas amanteigadas e de biscoito. Garante um efeito equilibrado que acalma a mente enquanto relaxa os músculos.', 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Mac & Cookies</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Mac & Cookies</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="hibrida" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Kush Mintz | Hybrid', 
-            '190.00', 
-            'Perfil refrescante de menta com um fundo terroso e picante. Oferece um relaxamento potente e é ideal para quem busca conforto físico intenso.', 
-            'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg'
-        )">
-            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg" alt="Kush Mintz">
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Kush Mintz', '190.00', 'Perfil refrescante de menta com um fundo terroso e picante. Oferece um relaxamento potente e é ideal para quem busca conforto físico intenso.', 'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Kush Mintz</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Kush Mintz</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="hibrida" onclick="abrirModal(
-            'Jeeter Juice Live Resin - GSC | Hybrid', 
-            '190.00', 
-            'Um clássico absoluto com notas de menta e chocolate doce. É famosa por elevar o humor e proporcionar um relaxamento profundo em todo o corpo.', 
-            'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg'
-        )">
-            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/fLP00rjv/IMG-2556.jpg" alt="GSC">
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('GSC - Girl Scout Cookies', '190.00', 'Um clássico absoluto com notas de menta e chocolate doce. É famosa por elevar o humor e proporcionar um relaxamento profundo em todo o corpo.', 'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/fLP00rjv/IMG-2556.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice GSC</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice GSC</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="hibrida" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Sugar Melon | Hybrid', 
-            '190.00', 
-            'Sabor doce de melão maduro com notas de açúcar. Esta híbrida garante uma sensação de bem-estar duradoura e um relaxamento muito agradável.', 
-            'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg'
-        )">
-            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg" alt="Sugar Melon">
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Sugar Melon', '190.00', 'Sabor doce de melão maduro com notas de açúcar. Esta híbrida garante uma sensação de bem-estar duradoura e um relaxamento muito agradável.', 'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Sugar Melon</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Sugar Melon</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="hibrida" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Lemon Drop | Hybrid', 
-            '190.00', 
-            'Aroma cítrico e refrescante que lembra balas de limão. Proporciona uma euforia leve e revigorante, perfeita para manter o foco e a produtividade.', 
-            'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg'
-        )">
-            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg" alt="Lemon Drop">
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Lemon Drop', '190.00', 'Aroma cítrico e refrescante que lembra balas de limão. Proporciona uma euforia leve e revigorante, perfeita para manter o foco e a produtividade.', 'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Lemon Drop</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Lemon Drop</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="hibrida" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Blueberry Tornado | Hybrid', 
-            '190.00', 
-            'Uma mistura potente com sabor intenso de mirtilo fresco e um toque doce. Oferece o equilíbrio ideal entre um relaxamento corporal suave e clareza mental.', 
-            'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg'
-        )">
-            <span class="tag-tipo" style="background:#f59e0b;">Híbrida</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg" alt="Blueberry Tornado">
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Blueberry Tornado', '190.00', 'Uma mistura potente com sabor intenso de mirtilo fresco e um toque doce. Oferece o equilíbrio ideal entre um relaxamento corporal suave e clareza mental.', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Blueberry Tornado</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Blueberry Tornado</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Ice Cream Banana | Indica', 
-            '190.00', 
-            'Sobremesa pura. Une a cremosidade do sorvete com o doce da banana madura para um relaxamento intenso e sensação de bem-estar.', 
-            'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg" alt="Ice Cream Banana">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Ice Cream Banana', '190.00', 'Sobremesa pura. Une a cremosidade do sorvete com o doce da banana madura para um relaxamento intenso e sensação de bem-estar.', 'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Ice Cream Banana</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Ice Cream Banana</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Do-Si-Lato | Indica', 
-            '190.00', 
-            'Combinação floral e de biscoito. Resulta em um relaxamento potente que acalma corpo e mente de forma equilibrada.', 
-            'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/4db6kR7K/IMG-2522.jpg" alt="Do-Si-Lato">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Do-Si-Lato', '190.00', 'Combinação floral e de biscoito. Resulta em um relaxamento potente que acalma corpo e mente de forma equilibrada.', 'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/4db6kR7K/IMG-2522.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Do-Si-Lato</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Do-Si-Lato</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="sativa" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Super Silver Haze | Sativa', 
-            '190.00', 
-            'Clássico premiado com aroma cítrico e terroso. Oferece efeitos revigorantes e é excelente para socializar e elevar o ânimo.', 
-            'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg'
-        )">
-            <span class="tag-tipo">Sativa</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg" alt="Super Silver Haze">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Peach Rings', '190.00', 'Sabor nostálgico de balas de pêssego. Esta Indica proporciona um relaxamento corporal profundo, sendo perfeita para relaxar no final da tarde.', 'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Peach Rings</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Super Silver Haze</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Peach Rings | Indica', 
-            '190.00', 
-            'Sabor nostálgico de balas de pêssego. Esta Indica proporciona um relaxamento corporal profundo, sendo perfeita para relaxar no final da tarde.', 
-            'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg" alt="Peach Rings">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Forbidden Gelato', '190.00', 'Mix exótico de frutas silvestres e notas cremosas. A escolha certa para aliviar o estresse com um perfil de sabor doce e inesquecível.', 'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Forbidden Gelato</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Peach Rings</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Forbidden Gelato | Indica', 
-            '190.00', 
-            'Mix exótico de frutas silvestres e notas cremosas. A escolha certa para aliviar o estresse com um perfil de sabor doce e inesquecível.', 
-            'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg" alt="Forbidden Gelato">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Harambe', '190.00', 'Perfil de sabor encorpado e potente com notas de diesel e terra. Focada no relaxamento profundo e ideal para quem busca desligar totalmente.', 'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Harambe</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Forbidden Gelato</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="sativa" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Chocolope Cookies | Sativa', 
-            '190.00', 
-            'Mistura sofisticada de café, chocolate e o doce de biscoitos recém-saídos do forno. Uma Sativa que estimula a mente com muito sabor.', 
-            'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg'
-        )">
-            <span class="tag-tipo">Sativa</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg" alt="Chocolope Cookies">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Churros', '190.00', 'Aroma de massa frita com açúcar e canela. Proporciona noites de descanso tranquilo.', 'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/sgNymF1T/IMG-2526.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Churros</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Chocolope Cookies</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="sativa" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Durban Poison | Sativa', 
-            '190.00', 
-            'O espresso das Sativas. Possui um aroma picante e doce de anis, garantindo energia extra e clareza mental para dias produtivos.', 
-            'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg'
-        )">
-            <span class="tag-tipo">Sativa</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg" alt="Durban Poison">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Rainbow Belts', '190.00', 'Explosão de balas de goma ácidas. Excelente para aliviar a tensão física.', 'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Rainbow Belts</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Durban Poison</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Harambe | Indica', 
-            '190.00', 
-            'Perfil de sabor encorpado e potente com notas de diesel e terra. Focada no relaxamento profundo e ideal para quem busca desligar totalmente.', 
-            'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg" alt="Harambe">
+        <div class="card" data-categoria="indica" onclick="abrirModal('Blue Zkz', '190.00', 'Uma mistura rica de mirtilos (blueberries) e notas de doces cítricos. Oferece uma experiência sedativa e calmante.', 'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Blue Zkz</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Harambe</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Churros | Indica', 
-            '190.00', 
-            'Aroma de massa frita com açúcar e canela. Proporciona noites de descanso tranquilo.', 
-            'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/sgNymF1T/IMG-2526.jpg" alt="Churros">
+        <div class="card" data-categoria="sativa" onclick="abrirModal('Super Silver Haze', '190.00', 'Clássico premiado com aroma cítrico e terroso. Oferece efeitos revigorantes e é excelente para socializar e elevar o ânimo.', 'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg', 'sativa')">
+            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Super Silver Haze</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Churros</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Rainbow Belts | Indica', 
-            '190.00', 
-            'Explosão de balas de goma ácidas. Excelente para aliviar a tensão física.', 
-            'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg" alt="Rainbow Belts">
+        <div class="card" data-categoria="sativa" onclick="abrirModal('Chocolope Cookies', '190.00', 'Mistura sofisticada de café, chocolate e o doce de biscoitos recém-saídos do forno. Uma Sativa que estimula a mente com muito sabor.', 'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg', 'sativa')">
+            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Chocolope Cookies</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Rainbow Belts</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="sativa" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Maui Wowie | Sativa', 
-            '190.00', 
-            'Clássico havaiano com notas de abacaxi. Traz euforia e energia vibrante.', 
-            'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg'
-        )">
-            <span class="tag-tipo">Sativa</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg" alt="Maui Wowie">
+        <div class="card" data-categoria="sativa" onclick="abrirModal('Durban Poison', '190.00', 'O espresso das Sativas. Possui um aroma picante e doce de anis, garantindo energia extra e clareza mental para dias produtivos.', 'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg', 'sativa')">
+            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Durban Poison</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Maui Wowie</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Blue Zkz | Indica', 
-            '190.00', 
-            'Uma mistura rica de mirtilos (blueberries) e notas de doces cítricos. Oferece uma experiência sedativa e calmante.', 
-            'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg'
-        )">
-            <span class="tag-tipo">Indica</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg" alt="Jeeter Blue Zkz">
+        <div class="card" data-categoria="sativa" onclick="abrirModal('Maui Wowie', '190.00', 'Clássico havaiano com notas de abacaxi. Traz euforia e energia vibrante.', 'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg', 'sativa')">
+            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Maui Wowie</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Blue Zkz</div>
-            <div class="card-preco">R$ 190,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="sativa" onclick="abrirModal(
-            'Jeeter Juice Live Resin - Honeydew | Sativa', 
-            '190.00', 
-            'Refrescante e leve, com o sabor característico do melão doce. High limpo e energizante.', 
-            'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg'
-        )">
-            <span class="tag-tipo">Sativa</span>
-            <div class="card-img-box">
-                <img src="https://i.postimg.cc/d08KRhCB/IMG-2530.jpg" alt="Jeeter Honeydew">
+        <div class="card" data-categoria="sativa" onclick="abrirModal('Honeydew', '190.00', 'Refrescante e leve, com o sabor característico do melão doce. High limpo e energizante.', 'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg', 'sativa')">
+            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/d08KRhCB/IMG-2530.jpg"></div>
+            <div class="card-info">
+                <div class="card-nome">Jeeter Juice Honeydew</div>
+                <div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Jeeter Juice Honeydew</div>
-            <div class="card-preco">R$ 190,00</div> 
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
-        <div class="card" data-categoria="essencia" onclick="abrirModal('Essência Mint Ice', '35.00', 'Sabor de menta extra forte e gelada. Frasco de 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop')">
-            <span class="tag-tipo" style="background:#2563eb">Essência</span>
-            <div class="card-img-box">
-                <img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop" alt="Foto">
+        <div class="card" data-categoria="essencia" onclick="abrirModal('Essência Mint Ice', '35.00', 'Sabor de menta extra forte e gelada. Frasco de 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop', 'essencia')">
+            <span class="tag-tipo" style="background:var(--essencia)">Essência</span>
+            <div class="card-img-box"><img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop"></div>
+            <div class="card-info">
+                <div class="card-nome">Essência Mint Ice</div>
+                <div class="card-preco" style="color:var(--essencia)">R$ 35,00 <span class="card-btn-mini">+</span></div>
             </div>
-            <div class="card-nome">Essência Mint Ice</div>
-            <div class="card-preco">R$ 35,00</div>
-            <div class="ver-detalhes">Ver Detalhes</div>
         </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 Catálogo Online</p>
+        <p>&copy; 2026 Jeeter Exclusive</p>
     </footer>
 
     <div class="modal-overlay" id="janela" onclick="fecharSeClicarFora(event)">
@@ -486,46 +490,59 @@
             <button class="fechar" onclick="fecharModal()">&times;</button>
             <div class="modal-img-top">
                 <img src="" id="m-img" alt="Detalhe">
+                <div class="modal-gradient"></div>
             </div>
             <div class="modal-content">
-                <div class="modal-titulo" id="m-nome">Nome</div>
-                <div class="modal-preco" id="m-preco">R$ 0,00</div>
-                <div class="modal-desc" id="m-desc">Desc</div>
-                <a href="#" id="link-zap" class="btn-comprar" target="_blank">Comprar no WhatsApp</a>
+                <span id="m-tag" class="modal-tag">TIPO</span>
+                <h2 class="modal-titulo" id="m-nome">Nome</h2>
+                <span class="modal-preco" id="m-preco">R$ 0,00</span>
+                <p class="modal-desc" id="m-desc">Descrição do produto vai aqui.</p>
+                <a href="#" id="link-zap" class="btn-comprar" target="_blank">
+                    COMPRAR NO WHATSAPP
+                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // === SEU NÚMERO ===
         var telefone = "5562996084455"; 
 
-        // === FILTROS ===
+        // Cores para o modal
+        const cores = {
+            'sativa': '#f59e0b',
+            'indica': '#8b5cf6',
+            'hibrida': '#10b981',
+            'essencia': '#06b6d4'
+        };
+
         function filtrar(categoria, botaoClicado) {
             var botoes = document.getElementsByClassName('btn-filtro');
-            for (var i = 0; i < botoes.length; i++) {
-                botoes[i].classList.remove('ativo');
-            }
+            for (var i = 0; i < botoes.length; i++) { botoes[i].classList.remove('ativo'); }
             botaoClicado.classList.add('ativo');
 
             var cards = document.getElementsByClassName('card');
             for (var i = 0; i < cards.length; i++) {
-                var card = cards[i];
-                var tipoDoCard = card.getAttribute('data-categoria');
-
+                var tipoDoCard = cards[i].getAttribute('data-categoria');
                 if (categoria === 'todos' || tipoDoCard === categoria) {
-                    card.style.display = 'block'; 
+                    cards[i].style.display = 'block'; 
+                    cards[i].style.animation = 'none';
+                    cards[i].offsetHeight; /* trigger reflow */
+                    cards[i].style.animation = 'fadeIn 0.5s forwards';
                 } else {
-                    card.style.display = 'none'; 
+                    cards[i].style.display = 'none'; 
                 }
             }
         }
 
-        // === JANELA MODAL ===
-        function abrirModal(nome, preco, descricao, imagemLink) {
+        function abrirModal(nome, preco, descricao, imagemLink, tipo) {
             document.getElementById('m-nome').innerText = nome;
             document.getElementById('m-desc').innerText = descricao;
             document.getElementById('m-img').src = imagemLink;
+            
+            // Configurar tag e cor
+            var tag = document.getElementById('m-tag');
+            tag.innerText = tipo;
+            tag.style.background = cores[tipo] || '#fff';
             
             var precoFormatado = "R$ " + parseFloat(preco).toFixed(2).replace(".", ",");
             document.getElementById('m-preco').innerText = precoFormatado;
@@ -534,7 +551,8 @@
             var linkFinal = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem);
             document.getElementById('link-zap').href = linkFinal;
 
-            document.getElementById('janela').style.display = 'flex';
+            var modal = document.getElementById('janela');
+            modal.style.display = 'flex';
         }
 
         function fecharModal() { document.getElementById('janela').style.display = 'none'; }
