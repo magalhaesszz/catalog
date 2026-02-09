@@ -610,7 +610,14 @@
             mensagem += `*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
             
             const link = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+            
+            // Abre o WhatsApp
             window.open(link, '_blank');
+
+            // LIMPA O CARRINHO E ATUALIZA A TELA
+            carrinho = [];
+            atualizarCarrinhoUI();
+            fecharModal('modal-carrinho');
         }
 
         // --- UTILITÁRIOS ---
