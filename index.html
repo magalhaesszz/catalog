@@ -265,6 +265,18 @@
 
     <div class="container">
 
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Blueberry Tornado', '190.00', 'Uma poderosa mistura com sabor intenso de mirtilo fresco e um toque adocicado. Oferece o equilíbrio ideal entre um relaxamento corporal suave e clareza mental.', 'https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg"></div>
+            <div class="card-info"><div class="card-nome">Jeeter Juice Blueberry Tornado</div><div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div></div>
+        </div>
+
+        <div class="card" data-categoria="hibrida" onclick="abrirModal('Cherry Punch', '190.00', 'Uma mistura equilibrada com sabor doce de cereja e notas terrosas. Proporciona um relaxamento suave e uma sensação de bem-estar ideal para qualquer momento do dia.', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg', 'hibrida')">
+            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg"></div>
+            <div class="card-info"><div class="card-nome">Jeeter Juice Cherry Punch</div><div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div></div>
+        </div>
+
         <div class="card" data-categoria="hibrida" onclick="abrirModal('Mac & Cookies', '190.00', 'Uma fusão cremosa de notas amanteigadas e de biscoito. Garante um efeito equilibrado que acalma a mente enquanto relaxa os músculos.', 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg"></div>
@@ -293,12 +305,6 @@
             <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg"></div>
             <div class="card-info"><div class="card-nome">Jeeter Juice Lemon Drop</div><div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModal('Blueberry Tornado', '190.00', 'Uma mistura potente com sabor intenso de mirtilo fresco e um toque doce. Oferece o equilíbrio ideal entre um relaxamento corporal suave e clareza mental.', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Blueberry Tornado</div><div class="card-preco">R$ 190,00 <span class="card-btn-mini">+</span></div></div>
         </div>
 
         <div class="card" data-categoria="indica" onclick="abrirModal('Ice Cream Banana', '190.00', 'Sobremesa pura. Une a cremosidade do sorvete com o doce da banana madura para um relaxamento intenso e sensação de bem-estar.', 'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg', 'indica')">
@@ -416,6 +422,7 @@
     <script>
         var telefone = "5562996084455"; 
 
+        // Cores para o modal
         const cores = {
             'sativa': '#f59e0b',
             'indica': '#8b5cf6',
