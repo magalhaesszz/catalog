@@ -30,6 +30,14 @@
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+        html, body {
+            /* TRAVA TOTAL DE ZOOM E ROLAGEM LATERAL */
+            touch-action: manipulation; 
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-dark);
@@ -38,7 +46,10 @@
             padding: 0;
             color: var(--text-main);
             min-height: 100vh;
-            padding-bottom: 80px; /* Espaço para não cobrir o rodapé com o botão flutuante */
+            padding-bottom: 80px; 
+            /* Evita seleção de texto acidental (parece app nativo) */
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         /* === CABEÇALHO === */
