@@ -23,7 +23,7 @@
             --hibrida: #10b981; /* Verde */
             --refil: #06b6d4;   /* Ciano */
             --oleo: #eab308;    /* Dourado */
-            --pod: #d946ef;     /* Rosa Neon (NOVO) */
+            --pod: #d946ef;     /* Rosa Neon */
             
             --zap-color: #25d366;
             --accent: #ffffff;
@@ -43,7 +43,7 @@
             -webkit-user-select: none; user-select: none;
         }
 
-        /* === BACKGROUND ANIMADO (Luzes Ambientes) === */
+        /* === BACKGROUND ANIMADO === */
         .ambient-light {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -71,10 +71,10 @@
 
         /* === CABEÇALHO === */
         header {
-            background: rgba(5, 5, 5, 0.7);
+            background: rgba(5, 5, 5, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 20px 0 15px;
+            padding: 20px 0 10px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -82,9 +82,18 @@
             transition: all 0.3s ease;
         }
         
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 15px;
+            padding: 0 20px;
+        }
+
         header h1 { 
-            margin: 0 0 15px; 
-            font-size: 1.5rem; 
+            margin: 0;
+            font-size: 1.4rem; 
             font-weight: 900; 
             text-align: center;
             letter-spacing: 2px;
@@ -93,6 +102,46 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* BOTÃO DE PESQUISA */
+        .btn-search-toggle {
+            position: absolute;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-search-toggle:active { transform: scale(0.9); background: rgba(255,255,255,0.2); }
+
+        /* BARRA DE PESQUISA */
+        .search-container {
+            display: none; /* Oculto por padrão */
+            padding: 0 20px 15px;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-input:focus { border-color: var(--hibrida); background: rgba(255,255,255,0.12); }
+
+        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+
 
         /* === FILTROS (Abas) === */
         .filtros-container {
@@ -353,7 +402,15 @@
     <div id="toast" class="toast"><i class="fas fa-check-circle" style="color:var(--hibrida)"></i> Adicionado ao Carrinho</div>
 
     <header>
-        <h1>Canetas da Paz 🍁</h1>
+        <div class="header-top">
+            <h1>Canetas da Paz 🍁</h1>
+            <button class="btn-search-toggle" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div id="search-bar" class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="O que você procura?" onkeyup="filtrarPesquisa()">
+        </div>
+
         <div class="filtros-container">
             <div class="filtros">
                 <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
@@ -733,6 +790,42 @@
 
             if (visiveis === 0) {
                 msgVazio.style.display = 'block';
+            } else {
+                msgVazio.style.display = 'none';
+            }
+        }
+
+        // === FUNÇÃO DE PESQUISA (NOVA) ===
+        function toggleSearch() {
+            const bar = document.getElementById('search-bar');
+            if (bar.style.display === 'block') {
+                bar.style.display = 'none';
+            } else {
+                bar.style.display = 'block';
+                document.getElementById('search-input').focus();
+            }
+        }
+
+        function filtrarPesquisa() {
+            const termo = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            const msgVazio = document.getElementById('msg-vazio');
+            let visiveis = 0;
+
+            cards.forEach(card => {
+                const nome = card.querySelector('.card-nome').innerText.toLowerCase();
+                if (nome.includes(termo)) {
+                    card.style.display = 'block';
+                    visiveis++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Se não encontrar nada, mostra msg
+            if (visiveis === 0) {
+                msgVazio.style.display = 'block';
+                msgVazio.innerHTML = '<i class="far fa-sad-tear"></i> Nenhum produto encontrado com esse nome.';
             } else {
                 msgVazio.style.display = 'none';
             }
