@@ -47,7 +47,7 @@
             color: var(--text-main);
             min-height: 100vh;
             padding-bottom: 80px; 
-            /* Evita seleção de texto acidental (parece app nativo) */
+            /* Evita seleção de texto acidental */
             -webkit-user-select: none;
             user-select: none;
         }
@@ -159,7 +159,7 @@
             color: #fff;
         }
 
-        /* === BOTÃO FLUTUANTE DO CARRINHO === */
+        /* === BOTÃO FLUTUANTE DO CARRINHO (DIREITA) === */
         .btn-carrinho-float {
             position: fixed;
             bottom: 25px; right: 25px;
@@ -188,6 +188,39 @@
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             border: 2px solid var(--bg-dark);
+        }
+
+        /* === BOTÕES REDES SOCIAIS (ESQUERDA) === */
+        .social-float {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 15px;
+            z-index: 900;
+        }
+
+        .btn-social {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .btn-social:active { transform: scale(0.9); }
+
+        .btn-insta {
+            background: #d6249f;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+        }
+
+        .btn-zap-contato {
+            background-color: var(--zap-color);
         }
 
         /* === MODAL DE DETALHES === */
@@ -442,6 +475,15 @@
 
     </div>
 
+    <div class="social-float">
+        <a href="https://wa.me/5562996084455" target="_blank" class="btn-social btn-zap-contato">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/canetasdapaz?igsh=MWdhbXhmbmt3b2Z1eg==" target="_blank" class="btn-social btn-insta">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+
     <div class="btn-carrinho-float" onclick="abrirCarrinho()">
         <i class="fas fa-shopping-bag"></i>
         <div class="contador-carrinho" id="cart-count">0</div>
@@ -622,10 +664,10 @@
             
             const link = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
             
-            // Abre o WhatsApp
+            // 1. Abre o WhatsApp
             window.open(link, '_blank');
 
-            // LIMPA O CARRINHO E ATUALIZA A TELA
+            // 2. LIMPA O CARRINHO E ATUALIZA A TELA
             carrinho = [];
             atualizarCarrinhoUI();
             fecharModal('modal-carrinho');
