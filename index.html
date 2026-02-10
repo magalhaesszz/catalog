@@ -42,7 +42,7 @@
             -webkit-user-select: none; user-select: none;
         }
 
-        /* === BACKGROUND ANIMADO (Luzes Ambientes) === */
+        /* === BACKGROUND ANIMADO === */
         .ambient-light {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -144,19 +144,12 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            
-            /* Preparação para Animação de Scroll */
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Classe que o JS adiciona quando visível */
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .card.visible { opacity: 1; transform: translateY(0); }
         .card:active { transform: scale(0.96) !important; transition: transform 0.1s; }
 
         .tag-tipo {
@@ -169,8 +162,6 @@
 
         .card-img-box { height: 180px; width: 100%; position: relative; overflow: hidden; }
         .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
-        
-        /* Zoom suave na imagem ao interagir */
         .card:active .card-img-box img { transform: scale(1.1); }
 
         .card-info { padding: 15px; backdrop-filter: blur(10px); }
@@ -202,7 +193,7 @@
             padding: 50px 20px;
             color: var(--text-muted);
             font-size: 0.9rem;
-            display: none; /* Controlado via JS */
+            display: none;
             animation: fadeIn 0.5s;
         }
         .empty-message i { font-size: 2rem; margin-bottom: 10px; display: block; opacity: 0.5; }
@@ -266,14 +257,13 @@
         .modal-img-top { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
         .modal-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, #121212, transparent); pointer-events: none; }
 
-        /* SETAS DE NAVEGAÇÃO */
+        /* Setas e Contador */
         .nav-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px);
             color: white; border: none; width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; cursor: pointer; z-index: 20;
-            transition: background 0.3s;
+            font-size: 1.2rem; cursor: pointer; z-index: 20; transition: background 0.3s;
         }
         .nav-btn:active { background: rgba(255,255,255,0.4); }
         .nav-prev { left: 15px; }
@@ -314,14 +304,12 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Modal Carrinho Específico */
+        /* Modal Carrinho */
         .cart-header { padding: 25px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; }
         .cart-items-container { padding: 25px; max-height: 55vh; overflow-y: auto; }
         .cart-item { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; margin-bottom: 12px; border: 1px solid var(--glass-border); }
         .cart-item-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; }
-        .cart-item-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 5px; }
         .cart-footer { padding: 25px; background: #1a1a1a; border-top: 1px solid var(--glass-border); }
-        
         .btn-finalizar {
             width: 100%; background: var(--zap-color); color: white;
             padding: 20px; border-radius: 18px; border: none;
@@ -409,7 +397,25 @@
             <div class="card-info"><div class="card-nome">Jeeter Juice Lemon Drop</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
         </div>
 
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Ice Cream Banana', 190, 'Sobremesa pura. Cremosidade do sorvete.', 'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg', 'indica')">
+        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Papaya | BabyJeeter 3G | THC 93,8%', 349.99, '', 'https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg"></div>
+            <div class="card-info"><div class="card-nome">Papaya | BabyJeeter 3G</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('OG Kush | BabyJeeter 3G | THC 93%', 349.99, '', 'https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg"></div>
+            <div class="card-info"><div class="card-nome">OG Kush | BabyJeeter 3G</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Jeeter Juice Liquid Diamonds - Goma Bubba 1g - INDICA', 199.99, '', 'https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg', 'indica')">
+            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg"></div>
+            <div class="card-info"><div class="card-nome">Liquid Diamonds Goma Bubba</div><div class="card-preco">R$ 199,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Ice Cream Banana', 190, 'Sobremesa pura. Cremosidade do sorvete.', ['https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg'], 'indica')">
             <span class="tag-tipo" style="background:var(--indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg"></div>
             <div class="card-info"><div class="card-nome">Jeeter Juice Ice Cream Banana</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
@@ -487,6 +493,30 @@
             <div class="card-info"><div class="card-nome">Jeeter Juice Honeydew</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
         </div>
 
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Jeeter - 5 Refil + Caneta | 5 un. 1ml - THC', 499.00, '', 'https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg"></div>
+            <div class="card-info"><div class="card-nome">Jeeter - 5 Refil + Caneta</div><div class="card-preco">R$ 499,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil Maui Wowie | Sativa | 98,4% - THC', 399.00, '', 'https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg"></div>
+            <div class="card-info"><div class="card-nome">Refil Maui Wowie</div><div class="card-preco">R$ 399,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil THC Bubba G | 1000mg | Concentrado', 149.99, '', 'https://i.postimg.cc/DySdJM3k/IMG-2580.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/DySdJM3k/IMG-2580.jpg"></div>
+            <div class="card-info"><div class="card-nome">Refil THC Bubba G</div><div class="card-preco">R$ 149,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('5G POD - BLUE DREAM - INDICA - THC', 399.99, '', 'https://i.postimg.cc/MZPmG84y/IMG-2579.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/MZPmG84y/IMG-2579.jpg"></div>
+            <div class="card-info"><div class="card-nome">5G POD - BLUE DREAM</div><div class="card-preco">R$ 399,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho de CBD Black Widow | 1g', 199.99, '', 'https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg"></div>
@@ -505,6 +535,12 @@
             <div class="card-info"><div class="card-nome">Cartucho Alien OG | 1,2g - THC</div><div class="card-preco">R$ 239,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
         </div>
 
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Essência Mint Ice', 35, 'Sabor de menta extra forte. 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop"></div>
+            <div class="card-info"><div class="card-nome">Essência Mint Ice</div><div class="card-preco" style="color:var(--refil)">R$ 35,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
         <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cartucho Atomizador de Cerâmica 1ml - THC', 39.99, '', ['https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg', 'https://i.postimg.cc/k2m8W4Hp/43320478_ce4b_4783_b97a_e656a035f2aa.jpg', 'https://i.postimg.cc/L8qTKg3R/6bc78dfe_2ac9_4b7c_8645_e9e7a65a531c.jpg'], 'oleo')">
             <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg"></div>
@@ -515,6 +551,12 @@
             <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg"></div>
             <div class="card-info"><div class="card-nome">Cannabis Óleo Das Sementes - Gotas - THC</div><div class="card-preco">R$ 249,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Óleo de CBD Delta-9 THC + CBD: Mix Definitivo', 349.99, '', 'https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg', 'oleo')">
+            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg"></div>
+            <div class="card-info"><div class="card-nome">Óleo de CBD Delta-9 THC + CBD</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
         </div>
 
         <div id="msg-vazio" class="empty-message">
