@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Canetas da Paz 💨</title>
+    <title>Canetas da Paz 🍁</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -262,11 +262,31 @@
         @media (min-width: 600px) { .modal-overlay { align-items: center; } .modal-box { border-radius: 30px; border: 1px solid var(--glass-border); } }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .modal-img-top { width: 100%; height: 350px; position: relative; }
-        .modal-img-top img { width: 100%; height: 100%; object-fit: cover; }
-        .modal-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, #121212, transparent); }
+        .modal-img-container { width: 100%; height: 350px; position: relative; background: #000; }
+        .modal-img-top { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
+        .modal-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, #121212, transparent); pointer-events: none; }
 
-        .modal-content { padding: 30px 25px; transform: translateY(-40px); position: relative; }
+        /* SETAS DE NAVEGAÇÃO */
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px);
+            color: white; border: none; width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; cursor: pointer; z-index: 20;
+            transition: background 0.3s;
+        }
+        .nav-btn:active { background: rgba(255,255,255,0.4); }
+        .nav-prev { left: 15px; }
+        .nav-next { right: 15px; }
+        
+        .img-counter {
+            position: absolute; bottom: 20px; right: 20px;
+            background: rgba(0,0,0,0.6); color: #fff;
+            padding: 4px 10px; border-radius: 12px;
+            font-size: 0.7rem; font-weight: 700; z-index: 20;
+        }
+
+        .modal-content { padding: 30px 25px; transform: translateY(-40px); position: relative; z-index: 5; }
         
         .modal-tag { 
             display: inline-block; font-size: 0.7rem; font-weight: 900; 
@@ -290,7 +310,7 @@
         .fechar-modal {
             position: absolute; top: 20px; right: 20px;
             background: rgba(0,0,0,0.6); border: none; width: 40px; height: 40px;
-            border-radius: 50%; color: #fff; font-size: 1.2rem; cursor: pointer; z-index: 10;
+            border-radius: 50%; color: #fff; font-size: 1.2rem; cursor: pointer; z-index: 30;
             backdrop-filter: blur(5px);
         }
 
@@ -332,7 +352,7 @@
     <div id="toast" class="toast"><i class="fas fa-check-circle" style="color:var(--hibrida)"></i> Adicionado ao Carrinho</div>
 
     <header>
-        <h1>Canetas da Paz 💨</h1>
+        <h1>Canetas da Paz 🍁</h1>
         <div class="filtros-container">
             <div class="filtros">
                 <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
@@ -467,6 +487,36 @@
             <div class="card-info"><div class="card-nome">Jeeter Juice Honeydew</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
         </div>
 
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho de CBD Black Widow | 1g', 199.99, '', 'https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg"></div>
+            <div class="card-info"><div class="card-nome">Cartucho de CBD Black Widow | 1g</div><div class="card-preco">R$ 199,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Pink Kush High THC Cartridge | 1g', 299.99, '', 'https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg"></div>
+            <div class="card-info"><div class="card-nome">Pink Kush High THC Cartridge | 1g</div><div class="card-preco">R$ 299,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho Alien OG | 1,2g - THC', 239.99, '', 'https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg', 'refil')">
+            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg"></div>
+            <div class="card-info"><div class="card-nome">Cartucho Alien OG | 1,2g - THC</div><div class="card-preco">R$ 239,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cartucho Atomizador de Cerâmica 1ml - THC', 39.99, '', ['https://i.postimg.cc/k2m8W4Hp/43320478_ce4b_4783_b97a_e656a035f2aa.jpg', 'https://i.postimg.cc/L8qTKg3R/6bc78dfe_2ac9_4b7c_8645_e9e7a65a531c.jpg'], 'oleo')">
+            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/k2m8W4Hp/43320478_ce4b_4783_b97a_e656a035f2aa.jpg"></div>
+            <div class="card-info"><div class="card-nome">Cartucho Atomizador de Cerâmica 1ml - THC</div><div class="card-preco">R$ 39,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
+        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cannabis Óleo Das Sementes - Gotas - THC', 249.99, '', 'https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg', 'oleo')">
+            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
+            <div class="card-img-box"><img src="https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg"></div>
+            <div class="card-info"><div class="card-nome">Cannabis Óleo Das Sementes - Gotas - THC</div><div class="card-preco">R$ 249,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+        </div>
+
         <div id="msg-vazio" class="empty-message">
             <i class="far fa-sad-tear"></i>
             Nenhum produto encontrado nesta categoria.
@@ -487,10 +537,14 @@
     <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
         <div class="modal-box">
             <button class="fechar-modal" onclick="fecharModal('modal-detalhes')">&times;</button>
-            <div class="modal-img-top">
-                <img src="" id="d-img">
+            <div class="modal-img-container">
+                <img src="" id="d-img" class="modal-img-top">
                 <div class="modal-gradient"></div>
+                <button class="nav-btn nav-prev" id="btn-prev" onclick="mudarImagem(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn nav-next" id="btn-next" onclick="mudarImagem(1)"><i class="fas fa-chevron-right"></i></button>
+                <div class="img-counter" id="img-counter">1/1</div>
             </div>
+            
             <div class="modal-content">
                 <span id="d-tag" class="modal-tag">TIPO</span>
                 <h2 class="modal-titulo" id="d-nome">Nome</h2>
@@ -526,6 +580,10 @@
         const telefone = "5562996084455"; 
         let carrinho = [];
         let produtoAtual = {}; 
+        
+        // Váriaveis do Slider
+        let imagensAtuais = [];
+        let indiceAtual = 0;
 
         const cores = {
             'sativa': '#f59e0b', 'indica': '#8b5cf6', 'hibrida': '#10b981', 'refil': '#06b6d4', 'oleo': '#eab308'
@@ -553,20 +611,16 @@
             const msgVazio = document.getElementById('msg-vazio');
 
             cards.forEach(card => {
-                // Remove classe visible para reiniciar animação se necessário
-                card.classList.remove('visible');
-                
+                card.classList.remove('visible'); // Reset animation
                 if (categoria === 'todos' || card.dataset.categoria === categoria) {
                     card.style.display = 'block';
                     visiveis++;
-                    // Pequeno delay para reativar a animação
                     setTimeout(() => card.classList.add('visible'), 50);
                 } else {
                     card.style.display = 'none';
                 }
             });
 
-            // Mostra mensagem se não houver produtos
             if (visiveis === 0) {
                 msgVazio.style.display = 'block';
             } else {
@@ -574,13 +628,31 @@
             }
         }
 
-        // === DETALHES DO PRODUTO ===
-        function abrirModalDetalhes(nome, preco, descricao, imagem, tipo) {
-            produtoAtual = { nome, preco, imagem, tipo };
+        // === DETALHES DO PRODUTO (INTELIGENTE) ===
+        function abrirModalDetalhes(nome, preco, descricao, imagensInput, tipo) {
+            // Tratar imagens (pode ser string única ou array)
+            if (Array.isArray(imagensInput)) {
+                imagensAtuais = imagensInput;
+            } else {
+                imagensAtuais = [imagensInput];
+            }
+            indiceAtual = 0;
+
+            // Salvar para o carrinho (sempre usa a primeira imagem como thumb)
+            produtoAtual = { nome, preco, imagem: imagensAtuais[0], tipo };
             
+            // Popula HTML básico
             document.getElementById('d-nome').innerText = nome;
-            document.getElementById('d-desc').innerText = descricao;
-            document.getElementById('d-img').src = imagem;
+            atualizarImagemModal(); // Função que gerencia a foto atual
+
+            // Lógica para esconder descrição se estiver vazia
+            const descEl = document.getElementById('d-desc');
+            if (descricao && descricao.trim() !== "") {
+                descEl.innerText = descricao;
+                descEl.style.display = "block";
+            } else {
+                descEl.style.display = "none";
+            }
             
             const precoFormatado = `R$ ${preco.toFixed(2).replace('.', ',')}`;
             const precoEl = document.getElementById('d-preco');
@@ -592,6 +664,41 @@
             tag.style.background = cores[tipo] || '#fff';
 
             document.getElementById('modal-detalhes').style.display = 'flex';
+        }
+
+        // === LÓGICA DO SLIDER ===
+        function atualizarImagemModal() {
+            const imgEl = document.getElementById('d-img');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const counter = document.getElementById('img-counter');
+
+            // Define a imagem atual
+            imgEl.style.opacity = 0;
+            setTimeout(() => {
+                imgEl.src = imagensAtuais[indiceAtual];
+                imgEl.style.opacity = 1;
+            }, 150);
+
+            // Atualiza contador e botões
+            if (imagensAtuais.length > 1) {
+                btnPrev.style.display = 'flex';
+                btnNext.style.display = 'flex';
+                counter.style.display = 'block';
+                counter.innerText = `${indiceAtual + 1}/${imagensAtuais.length}`;
+            } else {
+                btnPrev.style.display = 'none';
+                btnNext.style.display = 'none';
+                counter.style.display = 'none';
+            }
+        }
+
+        function mudarImagem(direcao) {
+            indiceAtual += direcao;
+            // Loop infinito (se passar do fim volta pro inicio e vice-versa)
+            if (indiceAtual >= imagensAtuais.length) indiceAtual = 0;
+            if (indiceAtual < 0) indiceAtual = imagensAtuais.length - 1;
+            atualizarImagemModal();
         }
 
         function adicionarDoModal() {
@@ -662,7 +769,7 @@
         function finalizarCompra() {
             if (carrinho.length === 0) return alert("Adicione produtos primeiro!");
 
-            let mensagem = "*PEDIDO CANETAS DA PAZ 💨*\n\n";
+            let mensagem = "*PEDIDO CANETAS DA PAZ 🍁*\n\n";
             let total = 0;
 
             carrinho.forEach(item => {
