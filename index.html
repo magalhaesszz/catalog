@@ -30,7 +30,12 @@
             --accent: #ffffff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* TRAVA DE ZOOM E SELEÇÃO */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            touch-action: manipulation; /* Trava duplo clique */
+        }
 
         html, body {
             touch-action: manipulation;
@@ -135,7 +140,7 @@
             background: rgba(255,255,255,0.08);
             color: #fff;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
+            font-size: 16px !important; /* TRAVA DE ZOOM NO IPHONE AO CLICAR NA BARRA */
             outline: none;
         }
         .search-input::placeholder { color: var(--text-muted); }
@@ -387,52 +392,26 @@
 
         /* === CHECKOUT EMBUTIDO (IFRAME) === */
         #modal-checkout .modal-box {
-            max-width: 800px; /* Maior para caber o checkout inteiro */
+            max-width: 800px; 
             height: 90vh;
             border-radius: 25px 25px 0 0;
             display: flex;
             flex-direction: column;
             padding: 0;
-            background: #fff; /* Fundo branco para a loja encaixar bem */
+            background: #fff; 
         }
         @media (min-width: 600px) { #modal-checkout .modal-box { border-radius: 25px; height: 85vh; } }
         
-        .checkout-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            flex-grow: 1;
-            border-radius: inherit;
-        }
-
-        .loading-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #121212; display: flex; align-items: center; justify-content: center;
-            z-index: 5; border-radius: inherit;
-        }
-
-        .spinner {
-            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1);
-            border-top-color: var(--pay-color); border-radius: 50%;
-            animation: spin 1s infinite linear;
-        }
+        .checkout-frame { width: 100%; height: 100%; border: none; flex-grow: 1; border-radius: inherit; }
+        .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #121212; display: flex; align-items: center; justify-content: center; z-index: 5; border-radius: inherit; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top-color: var(--pay-color); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        #modal-checkout .fechar-modal {
-            background: rgba(0,0,0,0.8);
-            color: #fff; top: 15px; right: 15px; z-index: 10;
-        }
+        #modal-checkout .fechar-modal { background: rgba(0,0,0,0.8); color: #fff; top: 15px; right: 15px; z-index: 10; }
 
         /* Toast de sucesso */
-        .toast {
-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-100px);
-            background: #fff; color: #000;
-            padding: 15px 30px; border-radius: 40px; font-weight: 800; font-size: 0.9rem;
-            z-index: 3000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none;
-        }
+        .toast { position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-100px); background: #fff; color: #000; padding: 15px 30px; border-radius: 40px; font-weight: 800; font-size: 0.9rem; z-index: 3000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none; }
         .toast.show { transform: translateX(-50%) translateY(0); }
-
     </style>
 </head>
 <body>
@@ -722,11 +701,11 @@
             <div class="card-info"><div class="card-nome">Óleo de CBD Delta-9 THC + CBD</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
         </div>
 
-        <div id="msg-vazio" class="empty-message">
-            <i class="far fa-sad-tear"></i>
-            Nenhum produto encontrado.
-        </div>
+    </div>
 
+    <div id="msg-vazio" class="empty-message">
+        <i class="far fa-sad-tear"></i>
+        Nenhum produto encontrado.
     </div>
 
     <div class="social-float">
@@ -745,9 +724,9 @@
             <div class="modal-img-container">
                 <img src="" id="d-img" class="modal-img-top">
                 <div class="modal-gradient"></div>
-                <button class="nav-btn nav-prev" id="btn-prev" onclick="mudarImagem(-1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn nav-next" id="btn-next" onclick="mudarImagem(1)"><i class="fas fa-chevron-right"></i></button>
-                <div class="img-counter" id="img-counter">1/1</div>
+                <div class="img-counter" id="img-counter" style="display:none;">1/1</div>
+                <button class="nav-btn nav-prev" id="btn-prev" style="display:none;" onclick="mudarImagem(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="nav-btn nav-next" id="btn-next" style="display:none;" onclick="mudarImagem(1)"><i class="fas fa-chevron-right"></i></button>
             </div>
             
             <div class="modal-content">
@@ -768,7 +747,9 @@
                 <h2><i class="fas fa-shopping-bag"></i> Seu Carrinho</h2>
                 <button class="fechar-modal" style="position:static" onclick="fecharModal('modal-carrinho')">&times;</button>
             </div>
-            <div class="cart-items-container" id="lista-itens"></div>
+            <div class="cart-items-container" id="lista-itens">
+                <p style="text-align:center; color:#555; padding:20px;">Seu carrinho está vazio.</p>
+            </div>
             <div class="cart-footer">
                 <div class="cart-total">
                     <span>Total:</span> <span id="valor-total">R$ 0,00</span>
@@ -787,14 +768,35 @@
 
     <div class="modal-overlay" id="modal-checkout" onclick="fecharSeClicarFora(event, 'modal-checkout')">
         <div class="modal-box">
-            <button class="fechar-modal" onclick="fecharModal('modal-checkout')">&times;</button>
+            <button class="fechar-modal" style="color: white; background: #000; top: 15px; right: 15px; z-index: 10;" onclick="fecharModal('modal-checkout')">&times;</button>
             <div class="loading-overlay" id="checkout-loader"><div class="spinner"></div></div>
             <iframe id="checkout-iframe" class="checkout-frame" src=""></iframe>
         </div>
     </div>
 
     <script>
-        // === CONFIGURAÇÃO E DADOS ===
+        // === TRAVA DE ZOOM E CLIQUES DUPLOS ===
+        document.addEventListener('dblclick', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+        
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            let now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+
+        document.addEventListener('touchmove', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+
+        // === CONFIGURAÇÃO DO SISTEMA ===
         const telefone = "5562996084455"; 
         let carrinho = [];
         let produtoAtual = {}; 
@@ -837,7 +839,6 @@
             const msgVazio = document.getElementById('msg-vazio');
             let visiveis = 0;
 
-            // Remove a classe ativo de todos os botões de filtro quando pesquisa
             if(termo !== '') {
                 document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
             }
@@ -863,7 +864,6 @@
             document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
             botaoClicado.classList.add('ativo');
             
-            // Limpa a pesquisa ao clicar numa aba
             document.getElementById('search-input').value = '';
             document.getElementById('search-bar').style.display = 'none';
             
@@ -890,7 +890,7 @@
             }
         }
 
-        // === DETALHES DO PRODUTO (INTELIGENTE) ===
+        // === DETALHES DO PRODUTO ===
         function abrirModalDetalhes(nome, preco, descricao, imagensInput, tipo) {
             if (Array.isArray(imagensInput)) {
                 imagensAtuais = imagensInput;
@@ -1028,19 +1028,15 @@
             const iframe = document.getElementById('checkout-iframe');
             const loader = document.getElementById('checkout-loader');
             
-            // Mostra o modal e o loader
             loader.style.display = 'flex';
             modalCheckout.style.display = 'flex';
             
-            // Carrega o link da Fortpay no iframe
             iframe.src = 'https://go.plataformafortpay.com.br/pbrzbbhtxp';
             
-            // Esconde o loader quando terminar de carregar a pagina do checkout
             iframe.onload = function() {
                 loader.style.display = 'none';
             };
             
-            // Limpa o carrinho
             carrinho = [];
             atualizarCarrinhoUI();
             fecharModal('modal-carrinho');
@@ -1074,7 +1070,6 @@
         
         function fecharModal(id) { 
             document.getElementById(id).style.display = 'none'; 
-            // Se fechou o modal de checkout, limpa o iframe para não ficar rodando de fundo
             if(id === 'modal-checkout') {
                 document.getElementById('checkout-iframe').src = '';
             }
