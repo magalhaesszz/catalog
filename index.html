@@ -364,7 +364,7 @@
         .cart-footer { padding: 25px; background: #1a1a1a; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 12px; }
         .cart-total { display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
         
-        /* BOTÃO PAGAR NO SITE (NOVO) */
+        /* BOTÃO PAGAR NO SITE */
         .btn-finalizar-site {
             width: 100%; background: linear-gradient(135deg, var(--pay-color), #059669); color: white;
             padding: 18px; border-radius: 15px; border: none;
@@ -375,7 +375,7 @@
         }
         .btn-finalizar-site:active { transform: scale(0.98); }
 
-        /* BOTÃO FINALIZAR WHATSAPP (MENOR E SECUNDÁRIO) */
+        /* BOTÃO FINALIZAR WHATSAPP */
         .btn-finalizar-whats {
             width: 100%; background: transparent; color: var(--zap-color);
             padding: 12px; border-radius: 15px; border: 1px solid var(--zap-color);
@@ -385,6 +385,45 @@
         }
         .btn-finalizar-whats:active { background: rgba(37, 211, 102, 0.1); }
 
+        /* === CHECKOUT EMBUTIDO (IFRAME) === */
+        #modal-checkout .modal-box {
+            max-width: 800px; /* Maior para caber o checkout inteiro */
+            height: 90vh;
+            border-radius: 25px 25px 0 0;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            background: #fff; /* Fundo branco para a loja encaixar bem */
+        }
+        @media (min-width: 600px) { #modal-checkout .modal-box { border-radius: 25px; height: 85vh; } }
+        
+        .checkout-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex-grow: 1;
+            border-radius: inherit;
+        }
+
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #121212; display: flex; align-items: center; justify-content: center;
+            z-index: 5; border-radius: inherit;
+        }
+
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1);
+            border-top-color: var(--pay-color); border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #modal-checkout .fechar-modal {
+            background: rgba(0,0,0,0.8);
+            color: #fff; top: 15px; right: 15px; z-index: 10;
+        }
+
+        /* Toast de sucesso */
         .toast {
             position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-100px);
             background: #fff; color: #000;
@@ -746,6 +785,14 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="modal-checkout" onclick="fecharSeClicarFora(event, 'modal-checkout')">
+        <div class="modal-box">
+            <button class="fechar-modal" onclick="fecharModal('modal-checkout')">&times;</button>
+            <div class="loading-overlay" id="checkout-loader"><div class="spinner"></div></div>
+            <iframe id="checkout-iframe" class="checkout-frame" src=""></iframe>
+        </div>
+    </div>
+
     <script>
         // === CONFIGURAÇÃO E DADOS ===
         const telefone = "5562996084455"; 
@@ -973,12 +1020,25 @@
             contador.style.display = qtdTotal > 0 ? 'flex' : 'none';
         }
 
-        // === PAGAMENTO DIRETO ===
+        // === PAGAMENTO DIRETO NO SITE (IFRAME) ===
         function irParaPagamento() {
             if (carrinho.length === 0) return alert("Adicione produtos primeiro!");
             
-            // Abre o checkout
-            window.open('https://go.plataformafortpay.com.br/pbrzbbhtxp', '_blank');
+            const modalCheckout = document.getElementById('modal-checkout');
+            const iframe = document.getElementById('checkout-iframe');
+            const loader = document.getElementById('checkout-loader');
+            
+            // Mostra o modal e o loader
+            loader.style.display = 'flex';
+            modalCheckout.style.display = 'flex';
+            
+            // Carrega o link da Fortpay no iframe
+            iframe.src = 'https://go.plataformafortpay.com.br/pbrzbbhtxp';
+            
+            // Esconde o loader quando terminar de carregar a pagina do checkout
+            iframe.onload = function() {
+                loader.style.display = 'none';
+            };
             
             // Limpa o carrinho
             carrinho = [];
@@ -1011,7 +1071,15 @@
 
         // === UTILITÁRIOS ===
         function abrirCarrinho() { document.getElementById('modal-carrinho').style.display = 'flex'; }
-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+        
+        function fecharModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            // Se fechou o modal de checkout, limpa o iframe para não ficar rodando de fundo
+            if(id === 'modal-checkout') {
+                document.getElementById('checkout-iframe').src = '';
+            }
+        }
+        
         function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
         
         function mostrarToast() {
