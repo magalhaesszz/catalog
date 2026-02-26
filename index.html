@@ -390,7 +390,7 @@
         }
         .btn-finalizar-whats:active { background: rgba(37, 211, 102, 0.1); }
 
-        /* === CHECKOUT EMBUTIDO (IFRAME) === */
+        /* === CHECKOUT EMBUTIDO (IFRAME) BLINDADO === */
         #modal-checkout .modal-box {
             max-width: 800px; 
             height: 90vh;
@@ -399,10 +399,18 @@
             flex-direction: column;
             padding: 0;
             background: #fff; 
+            touch-action: pan-y; /* Permite rolar a tela, mas bloqueia o movimento de pinça (zoom) */
         }
         @media (min-width: 600px) { #modal-checkout .modal-box { border-radius: 25px; height: 85vh; } }
         
-        .checkout-frame { width: 100%; height: 100%; border: none; flex-grow: 1; border-radius: inherit; }
+        .checkout-frame { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+            flex-grow: 1; 
+            border-radius: inherit; 
+            touch-action: pan-y; /* Extensão do bloqueio para o iframe */
+        }
         .loading-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #121212; display: flex; align-items: center; justify-content: center; z-index: 5; border-radius: inherit; }
         .spinner { width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-top-color: var(--pay-color); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -767,15 +775,15 @@
     </div>
 
     <div class="modal-overlay" id="modal-checkout" onclick="fecharSeClicarFora(event, 'modal-checkout')">
-        <div class="modal-box">
-            <button class="fechar-modal" style="color: white; background: #000; top: 15px; right: 15px; z-index: 10;" onclick="fecharModal('modal-checkout')">&times;</button>
+        <div class="modal-box" style="background: #fff; padding:0; display:flex; flex-direction:column; height:85vh; max-width:800px; border-radius:25px 25px 0 0;">
+            <button class="fechar-modal" style="color: white; background: rgba(0,0,0,0.8); top: 15px; right: 15px; z-index: 10;" onclick="fecharModal('modal-checkout')">&times;</button>
             <div class="loading-overlay" id="checkout-loader"><div class="spinner"></div></div>
             <iframe id="checkout-iframe" class="checkout-frame" src=""></iframe>
         </div>
     </div>
 
     <script>
-        // === TRAVA DE ZOOM E CLIQUES DUPLOS ===
+        // === TRAVA FORÇADA DE ZOOM PARA IOS/SAFARI ===
         document.addEventListener('dblclick', function(event) {
             event.preventDefault();
         }, { passive: false });
@@ -788,13 +796,6 @@
             }
             lastTouchEnd = now;
         }, { passive: false });
-
-        document.addEventListener('touchmove', function(event) {
-            if (event.touches.length > 1) {
-                event.preventDefault();
-            }
-        }, { passive: false });
-
 
         // === CONFIGURAÇÃO DO SISTEMA ===
         const telefone = "5562996084455"; 
