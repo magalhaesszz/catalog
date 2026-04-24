@@ -1,1006 +1,1511 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Canetas da Paz 🍁</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <style>
-        /* === TEMA ULTRA DARK === */
-        :root {
-            --bg-deep: #050505;
-            --glass-card: rgba(30, 30, 30, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            
-            /* Cores Neon */
-            --sativa: #f59e0b; /* Laranja */
-            --indica: #8b5cf6; /* Roxo */
-            --hibrida: #10b981; /* Verde */
-            --refil: #06b6d4;   /* Ciano */
-            --oleo: #eab308;    /* Dourado */
-            --pod: #d946ef;     /* Rosa Neon */
-            
-            --zap-color: #25d366;
-            --accent: #ffffff;
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        html, body {
-            touch-action: manipulation;
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0; padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            padding-bottom: 90px;
-            -webkit-user-select: none; user-select: none;
-        }
-
-        /* === BACKGROUND ANIMADO === */
-        .ambient-light {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .light-blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            animation: float 20s infinite ease-in-out alternate;
-        }
-
-        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: radial-gradient(#10b981, transparent 70%); }
-        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: radial-gradient(#8b5cf6, transparent 70%); animation-delay: -5s; }
-        .blob-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: radial-gradient(#f59e0b, transparent 70%); animation-delay: -10s; opacity: 0.2; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 50px) scale(1.1); }
-        }
-
-        /* === CABEÇALHO === */
-        header {
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 20px 0 10px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-        
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-bottom: 15px;
-            padding: 0 20px;
-        }
-
-        header h1 { 
-            margin: 0;
-            font-size: 1.4rem; 
-            font-weight: 900; 
-            text-align: center;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* BOTÃO DE PESQUISA */
-        .btn-search-toggle {
-            position: absolute;
-            right: 20px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--glass-border);
-            color: #fff;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-search-toggle:active { transform: scale(0.9); background: rgba(255,255,255,0.2); }
-
-        /* BARRA DE PESQUISA */
-        .search-container {
-            display: none; /* Oculto por padrão */
-            padding: 0 20px 15px;
-            animation: slideDown 0.3s ease-out;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        .search-input::placeholder { color: var(--text-muted); }
-        .search-input:focus { border-color: var(--hibrida); background: rgba(255,255,255,0.12); }
-
-        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
-
-
-        /* === FILTROS (Abas) === */
-        .filtros-container {
-            overflow-x: auto;
-            padding: 0 20px 5px;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-        .filtros-container::-webkit-scrollbar { display: none; }
-
-        .filtros { display: inline-flex; gap: 10px; }
-
-        .btn-filtro {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--text-muted);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-filtro.ativo {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        /* === GRADE PRODUTOS === */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
-            gap: 15px;
-        }
-
-        /* === CARD ANIMADO === */
-        .card {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            
-            /* Preparação para Animação de Scroll */
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Classe que o JS adiciona quando visível */
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card:active { transform: scale(0.96) !important; transition: transform 0.1s; }
-
-        .tag-tipo {
-            position: absolute; top: 12px; left: 12px;
-            font-size: 0.6rem; padding: 5px 10px; border-radius: 12px;
-            font-weight: 900; text-transform: uppercase; color: #000; z-index: 2;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            letter-spacing: 0.5px;
-        }
-
-        .card-img-box { height: 180px; width: 100%; position: relative; overflow: hidden; }
-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
-        
-        /* Zoom suave na imagem ao interagir */
-        .card:active .card-img-box img { transform: scale(1.1); }
-
-        .card-info { padding: 15px; backdrop-filter: blur(10px); }
-        .card-nome { 
-            font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; 
-            line-height: 1.4; color: #fff; 
-            height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-        }
-        
-        .card-preco { 
-            font-weight: 500; font-size: 1rem; color: #fff; 
-            display: flex; align-items: center; justify-content: space-between; 
-        }
-
-        .card-btn-add {
-            font-size: 0.9rem;
-            background: rgba(255,255,255,0.15);
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* === MENSAGEM VAZIO === */
-        .empty-message {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: none; /* Controlado via JS */
-            animation: fadeIn 0.5s;
-        }
-        .empty-message i { font-size: 2rem; margin-bottom: 10px; display: block; opacity: 0.5; }
-
-        /* === FLUTUANTES === */
-        .social-float {
-            position: fixed; bottom: 30px; left: 25px;
-            display: flex; flex-direction: column-reverse; gap: 15px; z-index: 900;
-        }
-
-        .btn-social {
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 1.4rem; text-decoration: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btn-social:active { transform: scale(0.9); }
-        .btn-insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
-        .btn-zap-contato { background-color: var(--zap-color); }
-
-        .btn-carrinho-float {
-            position: fixed; bottom: 30px; right: 25px;
-            background: #fff; color: #000;
-            width: 65px; height: 65px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 900;
-            cursor: pointer; transition: transform 0.3s;
-        }
-        .btn-carrinho-float:active { transform: scale(0.9); }
-
-        .contador-carrinho {
-            position: absolute; top: 0; right: 0;
-            background: #ef4444; color: white;
-            font-size: 0.75rem; font-weight: 800;
-            width: 22px; height: 22px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--bg-deep);
-        }
-
-        /* === MODAIS === */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.92); z-index: 2000;
-            align-items: end; justify-content: center; backdrop-filter: blur(10px);
-        }
-        
-        .modal-box {
-            background: #121212; width: 100%; max-width: 500px;
-            border-top-left-radius: 30px; border-top-right-radius: 30px;
-            overflow: hidden; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; max-height: 90vh; overflow-y: auto;
-            border: 1px solid var(--glass-border); border-bottom: none;
-        }
-
-        @media (min-width: 600px) { .modal-overlay { align-items: center; } .modal-box { border-radius: 30px; border: 1px solid var(--glass-border); } }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-        .modal-img-container { width: 100%; height: 350px; position: relative; background: #000; }
-        .modal-img-top { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
-        .modal-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, #121212, transparent); pointer-events: none; }
-
-        /* SETAS DE NAVEGAÇÃO */
-        .nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px);
-            color: white; border: none; width: 40px; height: 40px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; cursor: pointer; z-index: 20;
-            transition: background 0.3s;
-        }
-        .nav-btn:active { background: rgba(255,255,255,0.4); }
-        .nav-prev { left: 15px; }
-        .nav-next { right: 15px; }
-        
-        .img-counter {
-            position: absolute; bottom: 20px; right: 20px;
-            background: rgba(0,0,0,0.6); color: #fff;
-            padding: 4px 10px; border-radius: 12px;
-            font-size: 0.7rem; font-weight: 700; z-index: 20;
-        }
-
-        .modal-content { padding: 30px 25px; transform: translateY(-40px); position: relative; z-index: 5; }
-        
-        .modal-tag { 
-            display: inline-block; font-size: 0.7rem; font-weight: 900; 
-            padding: 6px 14px; border-radius: 20px; color: #000; margin-bottom: 12px; 
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        
-        .modal-titulo { font-size: 1.8rem; font-weight: 800; margin: 0 0 8px; line-height: 1.1; color: white; }
-        .modal-preco { font-size: 2rem; font-weight: 300; color: #fff; margin-bottom: 25px; display: block; }
-        .modal-desc { font-size: 0.95rem; color: #a1a1aa; line-height: 1.7; margin-bottom: 35px; font-weight: 400; }
-        
-        .btn-add-carrinho {
-            width: 100%; background: #fff; color: #000;
-            padding: 20px; border-radius: 18px; border: none;
-            font-weight: 800; font-size: 1rem; text-transform: uppercase;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-            letter-spacing: 1px; transition: transform 0.2s;
-        }
-        .btn-add-carrinho:active { transform: scale(0.98); }
-
-        .fechar-modal {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(0,0,0,0.6); border: none; width: 40px; height: 40px;
-            border-radius: 50%; color: #fff; font-size: 1.2rem; cursor: pointer; z-index: 30;
-            backdrop-filter: blur(5px);
-        }
-
-        /* Modal Carrinho Específico */
-        .cart-header { padding: 25px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; }
-        .cart-items-container { padding: 25px; max-height: 55vh; overflow-y: auto; }
-        .cart-item { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; margin-bottom: 12px; border: 1px solid var(--glass-border); }
-        .cart-item-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; }
-        .cart-item-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 5px; }
-        .cart-footer { padding: 25px; background: #1a1a1a; border-top: 1px solid var(--glass-border); }
-        
-        .btn-finalizar {
-            width: 100%; background: var(--zap-color); color: white;
-            padding: 20px; border-radius: 18px; border: none;
-            font-weight: 800; font-size: 1rem; text-transform: uppercase;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2);
-        }
-
-        .toast {
-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-100px);
-            background: #fff; color: #000;
-            padding: 15px 30px; border-radius: 40px; font-weight: 800; font-size: 0.9rem;
-            z-index: 3000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none;
-        }
-        .toast.show { transform: translateX(-50%) translateY(0); }
-
-    </style>
-</head>
-<body>
-
-    <div class="ambient-light">
-        <div class="light-blob blob-1"></div>
-        <div class="light-blob blob-2"></div>
-        <div class="light-blob blob-3"></div>
-    </div>
-
-    <div id="toast" class="toast"><i class="fas fa-check-circle" style="color:var(--hibrida)"></i> Adicionado ao Carrinho</div>
-
-    <header>
-        <div class="header-top">
-            <h1>Canetas da Paz 🍁</h1>
-            <button class="btn-search-toggle" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
-        </div>
-
-        <div id="search-bar" class="search-container">
-            <input type="text" id="search-input" class="search-input" placeholder="O que você procura?" onkeyup="filtrarPesquisa()">
-        </div>
-
-        <div class="filtros-container">
-            <div class="filtros">
-                <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
-                <button class="btn-filtro" onclick="filtrar('hibrida', this)">Híbrida</button>
-                <button class="btn-filtro" onclick="filtrar('indica', this)">Indica</button>
-                <button class="btn-filtro" onclick="filtrar('sativa', this)">Sativa</button>
-                <button class="btn-filtro" onclick="filtrar('refil', this)">Refil</button>
-                <button class="btn-filtro" onclick="filtrar('oleo', this)">Óleos</button>
-                <button class="btn-filtro" onclick="filtrar('pod', this)">PODS THC</button>
-            </div>
-        </div>
-    </header>
-
-    <div class="container" id="grade-produtos">
-        
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Strawberry Cheesecake (Indica)', 300.00, 'Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.', 'https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg"></div>
-            <div class="card-info"><div class="card-nome">Strawberry Cheesecake 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz - Skywalker OG (Indica)', 300.00, 'Vape descartável de 3g. Embalagem preta com três caixas. Clássico terroso e picante, relaxamento profundo.', 'https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg"></div>
-            <div class="card-info"><div class="card-nome">Skywalker OG</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Sour Diesel (Hybrid)', 300.00, 'Vape descartável de 3g. Embalagem azul ciano. Aroma de combustível e limão, energizante.', 'https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg"></div>
-            <div class="card-info"><div class="card-nome">Sour Diesel 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - White Fire OG (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa roxa com preto. Alta potência e efeito duradouro.', 'https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg"></div>
-            <div class="card-info"><div class="card-nome">White Fire OG 10g</div><div class="card-preco">R$ 450,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Purple Haze (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem roxa. Sabor doce de uva e terra, euforia mental.', 'https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg"></div>
-            <div class="card-info"><div class="card-nome">Purple Haze 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - Blackberry Moonrocks (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa azul petróleo/teal. Sabor de amora com potência extra.', 'https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg"></div>
-            <div class="card-info"><div class="card-nome">Blackberry Moonrocks 10g</div><div class="card-preco">R$ 450,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - Mimosa (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa verde clara/amarelada. Sabor cítrico de laranja e champanhe.', 'https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg"></div>
-            <div class="card-info"><div class="card-nome">Mimosa 10g</div><div class="card-preco">R$ 450,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Super Lemon Haze (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem verde. Sabor intenso de limão siciliano, efeito vibrante.', 'https://i.postimg.cc/D0Svtdht/IMG_2597.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/D0Svtdht/IMG_2597.jpg"></div>
-            <div class="card-info"><div class="card-nome">Super Lemon Haze 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Pineapple (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem laranja/marrom. Sabor tropical de abacaxi, levanta o humor.', 'https://i.postimg.cc/wM1qScHK/IMG_2595.jpg', 'pod')">
-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/wM1qScHK/IMG_2595.jpg"></div>
-            <div class="card-info"><div class="card-nome">Pineapple 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Blueberry Tornado', 190, 'Mistura potente com sabor intenso de mirtilo fresco.', 'https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Blueberry Tornado</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Cherry Punch', 190, 'Sabor doce de cereja e notas terrosas.', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Cherry Punch</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Mac & Cookies', 190, 'Fusão cremosa de notas amanteigadas.', 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Mac & Cookies</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Kush Mintz', 190, 'Perfil refrescante de menta com fundo terroso.', 'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Kush Mintz</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('GSC - Girl Scout Cookies', 190, 'Clássico absoluto com notas de menta.', 'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/fLP00rjv/IMG-2556.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice GSC</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Sugar Melon', 190, 'Sabor doce de melão maduro.', 'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Sugar Melon</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Lemon Drop', 190, 'Aroma cítrico e refrescante.', 'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg', 'hibrida')">
-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Lemon Drop</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Papaya | BabyJeeter 3G | THC 93,8%', 349.99, '', 'https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg"></div>
-            <div class="card-info"><div class="card-nome">Papaya | BabyJeeter 3G</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('OG Kush | BabyJeeter 3G | THC 93%', 349.99, '', 'https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg"></div>
-            <div class="card-info"><div class="card-nome">OG Kush | BabyJeeter 3G</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Jeeter Juice Liquid Diamonds - Goma Bubba 1g - INDICA', 199.99, '', 'https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg"></div>
-            <div class="card-info"><div class="card-nome">Liquid Diamonds Goma Bubba</div><div class="card-preco">R$ 199,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Ice Cream Banana', 190, 'Sobremesa pura. Cremosidade do sorvete.', ['https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg'], 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Ice Cream Banana</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Do-Si-Lato', 190, 'Combinação floral e de biscoito.', 'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/4db6kR7K/IMG-2522.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Do-Si-Lato</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Peach Rings', 190, 'Sabor nostálgico de balas de pêssego.', 'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Peach Rings</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Forbidden Gelato', 190, 'Mix exótico de frutas silvestres.', 'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Forbidden Gelato</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Harambe', 190, 'Perfil encorpado e potente.', 'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Harambe</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Churros', 190, 'Aroma de massa frita com açúcar e canela.', 'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/sgNymF1T/IMG-2526.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Churros</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Rainbow Belts', 190, 'Explosão de balas de goma ácidas.', 'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Rainbow Belts</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Blue Zkz', 190, 'Mistura rica de mirtilos e doces cítricos.', 'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg', 'indica')">
-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Blue Zkz</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Super Silver Haze', 190, 'Clássico premiado com aroma cítrico.', 'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg', 'sativa')">
-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Super Silver Haze</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Chocolope Cookies', 190, 'Mistura sofisticada de café e chocolate.', 'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg', 'sativa')">
-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Chocolope Cookies</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Durban Poison', 190, 'O espresso das Sativas.', 'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg', 'sativa')">
-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Durban Poison</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Maui Wowie', 190, 'Clássico havaiano com notas de abacaxi.', 'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg', 'sativa')">
-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Maui Wowie</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Honeydew', 190, 'Refrescante e leve, sabor melão doce.', 'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg', 'sativa')">
-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/d08KRhCB/IMG-2530.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter Juice Honeydew</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Jeeter - 5 Refil + Caneta | 5 un. 1ml - THC', 499.00, '', 'https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg"></div>
-            <div class="card-info"><div class="card-nome">Jeeter - 5 Refil + Caneta</div><div class="card-preco">R$ 499,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil Maui Wowie | Sativa | 98,4% - THC', 399.00, '', 'https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg"></div>
-            <div class="card-info"><div class="card-nome">Refil Maui Wowie</div><div class="card-preco">R$ 399,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil THC Bubba G | 1000mg | Concentrado', 149.99, '', 'https://i.postimg.cc/DySdJM3k/IMG-2580.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/DySdJM3k/IMG-2580.jpg"></div>
-            <div class="card-info"><div class="card-nome">Refil THC Bubba G</div><div class="card-preco">R$ 149,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('5G POD - BLUE DREAM - INDICA - THC', 399.99, '', 'https://i.postimg.cc/MZPmG84y/IMG-2579.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/MZPmG84y/IMG-2579.jpg"></div>
-            <div class="card-info"><div class="card-nome">5G POD - BLUE DREAM</div><div class="card-preco">R$ 399,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho de CBD Black Widow | 1g', 199.99, '', 'https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg"></div>
-            <div class="card-info"><div class="card-nome">Cartucho de CBD Black Widow | 1g</div><div class="card-preco">R$ 199,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Pink Kush High THC Cartridge | 1g', 299.99, '', 'https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg"></div>
-            <div class="card-info"><div class="card-nome">Pink Kush High THC Cartridge | 1g</div><div class="card-preco">R$ 299,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho Alien OG | 1,2g - THC', 239.99, '', 'https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg"></div>
-            <div class="card-info"><div class="card-nome">Cartucho Alien OG | 1,2g - THC</div><div class="card-preco">R$ 239,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Essência Mint Ice', 35, 'Sabor de menta extra forte. 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop', 'refil')">
-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
-            <div class="card-img-box"><img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop"></div>
-            <div class="card-info"><div class="card-nome">Essência Mint Ice</div><div class="card-preco" style="color:var(--refil)">R$ 35,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cartucho Atomizador de Cerâmica 1ml - THC', 39.99, '', ['https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg', 'https://i.postimg.cc/k2m8W4Hp/43320478_ce4b_4783_b97a_e656a035f2aa.jpg', 'https://i.postimg.cc/L8qTKg3R/6bc78dfe_2ac9_4b7c_8645_e9e7a65a531c.jpg'], 'oleo')">
-            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg"></div>
-            <div class="card-info"><div class="card-nome">Cartucho Atomizador de Cerâmica 1ml - THC</div><div class="card-preco">R$ 39,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cannabis Óleo Das Sementes - Gotas - THC', 249.99, '', 'https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg', 'oleo')">
-            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg"></div>
-            <div class="card-info"><div class="card-nome">Cannabis Óleo Das Sementes - Gotas - THC</div><div class="card-preco">R$ 249,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Óleo de CBD Delta-9 THC + CBD: Mix Definitivo', 349.99, '', 'https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg', 'oleo')">
-            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
-            <div class="card-img-box"><img src="https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg"></div>
-            <div class="card-info"><div class="card-nome">Óleo de CBD Delta-9 THC + CBD</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
-        </div>
-
-        <div id="msg-vazio" class="empty-message">
-            <i class="far fa-sad-tear"></i>
-            Nenhum produto encontrado nesta categoria.
-        </div>
-
-    </div>
-
-    <div class="social-float">
-        <a href="https://wa.me/5511995079212" target="_blank" class="btn-social btn-zap-contato"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.instagram.com/canetasdapaz?igsh=MWdhbXhmbmt3b2Z1eg==" target="_blank" class="btn-social btn-insta"><i class="fab fa-instagram"></i></a>
-    </div>
-
-    <div class="btn-carrinho-float" onclick="abrirCarrinho()">
-        <i class="fas fa-shopping-bag"></i>
-        <div class="contador-carrinho" id="cart-count" style="display:none">0</div>
-    </div>
-
-    <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
-        <div class="modal-box">
-            <button class="fechar-modal" onclick="fecharModal('modal-detalhes')">&times;</button>
-            <div class="modal-img-container">
-                <img src="" id="d-img" class="modal-img-top">
-                <div class="modal-gradient"></div>
-                <button class="nav-btn nav-prev" id="btn-prev" onclick="mudarImagem(-1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="nav-btn nav-next" id="btn-next" onclick="mudarImagem(1)"><i class="fas fa-chevron-right"></i></button>
-                <div class="img-counter" id="img-counter">1/1</div>
-            </div>
-            
-            <div class="modal-content">
-                <span id="d-tag" class="modal-tag">TIPO</span>
-                <h2 class="modal-titulo" id="d-nome">Nome</h2>
-                <span class="modal-preco" id="d-preco">R$ 0,00</span>
-                <p class="modal-desc" id="d-desc">Descrição.</p>
-                <button class="btn-add-carrinho" onclick="adicionarDoModal()">
-                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
-        <div class="modal-box">
-            <div class="cart-header">
-                <h2><i class="fas fa-shopping-bag"></i> Seu Carrinho</h2>
-                <button class="fechar-modal" style="position:static" onclick="fecharModal('modal-carrinho')">&times;</button>
-            </div>
-            <div class="cart-items-container" id="lista-itens"></div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <span>Total:</span> <span id="valor-total">R$ 0,00</span>
-                </div>
-                <button class="btn-finalizar" onclick="finalizarCompra()">
-                    <i class="fab fa-whatsapp"></i> Finalizar Pedido
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // === CONFIGURAÇÃO E DADOS ===
-        const telefone = "5511995079212"; 
-        let carrinho = [];
-        let produtoAtual = {}; 
-        
-        // Váriaveis do Slider
-        let imagensAtuais = [];
-        let indiceAtual = 0;
-
-        const cores = {
-            'sativa': '#f59e0b', 'indica': '#8b5cf6', 'hibrida': '#10b981', 'refil': '#06b6d4', 'oleo': '#eab308', 'pod': '#d946ef'
-        };
-
-        // === SCROLL REVEAL (ANIMAÇÃO AO ARRASTAR) ===
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        // Inicia observador nos cards
-        document.querySelectorAll('.card').forEach(card => observer.observe(card));
-
-        // === FILTRAGEM DE PRODUTOS ===
-        function filtrar(categoria, botaoClicado) {
-            document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
-            botaoClicado.classList.add('ativo');
-            
-            let visiveis = 0;
-            const cards = document.querySelectorAll('.card');
-            const msgVazio = document.getElementById('msg-vazio');
-
-            cards.forEach(card => {
-                card.classList.remove('visible'); // Reset animation
-                if (categoria === 'todos' || card.dataset.categoria === categoria) {
-                    card.style.display = 'block';
-                    visiveis++;
-                    setTimeout(() => card.classList.add('visible'), 50);
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            if (visiveis === 0) {
-                msgVazio.style.display = 'block';
-            } else {
-                msgVazio.style.display = 'none';
-            }
-        }
-
-        // === FUNÇÃO DE PESQUISA (NOVA) ===
-        function toggleSearch() {
-            const bar = document.getElementById('search-bar');
-            if (bar.style.display === 'block') {
-                bar.style.display = 'none';
-            } else {
-                bar.style.display = 'block';
-                document.getElementById('search-input').focus();
-            }
-        }
-
-        function filtrarPesquisa() {
-            const termo = document.getElementById('search-input').value.toLowerCase();
-            const cards = document.querySelectorAll('.card');
-            const msgVazio = document.getElementById('msg-vazio');
-            let visiveis = 0;
-
-            cards.forEach(card => {
-                const nome = card.querySelector('.card-nome').innerText.toLowerCase();
-                if (nome.includes(termo)) {
-                    card.style.display = 'block';
-                    visiveis++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Se não encontrar nada, mostra msg
-            if (visiveis === 0) {
-                msgVazio.style.display = 'block';
-                msgVazio.innerHTML = '<i class="far fa-sad-tear"></i> Nenhum produto encontrado com esse nome.';
-            } else {
-                msgVazio.style.display = 'none';
-            }
-        }
-
-        // === DETALHES DO PRODUTO (INTELIGENTE) ===
-        function abrirModalDetalhes(nome, preco, descricao, imagensInput, tipo) {
-            // Tratar imagens (pode ser string única ou array)
-            if (Array.isArray(imagensInput)) {
-                imagensAtuais = imagensInput;
-            } else {
-                imagensAtuais = [imagensInput];
-            }
-            indiceAtual = 0;
-
-            // Salvar para o carrinho (sempre usa a primeira imagem como thumb)
-            produtoAtual = { nome, preco, imagem: imagensAtuais[0], tipo };
-            
-            // Popula HTML básico
-            document.getElementById('d-nome').innerText = nome;
-            atualizarImagemModal(); // Função que gerencia a foto atual
-
-            // Lógica para esconder descrição se estiver vazia
-            const descEl = document.getElementById('d-desc');
-            if (descricao && descricao.trim() !== "") {
-                descEl.innerText = descricao;
-                descEl.style.display = "block";
-            } else {
-                descEl.style.display = "none";
-            }
-            
-            const precoFormatado = `R$ ${preco.toFixed(2).replace('.', ',')}`;
-            const precoEl = document.getElementById('d-preco');
-            precoEl.innerText = precoFormatado;
-            precoEl.style.color = cores[tipo] || '#fff';
-            
-            const tag = document.getElementById('d-tag');
-            tag.innerText = tipo;
-            tag.style.background = cores[tipo] || '#fff';
-
-            document.getElementById('modal-detalhes').style.display = 'flex';
-        }
-
-        // === LÓGICA DO SLIDER ===
-        function atualizarImagemModal() {
-            const imgEl = document.getElementById('d-img');
-            const btnPrev = document.getElementById('btn-prev');
-            const btnNext = document.getElementById('btn-next');
-            const counter = document.getElementById('img-counter');
-
-            // Define a imagem atual
-            imgEl.style.opacity = 0;
-            setTimeout(() => {
-                imgEl.src = imagensAtuais[indiceAtual];
-                imgEl.style.opacity = 1;
-            }, 150);
-
-            // Atualiza contador e botões
-            if (imagensAtuais.length > 1) {
-                btnPrev.style.display = 'flex';
-                btnNext.style.display = 'flex';
-                counter.style.display = 'block';
-                counter.innerText = `${indiceAtual + 1}/${imagensAtuais.length}`;
-            } else {
-                btnPrev.style.display = 'none';
-                btnNext.style.display = 'none';
-                counter.style.display = 'none';
-            }
-        }
-
-        function mudarImagem(direcao) {
-            indiceAtual += direcao;
-            // Loop infinito (se passar do fim volta pro inicio e vice-versa)
-            if (indiceAtual >= imagensAtuais.length) indiceAtual = 0;
-            if (indiceAtual < 0) indiceAtual = imagensAtuais.length - 1;
-            atualizarImagemModal();
-        }
-
-        function adicionarDoModal() {
-            adicionarAoCarrinho(produtoAtual.nome, produtoAtual.preco, produtoAtual.imagem);
-            fecharModal('modal-detalhes');
-        }
-
-        // === LÓGICA DO CARRINHO ===
-        function adicionarAoCarrinho(nome, preco, imagem) {
-            const itemExistente = carrinho.find(item => item.nome === nome);
-            if (itemExistente) {
-                itemExistente.qtd++;
-            } else {
-                carrinho.push({ nome, preco, imagem, qtd: 1 });
-            }
-            atualizarCarrinhoUI();
-            mostrarToast();
-        }
-
-        function removerItem(index) {
-            carrinho[index].qtd--;
-            if (carrinho[index].qtd <= 0) carrinho.splice(index, 1);
-            atualizarCarrinhoUI();
-        }
-
-        function aumentarItem(index) {
-            carrinho[index].qtd++;
-            atualizarCarrinhoUI();
-        }
-
-        function atualizarCarrinhoUI() {
-            const lista = document.getElementById('lista-itens');
-            const totalEl = document.getElementById('valor-total');
-            const contador = document.getElementById('cart-count');
-            
-            lista.innerHTML = '';
-            let total = 0;
-            let qtdTotal = 0;
-
-            if (carrinho.length === 0) {
-                lista.innerHTML = '<p style="text-align:center; color:#555; padding:20px;">Seu carrinho está vazio.</p>';
-            } else {
-                carrinho.forEach((item, index) => {
-                    total += item.preco * item.qtd;
-                    qtdTotal += item.qtd;
-                    lista.innerHTML += `
-                        <div class="cart-item">
-                            <img src="${item.imagem}" class="cart-item-img">
-                            <div style="flex:1">
-                                <span class="cart-item-title">${item.nome}</span>
-                                <span style="font-size:0.85rem; color:#ccc">R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
-                            </div>
-                            <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:20px">
-                                <i class="fas fa-minus" onclick="removerItem(${index})" style="cursor:pointer; font-size:0.8rem"></i>
-                                <span style="font-weight:bold">${item.qtd}</span>
-                                <i class="fas fa-plus" onclick="aumentarItem(${index})" style="cursor:pointer; font-size:0.8rem"></i>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            totalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            contador.innerText = qtdTotal;
-            contador.style.display = qtdTotal > 0 ? 'flex' : 'none';
-        }
-
-        function finalizarCompra() {
-            if (carrinho.length === 0) return alert("Adicione produtos primeiro!");
-
-            let mensagem = "*PEDIDO CANETAS DA PAZ 🍁*\n\n";
-            let total = 0;
-
-            carrinho.forEach(item => {
-                const subtotal = item.preco * item.qtd;
-                total += subtotal;
-                mensagem += `${item.qtd}x ${item.nome}\n(R$ ${subtotal.toFixed(2).replace('.', ',')})\n\n`;
-            });
-
-            mensagem += `*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-            
-            const link = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-            window.open(link, '_blank');
-
-            carrinho = [];
-            atualizarCarrinhoUI();
-            fecharModal('modal-carrinho');
-        }
-
-        // === UTILITÁRIOS ===
-        function abrirCarrinho() { document.getElementById('modal-carrinho').style.display = 'flex'; }
-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
-        function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
-        
-        function mostrarToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2000);
-        }
-    </script>
-</body>
-</html>
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/index.html b/index.html
+index c207f1b21a0cfd525127b94fe10cd070273ad839..f5e9e5db6554b1cf940cca085e040dcb1603e4cb 100644
+--- a/index.html
++++ b/index.html
+@@ -1,1006 +1,509 @@
+ <!DOCTYPE html>
+-<html lang="pt-br">
++<html lang="pt-BR">
+ <head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+-    <title>Canetas da Paz 🍁</title>
+-    
+-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+-    
+-    <style>
+-        /* === TEMA ULTRA DARK === */
+-        :root {
+-            --bg-deep: #050505;
+-            --glass-card: rgba(30, 30, 30, 0.4);
+-            --glass-border: rgba(255, 255, 255, 0.08);
+-            --text-main: #ffffff;
+-            --text-muted: #a1a1aa;
+-            
+-            /* Cores Neon */
+-            --sativa: #f59e0b; /* Laranja */
+-            --indica: #8b5cf6; /* Roxo */
+-            --hibrida: #10b981; /* Verde */
+-            --refil: #06b6d4;   /* Ciano */
+-            --oleo: #eab308;    /* Dourado */
+-            --pod: #d946ef;     /* Rosa Neon */
+-            
+-            --zap-color: #25d366;
+-            --accent: #ffffff;
+-        }
+-
+-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+-
+-        html, body {
+-            touch-action: manipulation;
+-            overflow-x: hidden;
+-            width: 100%;
+-            margin: 0; padding: 0;
+-            font-family: 'Montserrat', sans-serif;
+-            background-color: var(--bg-deep);
+-            color: var(--text-main);
+-            padding-bottom: 90px;
+-            -webkit-user-select: none; user-select: none;
+-        }
+-
+-        /* === BACKGROUND ANIMADO === */
+-        .ambient-light {
+-            position: fixed;
+-            top: 0; left: 0; width: 100%; height: 100%;
+-            overflow: hidden;
+-            z-index: -1;
+-            pointer-events: none;
+-        }
+-        
+-        .light-blob {
+-            position: absolute;
+-            border-radius: 50%;
+-            filter: blur(80px);
+-            opacity: 0.4;
+-            animation: float 20s infinite ease-in-out alternate;
+-        }
+-
+-        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: radial-gradient(#10b981, transparent 70%); }
+-        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: radial-gradient(#8b5cf6, transparent 70%); animation-delay: -5s; }
+-        .blob-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: radial-gradient(#f59e0b, transparent 70%); animation-delay: -10s; opacity: 0.2; }
+-
+-        @keyframes float {
+-            0% { transform: translate(0, 0) scale(1); }
+-            100% { transform: translate(30px, 50px) scale(1.1); }
+-        }
+-
+-        /* === CABEÇALHO === */
+-        header {
+-            background: rgba(5, 5, 5, 0.8);
+-            backdrop-filter: blur(20px);
+-            -webkit-backdrop-filter: blur(20px);
+-            padding: 20px 0 10px;
+-            position: sticky;
+-            top: 0;
+-            z-index: 100;
+-            border-bottom: 1px solid var(--glass-border);
+-            transition: all 0.3s ease;
+-        }
+-        
+-        .header-top {
+-            display: flex;
+-            align-items: center;
+-            justify-content: center;
+-            position: relative;
+-            margin-bottom: 15px;
+-            padding: 0 20px;
+-        }
+-
+-        header h1 { 
+-            margin: 0;
+-            font-size: 1.4rem; 
+-            font-weight: 900; 
+-            text-align: center;
+-            letter-spacing: 2px;
+-            text-transform: uppercase;
+-            background: linear-gradient(to right, #fff, #94a3b8);
+-            -webkit-background-clip: text;
+-            -webkit-text-fill-color: transparent;
+-        }
+-
+-        /* BOTÃO DE PESQUISA */
+-        .btn-search-toggle {
+-            position: absolute;
+-            right: 20px;
+-            background: rgba(255,255,255,0.1);
+-            border: 1px solid var(--glass-border);
+-            color: #fff;
+-            width: 40px; height: 40px;
+-            border-radius: 50%;
+-            display: flex; align-items: center; justify-content: center;
+-            font-size: 1.1rem;
+-            cursor: pointer;
+-            transition: all 0.3s;
+-        }
+-        .btn-search-toggle:active { transform: scale(0.9); background: rgba(255,255,255,0.2); }
+-
+-        /* BARRA DE PESQUISA */
+-        .search-container {
+-            display: none; /* Oculto por padrão */
+-            padding: 0 20px 15px;
+-            animation: slideDown 0.3s ease-out;
+-        }
+-        
+-        .search-input {
+-            width: 100%;
+-            padding: 12px 20px;
+-            border-radius: 25px;
+-            border: 1px solid var(--glass-border);
+-            background: rgba(255,255,255,0.08);
+-            color: #fff;
+-            font-family: 'Montserrat', sans-serif;
+-            font-size: 0.9rem;
+-            outline: none;
+-        }
+-        .search-input::placeholder { color: var(--text-muted); }
+-        .search-input:focus { border-color: var(--hibrida); background: rgba(255,255,255,0.12); }
+-
+-        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+-
+-
+-        /* === FILTROS (Abas) === */
+-        .filtros-container {
+-            overflow-x: auto;
+-            padding: 0 20px 5px;
+-            white-space: nowrap;
+-            -webkit-overflow-scrolling: touch;
+-            scrollbar-width: none;
+-        }
+-        .filtros-container::-webkit-scrollbar { display: none; }
+-
+-        .filtros { display: inline-flex; gap: 10px; }
+-
+-        .btn-filtro {
+-            background: rgba(255,255,255,0.05);
+-            border: 1px solid var(--glass-border);
+-            color: var(--text-muted);
+-            padding: 10px 20px;
+-            border-radius: 30px;
+-            font-size: 0.75rem;
+-            font-weight: 700;
+-            cursor: pointer;
+-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+-            text-transform: uppercase;
+-            letter-spacing: 1px;
+-        }
+-
+-        .btn-filtro.ativo {
+-            background: #fff;
+-            color: #000;
+-            border-color: #fff;
+-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+-            transform: scale(1.05);
+-        }
+-
+-        /* === GRADE PRODUTOS === */
+-        .container {
+-            max-width: 1200px;
+-            margin: 20px auto;
+-            padding: 0 15px;
+-            display: grid;
+-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+-            gap: 15px;
+-        }
+-
+-        /* === CARD ANIMADO === */
+-        .card {
+-            background: var(--glass-card);
+-            border: 1px solid var(--glass-border);
+-            border-radius: 20px;
+-            overflow: hidden;
+-            position: relative;
+-            
+-            /* Preparação para Animação de Scroll */
+-            opacity: 0;
+-            transform: translateY(30px);
+-            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+-        }
+-
+-        /* Classe que o JS adiciona quando visível */
+-        .card.visible {
+-            opacity: 1;
+-            transform: translateY(0);
+-        }
+-
+-        .card:active { transform: scale(0.96) !important; transition: transform 0.1s; }
+-
+-        .tag-tipo {
+-            position: absolute; top: 12px; left: 12px;
+-            font-size: 0.6rem; padding: 5px 10px; border-radius: 12px;
+-            font-weight: 900; text-transform: uppercase; color: #000; z-index: 2;
+-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+-            letter-spacing: 0.5px;
+-        }
+-
+-        .card-img-box { height: 180px; width: 100%; position: relative; overflow: hidden; }
+-        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+-        
+-        /* Zoom suave na imagem ao interagir */
+-        .card:active .card-img-box img { transform: scale(1.1); }
+-
+-        .card-info { padding: 15px; backdrop-filter: blur(10px); }
+-        .card-nome { 
+-            font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; 
+-            line-height: 1.4; color: #fff; 
+-            height: 38px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+-        }
+-        
+-        .card-preco { 
+-            font-weight: 500; font-size: 1rem; color: #fff; 
+-            display: flex; align-items: center; justify-content: space-between; 
+-        }
+-
+-        .card-btn-add {
+-            font-size: 0.9rem;
+-            background: rgba(255,255,255,0.15);
+-            width: 32px; height: 32px;
+-            border-radius: 50%;
+-            display: flex; align-items: center; justify-content: center;
+-            color: #fff;
+-            border: 1px solid rgba(255,255,255,0.1);
+-        }
+-
+-        /* === MENSAGEM VAZIO === */
+-        .empty-message {
+-            grid-column: 1 / -1;
+-            text-align: center;
+-            padding: 50px 20px;
+-            color: var(--text-muted);
+-            font-size: 0.9rem;
+-            display: none; /* Controlado via JS */
+-            animation: fadeIn 0.5s;
+-        }
+-        .empty-message i { font-size: 2rem; margin-bottom: 10px; display: block; opacity: 0.5; }
+-
+-        /* === FLUTUANTES === */
+-        .social-float {
+-            position: fixed; bottom: 30px; left: 25px;
+-            display: flex; flex-direction: column-reverse; gap: 15px; z-index: 900;
+-        }
+-
+-        .btn-social {
+-            width: 50px; height: 50px; border-radius: 50%;
+-            display: flex; align-items: center; justify-content: center;
+-            color: white; font-size: 1.4rem; text-decoration: none;
+-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+-            border: 1px solid rgba(255,255,255,0.1);
+-        }
+-        .btn-social:active { transform: scale(0.9); }
+-        .btn-insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+-        .btn-zap-contato { background-color: var(--zap-color); }
+-
+-        .btn-carrinho-float {
+-            position: fixed; bottom: 30px; right: 25px;
+-            background: #fff; color: #000;
+-            width: 65px; height: 65px; border-radius: 50%;
+-            display: flex; align-items: center; justify-content: center;
+-            font-size: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 900;
+-            cursor: pointer; transition: transform 0.3s;
+-        }
+-        .btn-carrinho-float:active { transform: scale(0.9); }
+-
+-        .contador-carrinho {
+-            position: absolute; top: 0; right: 0;
+-            background: #ef4444; color: white;
+-            font-size: 0.75rem; font-weight: 800;
+-            width: 22px; height: 22px; border-radius: 50%;
+-            display: flex; align-items: center; justify-content: center;
+-            border: 2px solid var(--bg-deep);
+-        }
+-
+-        /* === MODAIS === */
+-        .modal-overlay {
+-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+-            background: rgba(0, 0, 0, 0.92); z-index: 2000;
+-            align-items: end; justify-content: center; backdrop-filter: blur(10px);
+-        }
+-        
+-        .modal-box {
+-            background: #121212; width: 100%; max-width: 500px;
+-            border-top-left-radius: 30px; border-top-right-radius: 30px;
+-            overflow: hidden; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+-            position: relative; max-height: 90vh; overflow-y: auto;
+-            border: 1px solid var(--glass-border); border-bottom: none;
+-        }
+-
+-        @media (min-width: 600px) { .modal-overlay { align-items: center; } .modal-box { border-radius: 30px; border: 1px solid var(--glass-border); } }
+-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+-
+-        .modal-img-container { width: 100%; height: 350px; position: relative; background: #000; }
+-        .modal-img-top { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
+-        .modal-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, #121212, transparent); pointer-events: none; }
+-
+-        /* SETAS DE NAVEGAÇÃO */
+-        .nav-btn {
+-            position: absolute; top: 50%; transform: translateY(-50%);
+-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px);
+-            color: white; border: none; width: 40px; height: 40px; border-radius: 50%;
+-            display: flex; align-items: center; justify-content: center;
+-            font-size: 1.2rem; cursor: pointer; z-index: 20;
+-            transition: background 0.3s;
+-        }
+-        .nav-btn:active { background: rgba(255,255,255,0.4); }
+-        .nav-prev { left: 15px; }
+-        .nav-next { right: 15px; }
+-        
+-        .img-counter {
+-            position: absolute; bottom: 20px; right: 20px;
+-            background: rgba(0,0,0,0.6); color: #fff;
+-            padding: 4px 10px; border-radius: 12px;
+-            font-size: 0.7rem; font-weight: 700; z-index: 20;
+-        }
+-
+-        .modal-content { padding: 30px 25px; transform: translateY(-40px); position: relative; z-index: 5; }
+-        
+-        .modal-tag { 
+-            display: inline-block; font-size: 0.7rem; font-weight: 900; 
+-            padding: 6px 14px; border-radius: 20px; color: #000; margin-bottom: 12px; 
+-            text-transform: uppercase; letter-spacing: 1px;
+-        }
+-        
+-        .modal-titulo { font-size: 1.8rem; font-weight: 800; margin: 0 0 8px; line-height: 1.1; color: white; }
+-        .modal-preco { font-size: 2rem; font-weight: 300; color: #fff; margin-bottom: 25px; display: block; }
+-        .modal-desc { font-size: 0.95rem; color: #a1a1aa; line-height: 1.7; margin-bottom: 35px; font-weight: 400; }
+-        
+-        .btn-add-carrinho {
+-            width: 100%; background: #fff; color: #000;
+-            padding: 20px; border-radius: 18px; border: none;
+-            font-weight: 800; font-size: 1rem; text-transform: uppercase;
+-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+-            letter-spacing: 1px; transition: transform 0.2s;
+-        }
+-        .btn-add-carrinho:active { transform: scale(0.98); }
+-
+-        .fechar-modal {
+-            position: absolute; top: 20px; right: 20px;
+-            background: rgba(0,0,0,0.6); border: none; width: 40px; height: 40px;
+-            border-radius: 50%; color: #fff; font-size: 1.2rem; cursor: pointer; z-index: 30;
+-            backdrop-filter: blur(5px);
+-        }
+-
+-        /* Modal Carrinho Específico */
+-        .cart-header { padding: 25px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; }
+-        .cart-items-container { padding: 25px; max-height: 55vh; overflow-y: auto; }
+-        .cart-item { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; margin-bottom: 12px; border: 1px solid var(--glass-border); }
+-        .cart-item-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; }
+-        .cart-item-title { font-weight: 700; font-size: 0.9rem; display: block; margin-bottom: 5px; }
+-        .cart-footer { padding: 25px; background: #1a1a1a; border-top: 1px solid var(--glass-border); }
+-        
+-        .btn-finalizar {
+-            width: 100%; background: var(--zap-color); color: white;
+-            padding: 20px; border-radius: 18px; border: none;
+-            font-weight: 800; font-size: 1rem; text-transform: uppercase;
+-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2);
+-        }
+-
+-        .toast {
+-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-100px);
+-            background: #fff; color: #000;
+-            padding: 15px 30px; border-radius: 40px; font-weight: 800; font-size: 0.9rem;
+-            z-index: 3000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none;
+-        }
+-        .toast.show { transform: translateX(-50%) translateY(0); }
+-
+-    </style>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Canetas da Paz | Catálogo Premium</title>
++  <link rel="preconnect" href="https://fonts.googleapis.com">
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
++  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
++  <style>
++    :root {
++      --bg: #05070f;
++      --panel: rgba(16, 20, 33, 0.7);
++      --soft: rgba(255, 255, 255, 0.08);
++      --line: rgba(255, 255, 255, 0.14);
++      --txt: #f6f7fb;
++      --muted: #9ca3b3;
++      --accent: #7c5cff;
++      --accent-2: #00d4ff;
++      --ok: #22c55e;
++      --warn: #f59e0b;
++      --danger: #ef4444;
++    }
++
++    body[data-theme="light"] {
++      --bg: #f4f7ff;
++      --panel: rgba(255, 255, 255, 0.8);
++      --soft: rgba(15, 23, 42, 0.06);
++      --line: rgba(15, 23, 42, 0.12);
++      --txt: #0f172a;
++      --muted: #475569;
++      --accent: #5b21b6;
++      --accent-2: #0284c7;
++    }
++
++    * { box-sizing: border-box; }
++    body {
++      margin: 0;
++      font-family: "Inter", sans-serif;
++      background:
++        radial-gradient(circle at 10% 10%, rgba(124, 92, 255, 0.25), transparent 30%),
++        radial-gradient(circle at 90% 0%, rgba(0, 212, 255, 0.2), transparent 22%),
++        var(--bg);
++      color: var(--txt);
++      min-height: 100vh;
++    }
++
++    .wrap { max-width: 1220px; margin: 0 auto; padding: 1.2rem; }
++
++    .top {
++      position: sticky;
++      top: 0;
++      z-index: 50;
++      backdrop-filter: blur(14px);
++      background: color-mix(in srgb, var(--bg), transparent 24%);
++      border-bottom: 1px solid var(--line);
++    }
++
++    .top-row { display: flex; gap: 1rem; align-items: center; justify-content: space-between; }
++    .brand h1 { margin: 0; font-size: 1.3rem; }
++    .brand p { margin: .3rem 0 0; font-size: .88rem; color: var(--muted); }
++
++    .toolbar { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
++    .btn {
++      border: 1px solid var(--line);
++      background: var(--panel);
++      color: var(--txt);
++      border-radius: 12px;
++      padding: .62rem .85rem;
++      cursor: pointer;
++      font-weight: 600;
++    }
++    .btn:hover { border-color: var(--accent-2); }
++
++    .controls {
++      margin-top: 1rem;
++      display: grid;
++      grid-template-columns: 1.8fr 1fr 1fr;
++      gap: .7rem;
++    }
++
++    .field, select {
++      width: 100%;
++      border-radius: 12px;
++      border: 1px solid var(--line);
++      padding: .8rem .9rem;
++      color: var(--txt);
++      background: var(--panel);
++      outline: none;
++    }
++
++    .chips { display: flex; gap: .55rem; flex-wrap: wrap; margin: .9rem 0 .4rem; }
++    .chip {
++      border: 1px solid var(--line);
++      padding: .46rem .76rem;
++      border-radius: 999px;
++      cursor: pointer;
++      background: var(--soft);
++      color: var(--muted);
++      font-size: .82rem;
++      font-weight: 700;
++      text-transform: uppercase;
++      letter-spacing: .02em;
++    }
++    .chip.active { background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: white; border: none; }
++
++    .stats {
++      display: grid;
++      grid-template-columns: repeat(4, 1fr);
++      gap: .7rem;
++      margin: 1rem 0 1.2rem;
++    }
++    .stat {
++      border: 1px solid var(--line);
++      background: var(--panel);
++      border-radius: 16px;
++      padding: .8rem;
++    }
++    .stat small { color: var(--muted); display: block; margin-bottom: .25rem; }
++    .stat strong { font-size: 1.15rem; }
++
++    .grid {
++      display: grid;
++      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
++      gap: .85rem;
++      padding-bottom: 8rem;
++    }
++
++    .card {
++      border: 1px solid var(--line);
++      background: var(--panel);
++      border-radius: 18px;
++      overflow: hidden;
++      transition: transform .25s ease;
++      display: flex;
++      flex-direction: column;
++    }
++    .card:hover { transform: translateY(-4px); }
++
++    .image { position: relative; height: 170px; }
++    .image img { width: 100%; height: 100%; object-fit: cover; }
++    .tag {
++      position: absolute; left: .65rem; top: .65rem;
++      background: rgba(0, 0, 0, 0.65);
++      color: white;
++      font-weight: 700;
++      font-size: .74rem;
++      padding: .3rem .5rem;
++      border-radius: 999px;
++      text-transform: capitalize;
++    }
++
++    .fav {
++      position: absolute; right: .65rem; top: .65rem;
++      width: 34px; height: 34px; border-radius: 50%;
++      display: grid; place-items: center;
++      background: rgba(0,0,0,.55); color: white;
++      cursor: pointer; border: 1px solid rgba(255,255,255,.2);
++    }
++    .fav.active { color: #ff5678; }
++
++    .body { padding: .8rem .8rem 1rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
++    .title { font-weight: 700; min-height: 42px; }
++    .desc { color: var(--muted); font-size: .85rem; min-height: 38px; }
++    .row { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
++    .price { font-weight: 800; font-size: 1.02rem; }
++
++    .cta {
++      border: none; background: linear-gradient(130deg, var(--accent), var(--accent-2)); color: white;
++      border-radius: 10px; font-weight: 700; padding: .55rem .7rem; cursor: pointer;
++    }
++
++    .float-cart {
++      position: fixed;
++      right: 1rem;
++      bottom: 1rem;
++      z-index: 80;
++      width: 64px;
++      height: 64px;
++      border-radius: 50%;
++      border: none;
++      background: #111827;
++      color: white;
++      box-shadow: 0 14px 30px rgba(0,0,0,.38);
++      cursor: pointer;
++    }
++    .count {
++      position: absolute; top: -4px; right: -4px;
++      width: 22px; height: 22px; border-radius: 50%;
++      background: var(--danger); color: white; font-size: .75rem; font-weight: 700;
++      display: grid; place-items: center;
++    }
++
++    dialog {
++      border: 1px solid var(--line);
++      border-radius: 18px;
++      width: min(580px, 95vw);
++      background: color-mix(in srgb, var(--bg), black 10%);
++      color: var(--txt);
++      padding: 0;
++    }
++    dialog::backdrop { background: rgba(0,0,0,.66); }
++    .modal-head, .modal-body, .modal-foot { padding: .9rem 1rem; }
++    .modal-head { border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
++    .modal-body { max-height: 60vh; overflow: auto; }
++    .cart-line { display: grid; grid-template-columns: 1fr auto auto; gap: .55rem; align-items: center; padding: .55rem 0; border-bottom: 1px dashed var(--line); }
++    .qty-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--soft); color: var(--txt); }
++    .wa-btn { width: 100%; border: none; border-radius: 12px; padding: .86rem; background: var(--ok); color: #06210f; font-weight: 800; cursor: pointer; }
++    .empty { color: var(--muted); text-align: center; padding: 2rem 0; }
++
++    .toast {
++      position: fixed; left: 50%; transform: translateX(-50%);
++      bottom: 1rem; z-index: 90;
++      background: #111827; color: white;
++      border: 1px solid #2a3246;
++      border-radius: 999px; padding: .6rem 1rem;
++      opacity: 0; pointer-events: none;
++      transition: opacity .25s ease;
++    }
++    .toast.show { opacity: 1; }
++
++    @media (max-width: 780px) {
++      .controls { grid-template-columns: 1fr; }
++      .stats { grid-template-columns: repeat(2, 1fr); }
++    }
++  </style>
+ </head>
+ <body>
+-
+-    <div class="ambient-light">
+-        <div class="light-blob blob-1"></div>
+-        <div class="light-blob blob-2"></div>
+-        <div class="light-blob blob-3"></div>
++  <header class="top">
++    <div class="wrap">
++      <div class="top-row">
++        <div class="brand">
++          <h1>Canetas da Paz 🍁</h1>
++          <p>Catálogo premium · visual novo · compras rápidas no WhatsApp.</p>
++        </div>
++        <div class="toolbar">
++          <button class="btn" id="themeBtn"><i class="fa-solid fa-moon"></i> Tema</button>
++          <button class="btn" id="onlyFavBtn"><i class="fa-regular fa-heart"></i> Favoritos</button>
++        </div>
++      </div>
++      <div class="controls">
++        <input class="field" id="search" placeholder="Buscar por nome, sabor ou categoria..." />
++        <select id="sort">
++          <option value="relevance">Ordenar: Relevância</option>
++          <option value="price-asc">Menor preço</option>
++          <option value="price-desc">Maior preço</option>
++          <option value="name">A-Z</option>
++        </select>
++        <input class="field" id="budget" type="number" min="0" placeholder="Preço máximo (R$)" />
++      </div>
++      <div class="chips" id="chips"></div>
+     </div>
+-
+-    <div id="toast" class="toast"><i class="fas fa-check-circle" style="color:var(--hibrida)"></i> Adicionado ao Carrinho</div>
+-
+-    <header>
+-        <div class="header-top">
+-            <h1>Canetas da Paz 🍁</h1>
+-            <button class="btn-search-toggle" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
+-        </div>
+-
+-        <div id="search-bar" class="search-container">
+-            <input type="text" id="search-input" class="search-input" placeholder="O que você procura?" onkeyup="filtrarPesquisa()">
+-        </div>
+-
+-        <div class="filtros-container">
+-            <div class="filtros">
+-                <button class="btn-filtro ativo" onclick="filtrar('todos', this)">Todos</button>
+-                <button class="btn-filtro" onclick="filtrar('hibrida', this)">Híbrida</button>
+-                <button class="btn-filtro" onclick="filtrar('indica', this)">Indica</button>
+-                <button class="btn-filtro" onclick="filtrar('sativa', this)">Sativa</button>
+-                <button class="btn-filtro" onclick="filtrar('refil', this)">Refil</button>
+-                <button class="btn-filtro" onclick="filtrar('oleo', this)">Óleos</button>
+-                <button class="btn-filtro" onclick="filtrar('pod', this)">PODS THC</button>
+-            </div>
+-        </div>
+-    </header>
+-
+-    <div class="container" id="grade-produtos">
+-        
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Strawberry Cheesecake (Indica)', 300.00, 'Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.', 'https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Strawberry Cheesecake 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz - Skywalker OG (Indica)', 300.00, 'Vape descartável de 3g. Embalagem preta com três caixas. Clássico terroso e picante, relaxamento profundo.', 'https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Skywalker OG</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Sour Diesel (Hybrid)', 300.00, 'Vape descartável de 3g. Embalagem azul ciano. Aroma de combustível e limão, energizante.', 'https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Sour Diesel 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - White Fire OG (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa roxa com preto. Alta potência e efeito duradouro.', 'https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg"></div>
+-            <div class="card-info"><div class="card-nome">White Fire OG 10g</div><div class="card-preco">R$ 450,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Purple Haze (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem roxa. Sabor doce de uva e terra, euforia mental.', 'https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Purple Haze 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - Blackberry Moonrocks (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa azul petróleo/teal. Sabor de amora com potência extra.', 'https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Blackberry Moonrocks 10g</div><div class="card-preco">R$ 450,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - Mimosa (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa verde clara/amarelada. Sabor cítrico de laranja e champanhe.', 'https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Mimosa 10g</div><div class="card-preco">R$ 450,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Super Lemon Haze (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem verde. Sabor intenso de limão siciliano, efeito vibrante.', 'https://i.postimg.cc/D0Svtdht/IMG_2597.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/D0Svtdht/IMG_2597.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Super Lemon Haze 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Pineapple (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem laranja/marrom. Sabor tropical de abacaxi, levanta o humor.', 'https://i.postimg.cc/wM1qScHK/IMG_2595.jpg', 'pod')">
+-            <span class="tag-tipo" style="background:var(--pod)">POD THC</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/wM1qScHK/IMG_2595.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Pineapple 3.0</div><div class="card-preco">R$ 300,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Blueberry Tornado', 190, 'Mistura potente com sabor intenso de mirtilo fresco.', 'https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Blueberry Tornado</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Cherry Punch', 190, 'Sabor doce de cereja e notas terrosas.', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Cherry Punch</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Mac & Cookies', 190, 'Fusão cremosa de notas amanteigadas.', 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Mac & Cookies</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Kush Mintz', 190, 'Perfil refrescante de menta com fundo terroso.', 'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Kush Mintz</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('GSC - Girl Scout Cookies', 190, 'Clássico absoluto com notas de menta.', 'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/fLP00rjv/IMG-2556.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice GSC</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Sugar Melon', 190, 'Sabor doce de melão maduro.', 'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Sugar Melon</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Lemon Drop', 190, 'Aroma cítrico e refrescante.', 'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg', 'hibrida')">
+-            <span class="tag-tipo" style="background:var(--hibrida)">Hybrid</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Lemon Drop</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Papaya | BabyJeeter 3G | THC 93,8%', 349.99, '', 'https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Papaya | BabyJeeter 3G</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('OG Kush | BabyJeeter 3G | THC 93%', 349.99, '', 'https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg"></div>
+-            <div class="card-info"><div class="card-nome">OG Kush | BabyJeeter 3G</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Jeeter Juice Liquid Diamonds - Goma Bubba 1g - INDICA', 199.99, '', 'https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Liquid Diamonds Goma Bubba</div><div class="card-preco">R$ 199,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Ice Cream Banana', 190, 'Sobremesa pura. Cremosidade do sorvete.', ['https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg'], 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Ice Cream Banana</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Do-Si-Lato', 190, 'Combinação floral e de biscoito.', 'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/4db6kR7K/IMG-2522.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Do-Si-Lato</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Peach Rings', 190, 'Sabor nostálgico de balas de pêssego.', 'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Peach Rings</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Forbidden Gelato', 190, 'Mix exótico de frutas silvestres.', 'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Forbidden Gelato</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Harambe', 190, 'Perfil encorpado e potente.', 'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Harambe</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Churros', 190, 'Aroma de massa frita com açúcar e canela.', 'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/sgNymF1T/IMG-2526.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Churros</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Rainbow Belts', 190, 'Explosão de balas de goma ácidas.', 'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Rainbow Belts</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Blue Zkz', 190, 'Mistura rica de mirtilos e doces cítricos.', 'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg', 'indica')">
+-            <span class="tag-tipo" style="background:var(--indica)">Indica</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Blue Zkz</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Super Silver Haze', 190, 'Clássico premiado com aroma cítrico.', 'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg', 'sativa')">
+-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Super Silver Haze</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Chocolope Cookies', 190, 'Mistura sofisticada de café e chocolate.', 'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg', 'sativa')">
+-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Chocolope Cookies</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Durban Poison', 190, 'O espresso das Sativas.', 'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg', 'sativa')">
+-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Durban Poison</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Maui Wowie', 190, 'Clássico havaiano com notas de abacaxi.', 'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg', 'sativa')">
+-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Maui Wowie</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Honeydew', 190, 'Refrescante e leve, sabor melão doce.', 'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg', 'sativa')">
+-            <span class="tag-tipo" style="background:var(--sativa)">Sativa</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/d08KRhCB/IMG-2530.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter Juice Honeydew</div><div class="card-preco">R$ 190,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Jeeter - 5 Refil + Caneta | 5 un. 1ml - THC', 499.00, '', 'https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Jeeter - 5 Refil + Caneta</div><div class="card-preco">R$ 499,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil Maui Wowie | Sativa | 98,4% - THC', 399.00, '', 'https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Refil Maui Wowie</div><div class="card-preco">R$ 399,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil THC Bubba G | 1000mg | Concentrado', 149.99, '', 'https://i.postimg.cc/DySdJM3k/IMG-2580.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/DySdJM3k/IMG-2580.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Refil THC Bubba G</div><div class="card-preco">R$ 149,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('5G POD - BLUE DREAM - INDICA - THC', 399.99, '', 'https://i.postimg.cc/MZPmG84y/IMG-2579.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/MZPmG84y/IMG-2579.jpg"></div>
+-            <div class="card-info"><div class="card-nome">5G POD - BLUE DREAM</div><div class="card-preco">R$ 399,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho de CBD Black Widow | 1g', 199.99, '', 'https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Cartucho de CBD Black Widow | 1g</div><div class="card-preco">R$ 199,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Pink Kush High THC Cartridge | 1g', 299.99, '', 'https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Pink Kush High THC Cartridge | 1g</div><div class="card-preco">R$ 299,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho Alien OG | 1,2g - THC', 239.99, '', 'https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Cartucho Alien OG | 1,2g - THC</div><div class="card-preco">R$ 239,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Essência Mint Ice', 35, 'Sabor de menta extra forte. 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop', 'refil')">
+-            <span class="tag-tipo" style="background:var(--refil)">Refil</span>
+-            <div class="card-img-box"><img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop"></div>
+-            <div class="card-info"><div class="card-nome">Essência Mint Ice</div><div class="card-preco" style="color:var(--refil)">R$ 35,00 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cartucho Atomizador de Cerâmica 1ml - THC', 39.99, '', ['https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg', 'https://i.postimg.cc/k2m8W4Hp/43320478_ce4b_4783_b97a_e656a035f2aa.jpg', 'https://i.postimg.cc/L8qTKg3R/6bc78dfe_2ac9_4b7c_8645_e9e7a65a531c.jpg'], 'oleo')">
+-            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Cartucho Atomizador de Cerâmica 1ml - THC</div><div class="card-preco">R$ 39,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cannabis Óleo Das Sementes - Gotas - THC', 249.99, '', 'https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg', 'oleo')">
+-            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Cannabis Óleo Das Sementes - Gotas - THC</div><div class="card-preco">R$ 249,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Óleo de CBD Delta-9 THC + CBD: Mix Definitivo', 349.99, '', 'https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg', 'oleo')">
+-            <span class="tag-tipo" style="background:var(--oleo)">Óleo</span>
+-            <div class="card-img-box"><img src="https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg"></div>
+-            <div class="card-info"><div class="card-nome">Óleo de CBD Delta-9 THC + CBD</div><div class="card-preco">R$ 349,99 <span class="card-btn-add"><i class="fas fa-plus"></i></span></div></div>
+-        </div>
+-
+-        <div id="msg-vazio" class="empty-message">
+-            <i class="far fa-sad-tear"></i>
+-            Nenhum produto encontrado nesta categoria.
+-        </div>
+-
++  </header>
++
++  <main class="wrap">
++    <section class="stats" id="stats"></section>
++    <section class="grid" id="grid"></section>
++  </main>
++
++  <button class="float-cart" id="openCart" aria-label="Abrir carrinho">
++    <i class="fa-solid fa-cart-shopping"></i>
++    <span class="count" id="cartCount">0</span>
++  </button>
++
++  <dialog id="cartModal">
++    <div class="modal-head">
++      <strong>Seu carrinho</strong>
++      <button class="btn" id="closeCart">Fechar</button>
+     </div>
+-
+-    <div class="social-float">
+-        <a href="https://wa.me/5511995079212" target="_blank" class="btn-social btn-zap-contato"><i class="fab fa-whatsapp"></i></a>
+-        <a href="https://www.instagram.com/canetasdapaz?igsh=MWdhbXhmbmt3b2Z1eg==" target="_blank" class="btn-social btn-insta"><i class="fab fa-instagram"></i></a>
++    <div class="modal-body" id="cartBody"></div>
++    <div class="modal-foot">
++      <p><strong>Total:</strong> <span id="cartTotal">R$ 0,00</span></p>
++      <button class="wa-btn" id="checkoutBtn"><i class="fa-brands fa-whatsapp"></i> Finalizar pedido</button>
+     </div>
+-
+-    <div class="btn-carrinho-float" onclick="abrirCarrinho()">
+-        <i class="fas fa-shopping-bag"></i>
+-        <div class="contador-carrinho" id="cart-count" style="display:none">0</div>
+-    </div>
+-
+-    <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
+-        <div class="modal-box">
+-            <button class="fechar-modal" onclick="fecharModal('modal-detalhes')">&times;</button>
+-            <div class="modal-img-container">
+-                <img src="" id="d-img" class="modal-img-top">
+-                <div class="modal-gradient"></div>
+-                <button class="nav-btn nav-prev" id="btn-prev" onclick="mudarImagem(-1)"><i class="fas fa-chevron-left"></i></button>
+-                <button class="nav-btn nav-next" id="btn-next" onclick="mudarImagem(1)"><i class="fas fa-chevron-right"></i></button>
+-                <div class="img-counter" id="img-counter">1/1</div>
++  </dialog>
++
++  <div class="toast" id="toast"></div>
++
++  <script>
++    const whatsappNumber = "5599999999999";
++    const products = [
++      { id: 1, name: "Strawberry Cheesecake 3.0", category: "pod", subtype: "indica", price: 300, flavor: "morango", image: "https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg", desc: "Vape descartável com perfil doce e cremoso." },
++      { id: 2, name: "Sour Diesel 3.0", category: "pod", subtype: "hibrida", price: 300, flavor: "diesel", image: "https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg", desc: "Energizante, cítrico e muito aromático." },
++      { id: 3, name: "White Fire OG 10g", category: "pod", subtype: "sativa", price: 450, flavor: "herbal", image: "https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg", desc: "Tank 10g para quem quer alto rendimento." },
++      { id: 4, name: "Purple Haze 3.0", category: "pod", subtype: "sativa", price: 300, flavor: "uva", image: "https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg", desc: "Euforia mental com toque adocicado." },
++      { id: 5, name: "Jeeter Blueberry Tornado", category: "hibrida", subtype: "hibrida", price: 190, flavor: "mirtilo", image: "https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg", desc: "Mistura potente e sabor de mirtilo fresco." },
++      { id: 6, name: "Jeeter Cherry Punch", category: "hibrida", subtype: "hibrida", price: 190, flavor: "cereja", image: "https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg", desc: "Doce com fundo terroso equilibrado." },
++      { id: 7, name: "Jeeter Kush Mintz", category: "hibrida", subtype: "indica", price: 190, flavor: "menta", image: "https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg", desc: "Refrescante e denso, para relaxar." },
++      { id: 8, name: "Óleo Premium 1ml", category: "oleo", subtype: "indica", price: 160, flavor: "natural", image: "https://images.unsplash.com/photo-1615485737571-27f4f1f76cf0?auto=format&fit=crop&w=800&q=60", desc: "Óleo concentrado com alta pureza." },
++      { id: 9, name: "Refil Citrus Blast", category: "refil", subtype: "sativa", price: 130, flavor: "cítrico", image: "https://images.unsplash.com/photo-1631545806522-f87443d4b364?auto=format&fit=crop&w=800&q=60", desc: "Refil de reposição com pegada cítrica." },
++      { id: 10, name: "Caneta Sativa Gold", category: "sativa", subtype: "sativa", price: 210, flavor: "limão", image: "https://images.unsplash.com/photo-1609519426886-cfcb6d6f56be?auto=format&fit=crop&w=800&q=60", desc: "Leve, criativa e ideal para o dia." }
++    ];
++
++    const state = {
++      category: "todos",
++      search: "",
++      sort: "relevance",
++      budget: null,
++      onlyFav: false,
++      cart: JSON.parse(localStorage.getItem("cart_v2") || "{}"),
++      favs: JSON.parse(localStorage.getItem("favs_v2") || "[]")
++    };
++
++    const fmt = (v) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
++    const grid = document.getElementById("grid");
++    const chips = document.getElementById("chips");
++    const stats = document.getElementById("stats");
++    const toast = document.getElementById("toast");
++
++    const categories = ["todos", ...new Set(products.map(p => p.category))];
++    chips.innerHTML = categories.map(cat => `<button class="chip ${cat === "todos" ? "active" : ""}" data-cat="${cat}">${cat}</button>`).join("");
++
++    function save() {
++      localStorage.setItem("cart_v2", JSON.stringify(state.cart));
++      localStorage.setItem("favs_v2", JSON.stringify(state.favs));
++    }
++
++    function showToast(msg) {
++      toast.textContent = msg;
++      toast.classList.add("show");
++      setTimeout(() => toast.classList.remove("show"), 1300);
++    }
++
++    function filteredProducts() {
++      const q = state.search.trim().toLowerCase();
++      let list = products.filter(p => {
++        const hitSearch = !q || [p.name, p.category, p.subtype, p.flavor].join(" ").toLowerCase().includes(q);
++        const hitCat = state.category === "todos" || p.category === state.category;
++        const hitBudget = state.budget == null || p.price <= state.budget;
++        const hitFav = !state.onlyFav || state.favs.includes(p.id);
++        return hitSearch && hitCat && hitBudget && hitFav;
++      });
++
++      if (state.sort === "price-asc") list.sort((a,b) => a.price - b.price);
++      if (state.sort === "price-desc") list.sort((a,b) => b.price - a.price);
++      if (state.sort === "name") list.sort((a,b) => a.name.localeCompare(b.name));
++      return list;
++    }
++
++    function updateStats(list) {
++      const total = Object.values(state.cart).reduce((sum, qty) => sum + qty, 0);
++      const min = list.length ? Math.min(...list.map(p => p.price)) : 0;
++      const max = list.length ? Math.max(...list.map(p => p.price)) : 0;
++      const avg = list.length ? list.reduce((s,p) => s + p.price, 0) / list.length : 0;
++      stats.innerHTML = `
++        <article class="stat"><small>Itens visíveis</small><strong>${list.length}</strong></article>
++        <article class="stat"><small>Faixa de preço</small><strong>${fmt(min)} - ${fmt(max)}</strong></article>
++        <article class="stat"><small>Preço médio</small><strong>${fmt(avg || 0)}</strong></article>
++        <article class="stat"><small>No carrinho</small><strong>${total}</strong></article>
++      `;
++      document.getElementById("cartCount").textContent = total;
++    }
++
++    function render() {
++      const list = filteredProducts();
++      updateStats(list);
++      if (!list.length) {
++        grid.innerHTML = `<div class="empty">Nada encontrado com os filtros atuais.</div>`;
++        return;
++      }
++
++      grid.innerHTML = list.map(p => {
++        const fav = state.favs.includes(p.id);
++        return `
++          <article class="card">
++            <div class="image">
++              <img src="${p.image}" alt="${p.name}" loading="lazy" />
++              <span class="tag">${p.category}</span>
++              <button class="fav ${fav ? "active" : ""}" data-fav="${p.id}"><i class="fa-solid fa-heart"></i></button>
+             </div>
+-            
+-            <div class="modal-content">
+-                <span id="d-tag" class="modal-tag">TIPO</span>
+-                <h2 class="modal-titulo" id="d-nome">Nome</h2>
+-                <span class="modal-preco" id="d-preco">R$ 0,00</span>
+-                <p class="modal-desc" id="d-desc">Descrição.</p>
+-                <button class="btn-add-carrinho" onclick="adicionarDoModal()">
+-                    <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+-                </button>
++            <div class="body">
++              <div class="title">${p.name}</div>
++              <div class="desc">${p.desc}</div>
++              <div class="row">
++                <span class="price">${fmt(p.price)}</span>
++                <button class="cta" data-add="${p.id}"><i class="fa-solid fa-cart-plus"></i> Add</button>
++              </div>
+             </div>
+-        </div>
+-    </div>
+-
+-    <div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
+-        <div class="modal-box">
+-            <div class="cart-header">
+-                <h2><i class="fas fa-shopping-bag"></i> Seu Carrinho</h2>
+-                <button class="fechar-modal" style="position:static" onclick="fecharModal('modal-carrinho')">&times;</button>
++          </article>
++        `;
++      }).join("");
++    }
++
++    function addToCart(id) {
++      state.cart[id] = (state.cart[id] || 0) + 1;
++      save();
++      render();
++      showToast("Produto adicionado ao carrinho");
++    }
++
++    function toggleFav(id) {
++      if (state.favs.includes(id)) state.favs = state.favs.filter(v => v !== id);
++      else state.favs.push(id);
++      save();
++      render();
++    }
++
++    function renderCart() {
++      const cartBody = document.getElementById("cartBody");
++      const ids = Object.keys(state.cart).map(Number).filter(id => state.cart[id] > 0);
++      if (!ids.length) {
++        cartBody.innerHTML = `<div class="empty">Carrinho vazio. Escolha alguns produtos 👀</div>`;
++        document.getElementById("cartTotal").textContent = fmt(0);
++        return;
++      }
++
++      let total = 0;
++      cartBody.innerHTML = ids.map(id => {
++        const p = products.find(x => x.id === id);
++        const qty = state.cart[id];
++        const line = p.price * qty;
++        total += line;
++        return `
++          <div class="cart-line">
++            <div>
++              <strong>${p.name}</strong><br>
++              <small>${qty} x ${fmt(p.price)}</small>
+             </div>
+-            <div class="cart-items-container" id="lista-itens"></div>
+-            <div class="cart-footer">
+-                <div class="cart-total">
+-                    <span>Total:</span> <span id="valor-total">R$ 0,00</span>
+-                </div>
+-                <button class="btn-finalizar" onclick="finalizarCompra()">
+-                    <i class="fab fa-whatsapp"></i> Finalizar Pedido
+-                </button>
++            <div>
++              <button class="qty-btn" data-dec="${id}">-</button>
++              <button class="qty-btn" data-inc="${id}">+</button>
+             </div>
+-        </div>
+-    </div>
+-
+-    <script>
+-        // === CONFIGURAÇÃO E DADOS ===
+-        const telefone = "5511995079212"; 
+-        let carrinho = [];
+-        let produtoAtual = {}; 
+-        
+-        // Váriaveis do Slider
+-        let imagensAtuais = [];
+-        let indiceAtual = 0;
+-
+-        const cores = {
+-            'sativa': '#f59e0b', 'indica': '#8b5cf6', 'hibrida': '#10b981', 'refil': '#06b6d4', 'oleo': '#eab308', 'pod': '#d946ef'
+-        };
+-
+-        // === SCROLL REVEAL (ANIMAÇÃO AO ARRASTAR) ===
+-        const observer = new IntersectionObserver((entries) => {
+-            entries.forEach(entry => {
+-                if (entry.isIntersecting) {
+-                    entry.target.classList.add('visible');
+-                }
+-            });
+-        }, { threshold: 0.1 });
+-
+-        // Inicia observador nos cards
+-        document.querySelectorAll('.card').forEach(card => observer.observe(card));
+-
+-        // === FILTRAGEM DE PRODUTOS ===
+-        function filtrar(categoria, botaoClicado) {
+-            document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
+-            botaoClicado.classList.add('ativo');
+-            
+-            let visiveis = 0;
+-            const cards = document.querySelectorAll('.card');
+-            const msgVazio = document.getElementById('msg-vazio');
+-
+-            cards.forEach(card => {
+-                card.classList.remove('visible'); // Reset animation
+-                if (categoria === 'todos' || card.dataset.categoria === categoria) {
+-                    card.style.display = 'block';
+-                    visiveis++;
+-                    setTimeout(() => card.classList.add('visible'), 50);
+-                } else {
+-                    card.style.display = 'none';
+-                }
+-            });
+-
+-            if (visiveis === 0) {
+-                msgVazio.style.display = 'block';
+-            } else {
+-                msgVazio.style.display = 'none';
+-            }
+-        }
+-
+-        // === FUNÇÃO DE PESQUISA (NOVA) ===
+-        function toggleSearch() {
+-            const bar = document.getElementById('search-bar');
+-            if (bar.style.display === 'block') {
+-                bar.style.display = 'none';
+-            } else {
+-                bar.style.display = 'block';
+-                document.getElementById('search-input').focus();
+-            }
+-        }
+-
+-        function filtrarPesquisa() {
+-            const termo = document.getElementById('search-input').value.toLowerCase();
+-            const cards = document.querySelectorAll('.card');
+-            const msgVazio = document.getElementById('msg-vazio');
+-            let visiveis = 0;
+-
+-            cards.forEach(card => {
+-                const nome = card.querySelector('.card-nome').innerText.toLowerCase();
+-                if (nome.includes(termo)) {
+-                    card.style.display = 'block';
+-                    visiveis++;
+-                } else {
+-                    card.style.display = 'none';
+-                }
+-            });
+-
+-            // Se não encontrar nada, mostra msg
+-            if (visiveis === 0) {
+-                msgVazio.style.display = 'block';
+-                msgVazio.innerHTML = '<i class="far fa-sad-tear"></i> Nenhum produto encontrado com esse nome.';
+-            } else {
+-                msgVazio.style.display = 'none';
+-            }
+-        }
+-
+-        // === DETALHES DO PRODUTO (INTELIGENTE) ===
+-        function abrirModalDetalhes(nome, preco, descricao, imagensInput, tipo) {
+-            // Tratar imagens (pode ser string única ou array)
+-            if (Array.isArray(imagensInput)) {
+-                imagensAtuais = imagensInput;
+-            } else {
+-                imagensAtuais = [imagensInput];
+-            }
+-            indiceAtual = 0;
+-
+-            // Salvar para o carrinho (sempre usa a primeira imagem como thumb)
+-            produtoAtual = { nome, preco, imagem: imagensAtuais[0], tipo };
+-            
+-            // Popula HTML básico
+-            document.getElementById('d-nome').innerText = nome;
+-            atualizarImagemModal(); // Função que gerencia a foto atual
+-
+-            // Lógica para esconder descrição se estiver vazia
+-            const descEl = document.getElementById('d-desc');
+-            if (descricao && descricao.trim() !== "") {
+-                descEl.innerText = descricao;
+-                descEl.style.display = "block";
+-            } else {
+-                descEl.style.display = "none";
+-            }
+-            
+-            const precoFormatado = `R$ ${preco.toFixed(2).replace('.', ',')}`;
+-            const precoEl = document.getElementById('d-preco');
+-            precoEl.innerText = precoFormatado;
+-            precoEl.style.color = cores[tipo] || '#fff';
+-            
+-            const tag = document.getElementById('d-tag');
+-            tag.innerText = tipo;
+-            tag.style.background = cores[tipo] || '#fff';
+-
+-            document.getElementById('modal-detalhes').style.display = 'flex';
+-        }
+-
+-        // === LÓGICA DO SLIDER ===
+-        function atualizarImagemModal() {
+-            const imgEl = document.getElementById('d-img');
+-            const btnPrev = document.getElementById('btn-prev');
+-            const btnNext = document.getElementById('btn-next');
+-            const counter = document.getElementById('img-counter');
+-
+-            // Define a imagem atual
+-            imgEl.style.opacity = 0;
+-            setTimeout(() => {
+-                imgEl.src = imagensAtuais[indiceAtual];
+-                imgEl.style.opacity = 1;
+-            }, 150);
+-
+-            // Atualiza contador e botões
+-            if (imagensAtuais.length > 1) {
+-                btnPrev.style.display = 'flex';
+-                btnNext.style.display = 'flex';
+-                counter.style.display = 'block';
+-                counter.innerText = `${indiceAtual + 1}/${imagensAtuais.length}`;
+-            } else {
+-                btnPrev.style.display = 'none';
+-                btnNext.style.display = 'none';
+-                counter.style.display = 'none';
+-            }
+-        }
+-
+-        function mudarImagem(direcao) {
+-            indiceAtual += direcao;
+-            // Loop infinito (se passar do fim volta pro inicio e vice-versa)
+-            if (indiceAtual >= imagensAtuais.length) indiceAtual = 0;
+-            if (indiceAtual < 0) indiceAtual = imagensAtuais.length - 1;
+-            atualizarImagemModal();
+-        }
+-
+-        function adicionarDoModal() {
+-            adicionarAoCarrinho(produtoAtual.nome, produtoAtual.preco, produtoAtual.imagem);
+-            fecharModal('modal-detalhes');
+-        }
+-
+-        // === LÓGICA DO CARRINHO ===
+-        function adicionarAoCarrinho(nome, preco, imagem) {
+-            const itemExistente = carrinho.find(item => item.nome === nome);
+-            if (itemExistente) {
+-                itemExistente.qtd++;
+-            } else {
+-                carrinho.push({ nome, preco, imagem, qtd: 1 });
+-            }
+-            atualizarCarrinhoUI();
+-            mostrarToast();
+-        }
+-
+-        function removerItem(index) {
+-            carrinho[index].qtd--;
+-            if (carrinho[index].qtd <= 0) carrinho.splice(index, 1);
+-            atualizarCarrinhoUI();
+-        }
+-
+-        function aumentarItem(index) {
+-            carrinho[index].qtd++;
+-            atualizarCarrinhoUI();
+-        }
+-
+-        function atualizarCarrinhoUI() {
+-            const lista = document.getElementById('lista-itens');
+-            const totalEl = document.getElementById('valor-total');
+-            const contador = document.getElementById('cart-count');
+-            
+-            lista.innerHTML = '';
+-            let total = 0;
+-            let qtdTotal = 0;
+-
+-            if (carrinho.length === 0) {
+-                lista.innerHTML = '<p style="text-align:center; color:#555; padding:20px;">Seu carrinho está vazio.</p>';
+-            } else {
+-                carrinho.forEach((item, index) => {
+-                    total += item.preco * item.qtd;
+-                    qtdTotal += item.qtd;
+-                    lista.innerHTML += `
+-                        <div class="cart-item">
+-                            <img src="${item.imagem}" class="cart-item-img">
+-                            <div style="flex:1">
+-                                <span class="cart-item-title">${item.nome}</span>
+-                                <span style="font-size:0.85rem; color:#ccc">R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
+-                            </div>
+-                            <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:20px">
+-                                <i class="fas fa-minus" onclick="removerItem(${index})" style="cursor:pointer; font-size:0.8rem"></i>
+-                                <span style="font-weight:bold">${item.qtd}</span>
+-                                <i class="fas fa-plus" onclick="aumentarItem(${index})" style="cursor:pointer; font-size:0.8rem"></i>
+-                            </div>
+-                        </div>
+-                    `;
+-                });
+-            }
+-
+-            totalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+-            contador.innerText = qtdTotal;
+-            contador.style.display = qtdTotal > 0 ? 'flex' : 'none';
+-        }
+-
+-        function finalizarCompra() {
+-            if (carrinho.length === 0) return alert("Adicione produtos primeiro!");
+-
+-            let mensagem = "*PEDIDO CANETAS DA PAZ 🍁*\n\n";
+-            let total = 0;
+-
+-            carrinho.forEach(item => {
+-                const subtotal = item.preco * item.qtd;
+-                total += subtotal;
+-                mensagem += `${item.qtd}x ${item.nome}\n(R$ ${subtotal.toFixed(2).replace('.', ',')})\n\n`;
+-            });
+-
+-            mensagem += `*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+-            
+-            const link = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+-            window.open(link, '_blank');
+-
+-            carrinho = [];
+-            atualizarCarrinhoUI();
+-            fecharModal('modal-carrinho');
+-        }
+-
+-        // === UTILITÁRIOS ===
+-        function abrirCarrinho() { document.getElementById('modal-carrinho').style.display = 'flex'; }
+-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+-        function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
+-        
+-        function mostrarToast() {
+-            const toast = document.getElementById('toast');
+-            toast.classList.add('show');
+-            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+-        }
+-    </script>
++            <strong>${fmt(line)}</strong>
++          </div>
++        `;
++      }).join("");
++
++      document.getElementById("cartTotal").textContent = fmt(total);
++    }
++
++    function checkout() {
++      const ids = Object.keys(state.cart).map(Number).filter(id => state.cart[id] > 0);
++      if (!ids.length) return showToast("Adicione produtos antes de finalizar");
++      const lines = ids.map((id, idx) => {
++        const p = products.find(x => x.id === id);
++        return `${idx + 1}. ${p.name} x${state.cart[id]} (${fmt(p.price * state.cart[id])})`;
++      });
++      const total = ids.reduce((s,id) => s + products.find(x => x.id === id).price * state.cart[id], 0);
++      const msg = encodeURIComponent(`Olá! Quero fechar pedido:%0A${lines.join("%0A")}%0A%0ATotal: ${fmt(total)}`);
++      window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, "_blank");
++    }
++
++    document.getElementById("search").addEventListener("input", (e) => { state.search = e.target.value; render(); });
++    document.getElementById("sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
++    document.getElementById("budget").addEventListener("input", (e) => {
++      const n = Number(e.target.value);
++      state.budget = Number.isFinite(n) && n > 0 ? n : null;
++      render();
++    });
++
++    chips.addEventListener("click", (e) => {
++      const chip = e.target.closest(".chip");
++      if (!chip) return;
++      state.category = chip.dataset.cat;
++      document.querySelectorAll(".chip").forEach(c => c.classList.toggle("active", c === chip));
++      render();
++    });
++
++    grid.addEventListener("click", (e) => {
++      const add = e.target.closest("[data-add]");
++      const fav = e.target.closest("[data-fav]");
++      if (add) addToCart(Number(add.dataset.add));
++      if (fav) toggleFav(Number(fav.dataset.fav));
++    });
++
++    document.getElementById("onlyFavBtn").addEventListener("click", () => {
++      state.onlyFav = !state.onlyFav;
++      document.getElementById("onlyFavBtn").style.borderColor = state.onlyFav ? "#ff5678" : "var(--line)";
++      render();
++    });
++
++    document.getElementById("themeBtn").addEventListener("click", () => {
++      const isLight = document.body.dataset.theme === "light";
++      document.body.dataset.theme = isLight ? "" : "light";
++      localStorage.setItem("theme_v2", document.body.dataset.theme || "dark");
++    });
++
++    document.getElementById("openCart").addEventListener("click", () => {
++      renderCart();
++      document.getElementById("cartModal").showModal();
++    });
++
++    document.getElementById("closeCart").addEventListener("click", () => {
++      document.getElementById("cartModal").close();
++    });
++
++    document.getElementById("cartBody").addEventListener("click", (e) => {
++      const inc = e.target.closest("[data-inc]");
++      const dec = e.target.closest("[data-dec]");
++      if (inc) state.cart[inc.dataset.inc] = (state.cart[inc.dataset.inc] || 0) + 1;
++      if (dec) {
++        const id = dec.dataset.dec;
++        state.cart[id] = Math.max((state.cart[id] || 0) - 1, 0);
++        if (state.cart[id] === 0) delete state.cart[id];
++      }
++      save();
++      render();
++      renderCart();
++    });
++
++    document.getElementById("checkoutBtn").addEventListener("click", checkout);
++
++    const theme = localStorage.getItem("theme_v2");
++    if (theme === "light") document.body.dataset.theme = "light";
++    render();
++  </script>
+ </body>
+ </html>
+ 
+EOF
+)
