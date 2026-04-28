@@ -636,7 +636,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 'use strict';
 
 // ============================================================
-// CONFIGURAÇÕES PADRÃO
+// CONFIGURAÇÕES PADRÃO 
 // ============================================================
 const TELEFONE = "5511995079212";
 const SENHA_HASH = "VEhFRU5E"; // THEEND
@@ -757,7 +757,7 @@ function formatarData(data) {
 }
 
 // ============================================================
-// MODAIS
+// MODAIS E EVENTOS DE CLIQUE
 // ============================================================
 function abrirModal(id) {
     const modal = $(id);
@@ -1032,7 +1032,7 @@ function atualizarPreview() {
 }
 
 // ============================================================
-// GERENCIAR
+// GERENCIAR 
 // ============================================================
 function renderListaGerenciar() {
     const lista = $('lista-produtos');
@@ -1057,15 +1057,20 @@ function renderListaGerenciar() {
     let html = '';
     filtrados.forEach(function(p) {
         const cor = CORES[p.categoria] || { hex: '#fff', label: p.categoria };
-        html += '<div class="produto-item">';
-        html += '<img src="' + escapeHTML(p.imagem) + '" onerror="this.src=\'https://via.placeholder.com/60\'">';
-        html += '<div class="produto-item-info"><strong>' + escapeHTML(p.nome) + '</strong><small><span class="produto-item-cat-tag" style="background:' + cor.hex + '">' + cor.label + '</span><span>' + formatarPreco(p.preco) + '</span></small></div>';
-        html += '<div class="produto-item-actions">';
-        // Adicionadas aspas ao redor do p.id para garantir que funcione com UUIDs
-        html += '<button class="btn-mini btn-edit-mini" onclick="editarProduto(\'' + p.id + '\')" title="Editar"><i class="fas fa-edit"></i></button>';
-        html += '<button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto(\'' + p.id + '\')" title="Duplicar"><i class="fas fa-clone"></i></button>';
-        html += '<button class="btn-mini btn-delete-mini" onclick="confirmarExclusao(\'' + p.id + '\')" title="Excluir"><i class="fas fa-trash"></i></button>';
-        html += '</div></div>';
+        
+        // CORREÇÃO CRÍTICA DO BUG DE STRING NAS FUNÇÕES ONCLICK
+        html += `<div class="produto-item">
+            <img src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/60'">
+            <div class="produto-item-info">
+                <strong>${escapeHTML(p.nome)}</strong>
+                <small><span class="produto-item-cat-tag" style="background:${cor.hex}">${cor.label}</span><span>${formatarPreco(p.preco)}</span></small>
+            </div>
+            <div class="produto-item-actions">
+                <button class="btn-mini btn-edit-mini" onclick="editarProduto('${p.id}')" title="Editar"><i class="fas fa-edit"></i></button>
+                <button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto('${p.id}')" title="Duplicar"><i class="fas fa-clone"></i></button>
+                <button class="btn-mini btn-delete-mini" onclick="confirmarExclusao('${p.id}')" title="Excluir"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>`;
     });
     lista.innerHTML = html;
 }
@@ -1237,7 +1242,7 @@ async function recarregarTudo() {
 }
 
 // ============================================================
-// SUPABASE
+// SUPABASE E BANCO DE DADOS
 // ============================================================
 function setStatusConexao(online) {
     conexaoOK = online;
@@ -1299,8 +1304,7 @@ async function carregarProdutosSupabase() {
     console.log('🔄 Buscando produtos...');
     
     try {
-        // AQUI ESTAVA O SEU ERRO. A linha de `.order('created_at', ...)` foi 
-        // REMOVIDA para não dar crash se o banco não tiver essa exata coluna.
+        // AQUI FOI CORRIGIDO O ERRO DE BUSCA - Retirado o .order('created_at')
         const res = await supabaseClient
             .from(CONFIG.tabela)
             .select('*');
@@ -1340,7 +1344,7 @@ async function carregarProdutosSupabase() {
 }
 
 // ============================================================
-// CRUD
+// CRUD OTIMIZADO PARA TIPOS DE IDS E ERROS
 // ============================================================
 async function salvarProdutoSupabase() {
     const nome = $('add-nome').value.trim();
@@ -1384,20 +1388,21 @@ async function salvarProdutoSupabase() {
     }
 }
 
-function editarProduto(id) {
-    const p = produtosSupabase.find(function(x) { return x.id == id; });
+// Função de edição segura convertendo id em String para busca no array
+function editarProduto(idRaw) {
+    const p = produtosSupabase.find(x => String(x.id) === String(idRaw));
     if (!p) return;
     $('edit-id').value = p.id; 
     $('edit-nome').value = p.nome;
     $('edit-preco').value = p.preco; 
     $('edit-cat').value = p.categoria;
-    $('edit-imgs').value = p.imagem; 
+    $('edit-imgs').value = Array.isArray(p.imagem) ? p.imagem.join(', ') : p.imagem; 
     $('edit-desc').value = p.descricao || '';
     abrirModal('modal-editar');
 }
 
 async function atualizarProdutoSupabase() {
-    const id = $('edit-id').value;
+    let idRaw = $('edit-id').value;
     const nome = $('edit-nome').value.trim();
     const preco = parseFloat($('edit-preco').value);
     const categoria = $('edit-cat').value;
@@ -1406,10 +1411,14 @@ async function atualizarProdutoSupabase() {
     
     if (!nome || isNaN(preco) || !imagem) { mostrarToast('Preencha tudo', 'error'); return; }
     
+    // Tratamento de conversão caso o banco de dados exija ID tipo Inteiro
+    let formatId = /^\d+$/.test(idRaw) ? parseInt(idRaw, 10) : idRaw;
+
     try {
         const res = await supabaseClient.from(CONFIG.tabela)
             .update({ nome: nome, preco: preco, imagem: imagem, descricao: descricao, categoria: categoria })
-            .eq('id', id);
+            .eq('id', formatId);
+            
         if (res.error) { mostrarToast('Erro: ' + res.error.message, 'error'); return; }
         mostrarToast('Atualizado!', 'success');
         await carregarProdutosSupabase();
@@ -1417,23 +1426,28 @@ async function atualizarProdutoSupabase() {
     } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
-async function duplicarProduto(id) {
-    const p = produtosSupabase.find(function(x) { return x.id == id; });
+async function duplicarProduto(idRaw) {
+    const p = produtosSupabase.find(x => String(x.id) === String(idRaw));
     if (!p || !confirm('Duplicar "' + p.nome + '"?')) return;
     try {
         const res = await supabaseClient.from(CONFIG.tabela)
             .insert([{ nome: p.nome + ' (Cópia)', preco: p.preco, imagem: p.imagem, descricao: p.descricao, categoria: p.categoria }]);
+            
         if (res.error) { mostrarToast('Erro ao duplicar', 'error'); return; }
         mostrarToast('Duplicado!', 'success');
         await carregarProdutosSupabase();
     } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
-async function confirmarExclusao(id) {
-    const p = produtosSupabase.find(function(x) { return x.id == id; });
+async function confirmarExclusao(idRaw) {
+    const p = produtosSupabase.find(x => String(x.id) === String(idRaw));
     if (!p || !confirm('Excluir "' + p.nome + '"?\nEsta ação não pode ser desfeita.')) return;
+    
+    // Tratamento de conversão caso o banco de dados exija ID tipo Inteiro
+    let formatId = /^\d+$/.test(idRaw) ? parseInt(idRaw, 10) : idRaw;
+
     try {
-        const res = await supabaseClient.from(CONFIG.tabela).delete().eq('id', id);
+        const res = await supabaseClient.from(CONFIG.tabela).delete().eq('id', formatId);
         if (res.error) { mostrarToast('Erro ao excluir', 'error'); return; }
         mostrarToast('Excluído', 'success');
         await carregarProdutosSupabase();
