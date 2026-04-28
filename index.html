@@ -87,7 +87,7 @@
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 20px; }
         @media (min-width: 768px) { .container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); } }
 
-        /* TRAVA DE OPACIDADE REMOVIDA PARA EVITAR TELA PRETA */
+        /* REMOVIDO OPACITY 0 PARA GARANTIR QUE TUDO APAREÇA */
         .card { 
             background: var(--glass-card); border: 1px solid var(--glass-border); border-radius: 28px; 
             overflow: hidden; position: relative; 
@@ -166,10 +166,6 @@
         .btn-carrinho-float { position: fixed; bottom: 30px; right: 25px; width: 68px; height: 68px; border-radius: 50%; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; z-index: 900; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: none; cursor: pointer; transition: 0.3s; }
         .contador-carrinho { position: absolute; top: -2px; right: -2px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 800; min-width: 24px; height: 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-deep); }
 
-        /* ANIMAÇÃO DE PULSO NO CARRINHO */
-        @keyframes pulseCart { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
-        .pulse-anim { animation: pulseCart 0.3s ease-in-out; }
-
         /* ADMIN */
         .admin-form { display: flex; flex-direction: column; gap: 12px; padding: 10px 0; }
         .admin-input { width: 100%; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; font-size: 16px !important; outline: none; font-family: 'Montserrat'; }
@@ -205,7 +201,6 @@
     </header>
 
     <div class="container" id="grade-produtos">
-        
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Strawberry Cheesecake (Indica)', 300.00, 'Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.', 'https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg"></div>
@@ -214,7 +209,6 @@
                 <div class="card-preco">R$ 300,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 3.0 - Strawberry Cheesecake (Indica)', 300.00, 'https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz - Skywalker OG (Indica)', 300.00, 'Vape descartável de 3g. Embalagem preta com três caixas. Clássico terroso e picante, relaxamento profundo.', 'https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg"></div>
@@ -223,7 +217,6 @@
                 <div class="card-preco">R$ 300,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz - Skywalker OG (Indica)', 300.00, 'https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Sour Diesel (Hybrid)', 300.00, 'Vape descartável de 3g. Embalagem azul ciano. Aroma de combustível e limão, energizante.', 'https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg"></div>
@@ -232,7 +225,6 @@
                 <div class="card-preco">R$ 300,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 3.0 - Sour Diesel (Hybrid)', 300.00, 'https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - White Fire OG (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa roxa com preto. Alta potência e efeito duradouro.', 'https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg"></div>
@@ -241,7 +233,6 @@
                 <div class="card-preco">R$ 450,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 10g - White Fire OG (Sativa)', 450.00, 'https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Purple Haze (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem roxa. Sabor doce de uva e terra, euforia mental.', 'https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg"></div>
@@ -250,7 +241,6 @@
                 <div class="card-preco">R$ 300,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 3.0 - Purple Haze (Sativa)', 300.00, 'https://i.postimg.cc/Kj1Gdrb6/IMG_2596.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - Blackberry Moonrocks (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa azul petróleo/teal. Sabor de amora com potência extra.', 'https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg"></div>
@@ -259,7 +249,6 @@
                 <div class="card-preco">R$ 450,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 10g - Blackberry Moonrocks (Sativa)', 450.00, 'https://i.postimg.cc/j2DxGQTh/IMG_2589.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 10g - Mimosa (Sativa)', 450.00, 'Dispositivo Tank de 10g (10.0). Caixa verde clara/amarelada. Sabor cítrico de laranja e champanhe.', 'https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg"></div>
@@ -268,7 +257,6 @@
                 <div class="card-preco">R$ 450,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 10g - Mimosa (Sativa)', 450.00, 'https://i.postimg.cc/hvXDHbnZ/IMG_2590.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Super Lemon Haze (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem verde. Sabor intenso de limão siciliano, efeito vibrante.', 'https://i.postimg.cc/D0Svtdht/IMG_2597.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/D0Svtdht/IMG_2597.jpg"></div>
@@ -277,7 +265,6 @@
                 <div class="card-preco">R$ 300,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 3.0 - Super Lemon Haze (Sativa)', 300.00, 'https://i.postimg.cc/D0Svtdht/IMG_2597.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Pineapple (Sativa)', 300.00, 'Vape descartável de 3g. Embalagem laranja/marrom. Sabor tropical de abacaxi, levanta o humor.', 'https://i.postimg.cc/wM1qScHK/IMG_2595.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/wM1qScHK/IMG_2595.jpg"></div>
@@ -286,7 +273,6 @@
                 <div class="card-preco">R$ 300,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Hallu Labz 3.0 - Pineapple (Sativa)', 300.00, 'https://i.postimg.cc/wM1qScHK/IMG_2595.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Blueberry Tornado', 190.00, 'Mistura potente com sabor intenso de mirtilo fresco e um toque adocicado.', ['https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg'], 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg"></div>
@@ -295,7 +281,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Blueberry Tornado', 190.00, 'https://i.postimg.cc/5N6PHXLL/56ce0c76-fadd-4a2e-9570-00e1d48d943b.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Cherry Punch', 190.00, 'Sabor doce de cereja e notas terrosas.', 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg"></div>
@@ -304,7 +289,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Cherry Punch', 190.00, 'https://i.postimg.cc/qMxy1jkr/IMG-2553.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Mac & Cookies', 190.00, 'Fusão cremosa de notas amanteigadas e de biscoito.', 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg"></div>
@@ -313,7 +297,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Mac & Cookies', 190.00, 'https://i.postimg.cc/pd8SSwyZ/IMG-2554.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Kush Mintz', 190.00, 'Perfil refrescante de menta com fundo terroso.', 'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg"></div>
@@ -322,7 +305,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Kush Mintz', 190.00, 'https://i.postimg.cc/904Z8hQ5/IMG-2555.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('GSC - Girl Scout Cookies', 190.00, 'Clássico absoluto com notas de menta e chocolate.', 'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/fLP00rjv/IMG-2556.jpg"></div>
@@ -331,7 +313,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('GSC - Girl Scout Cookies', 190.00, 'https://i.postimg.cc/fLP00rjv/IMG-2556.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Sugar Melon', 190.00, 'Sabor doce de melão maduro com notas de açúcar.', 'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg"></div>
@@ -340,7 +321,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Sugar Melon', 190.00, 'https://i.postimg.cc/zfXjC4Kv/IMG-2557.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="hibrida" onclick="abrirModalDetalhes('Lemon Drop', 190.00, 'Aroma cítrico e refrescante que lembra balas de limão.', 'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg', 'hibrida')">
             <span class="tag-tipo" style="background:var(--cat-hibrida)">Híbrida</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg"></div>
@@ -349,7 +329,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Lemon Drop', 190.00, 'https://i.postimg.cc/MpzbwgsK/IMG-2552.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Papaya | BabyJeeter 3G | THC 93,8%', 349.99, '', 'https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg"></div>
@@ -358,7 +337,6 @@
                 <div class="card-preco">R$ 349,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Papaya | BabyJeeter 3G | THC 93,8%', 349.99, 'https://i.postimg.cc/qMNXh5Vs/IMG-2578.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('OG Kush | BabyJeeter 3G | THC 93%', 349.99, '', 'https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg"></div>
@@ -367,7 +345,6 @@
                 <div class="card-preco">R$ 349,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('OG Kush | BabyJeeter 3G | THC 93%', 349.99, 'https://i.postimg.cc/fTVjtrnf/IMG-2577.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Jeeter Juice Liquid Diamonds - Goma Bubba 1g', 199.99, '', 'https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg"></div>
@@ -376,7 +353,6 @@
                 <div class="card-preco">R$ 199,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Jeeter Juice Liquid Diamonds - Goma Bubba 1g', 199.99, 'https://i.postimg.cc/TYKqL4Mr/IMG-2576.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Ice Cream Banana', 190.00, 'Sobremesa pura. Cremosidade do sorvete.', 'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg"></div>
@@ -385,7 +361,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Ice Cream Banana', 190.00, 'https://i.postimg.cc/sxsJvgdT/IMG-2521.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Do-Si-Lato', 190.00, 'Combinação floral e de biscoito.', 'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/4db6kR7K/IMG-2522.jpg"></div>
@@ -394,7 +369,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Do-Si-Lato', 190.00, 'https://i.postimg.cc/4db6kR7K/IMG-2522.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Peach Rings', 190.00, 'Sabor nostálgico de balas de pêssego.', 'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg"></div>
@@ -403,7 +377,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Peach Rings', 190.00, 'https://i.postimg.cc/gJJzdvrc/IMG-2523.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Forbidden Gelato', 190.00, 'Mix exótico de frutas silvestres e notas cremosas.', 'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg"></div>
@@ -412,7 +385,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Forbidden Gelato', 190.00, 'https://i.postimg.cc/Ss3JvZVS/IMG-2524.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Harambe', 190.00, 'Perfil de sabor encorpado e potente com notas de diesel.', 'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg"></div>
@@ -421,7 +393,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Harambe', 190.00, 'https://i.postimg.cc/dVYJDMLZ/IMG-2525.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Churros', 190.00, 'Aroma de massa frita com açúcar e canela.', 'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/sgNymF1T/IMG-2526.jpg"></div>
@@ -430,7 +401,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Churros', 190.00, 'https://i.postimg.cc/sgNymF1T/IMG-2526.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Rainbow Belts', 190.00, 'Explosão de balas de goma ácidas.', 'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg"></div>
@@ -439,7 +409,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Rainbow Belts', 190.00, 'https://i.postimg.cc/d3DWQfmW/IMG-2527.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="indica" onclick="abrirModalDetalhes('Blue Zkz', 190.00, 'Uma mistura rica de mirtilos e doces cítricos.', 'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg', 'indica')">
             <span class="tag-tipo" style="background:var(--cat-indica)">Indica</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg"></div>
@@ -448,7 +417,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Blue Zkz', 190.00, 'https://i.postimg.cc/nzbB5PCJ/IMG-2529.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Super Silver Haze', 190.00, 'Clássico premiado com aroma cítrico e terroso.', 'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg', 'sativa')">
             <span class="tag-tipo" style="background:var(--cat-sativa)">Sativa</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg"></div>
@@ -457,7 +425,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Super Silver Haze', 190.00, 'https://i.postimg.cc/C1NqrCXL/IMG-2517.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Chocolope Cookies', 190.00, 'Mistura sofisticada de café e chocolate.', 'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg', 'sativa')">
             <span class="tag-tipo" style="background:var(--cat-sativa)">Sativa</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg"></div>
@@ -466,7 +433,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Chocolope Cookies', 190.00, 'https://i.postimg.cc/dtK0ZZfc/IMG-2520.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Durban Poison', 190.00, 'O espresso das Sativas. Aroma picante de anis.', 'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg', 'sativa')">
             <span class="tag-tipo" style="background:var(--cat-sativa)">Sativa</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg"></div>
@@ -475,7 +441,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Durban Poison', 190.00, 'https://i.postimg.cc/9FWhjdSz/IMG-2518.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Maui Wowie', 190.00, 'Clássico havaiano com notas de abacaxi.', 'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg', 'sativa')">
             <span class="tag-tipo" style="background:var(--cat-sativa)">Sativa</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg"></div>
@@ -484,7 +449,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Maui Wowie', 190.00, 'https://i.postimg.cc/nzBgbgTZ/IMG-2528.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="sativa" onclick="abrirModalDetalhes('Honeydew', 190.00, 'Refrescante e leve, sabor melão doce.', 'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg', 'sativa')">
             <span class="tag-tipo" style="background:var(--cat-sativa)">Sativa</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/d08KRhCB/IMG-2530.jpg"></div>
@@ -493,7 +457,6 @@
                 <div class="card-preco">R$ 190,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Honeydew', 190.00, 'https://i.postimg.cc/d08KRhCB/IMG-2530.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Jeeter - 5 Refil + Caneta | 5 un. 1ml', 499.00, '', 'https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg"></div>
@@ -502,7 +465,6 @@
                 <div class="card-preco">R$ 499,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Jeeter - 5 Refil + Caneta | 5 un. 1ml', 499.00, 'https://i.postimg.cc/NfZ81kQY/IMG-2582.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil Maui Wowie | Sativa | 98,4%', 399.00, '', 'https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg"></div>
@@ -511,7 +473,6 @@
                 <div class="card-preco">R$ 399,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Refil Maui Wowie | Sativa | 98,4%', 399.00, 'https://i.postimg.cc/wTn5hQ9g/IMG-2581.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Refil THC Bubba G | 1000mg', 149.99, '', 'https://i.postimg.cc/DySdJM3k/IMG-2580.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/DySdJM3k/IMG-2580.jpg"></div>
@@ -520,7 +481,6 @@
                 <div class="card-preco">R$ 149,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Refil THC Bubba G | 1000mg', 149.99, 'https://i.postimg.cc/DySdJM3k/IMG-2580.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('5G POD - BLUE DREAM - INDICA', 399.99, '', 'https://i.postimg.cc/MZPmG84y/IMG-2579.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/MZPmG84y/IMG-2579.jpg"></div>
@@ -529,7 +489,6 @@
                 <div class="card-preco">R$ 399,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('5G POD - BLUE DREAM - INDICA', 399.99, 'https://i.postimg.cc/MZPmG84y/IMG-2579.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho de CBD Black Widow | 1g', 199.99, '', 'https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg"></div>
@@ -538,7 +497,6 @@
                 <div class="card-preco">R$ 199,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Cartucho de CBD Black Widow | 1g', 199.99, 'https://i.postimg.cc/FHfZ5kVh/f0c03075_86cb_4cf7_90f5_856f7ef7631c.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Pink Kush High THC Cartridge | 1g', 299.99, '', 'https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg"></div>
@@ -547,7 +505,6 @@
                 <div class="card-preco">R$ 299,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Pink Kush High THC Cartridge | 1g', 299.99, 'https://i.postimg.cc/7ZCV8Jnx/43dc5643_035f_45e4_8f04_27a78e5e61df.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Cartucho Alien OG | 1,2g', 239.99, '', 'https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg"></div>
@@ -556,7 +513,6 @@
                 <div class="card-preco">R$ 239,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Cartucho Alien OG | 1,2g', 239.99, 'https://i.postimg.cc/jSGhsqZm/8247d49b_66e5_41a7_aa1d_6f5ada54c884.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="refil" onclick="abrirModalDetalhes('Essência Mint Ice | 30ml', 35.00, 'Sabor de menta extra forte e gelada. Frasco de 30ml.', 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop', 'refil')">
             <span class="tag-tipo" style="background:var(--cat-refil)">Refil</span>
             <div class="card-img-box"><img src="https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop"></div>
@@ -565,7 +521,6 @@
                 <div class="card-preco">R$ 35,00 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Essência Mint Ice | 30ml', 35.00, 'https://images.unsplash.com/photo-1608649068058-20e4c605df0c?q=80&w=600&auto=format&fit=crop')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cartucho Atomizador de Cerâmica 1ml', 39.99, '', ['https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg', 'https://i.postimg.cc/k2m8W4Hp/43320478_ce4b_4783_b97a_e656a035f2aa.jpg', 'https://i.postimg.cc/L8qTKg3R/6bc78dfe_2ac9_4b7c_8645_e9e7a65a531c.jpg'], 'oleo')">
             <span class="tag-tipo" style="background:var(--cat-oleo)">Óleo</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg"></div>
@@ -574,7 +529,6 @@
                 <div class="card-preco">R$ 39,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Cartucho Atomizador de Cerâmica 1ml', 39.99, 'https://i.postimg.cc/8zKVcxTR/cd4bb426-afb4-46b1-928c-753d8553baf0.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Cannabis Óleo Das Sementes', 249.99, '', 'https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg', 'oleo')">
             <span class="tag-tipo" style="background:var(--cat-oleo)">Óleo</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg"></div>
@@ -583,7 +537,6 @@
                 <div class="card-preco">R$ 249,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Cannabis Óleo Das Sementes', 249.99, 'https://i.postimg.cc/Njy4q2kc/7e47b6d8_3926_45bf_8a74_fc04d825dcfd.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div class="card" data-categoria="oleo" onclick="abrirModalDetalhes('Óleo de CBD Delta-9 THC + CBD', 349.99, 'Mix definitivo alívio de estresse full spectrum.', 'https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg', 'oleo')">
             <span class="tag-tipo" style="background:var(--cat-oleo)">Óleo</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg"></div>
@@ -594,13 +547,12 @@
         </div>
 
         <div id="supa-produtos" style="display: contents;"></div>
-
     </div>
 
-    <div id="msg-vazio" class="empty-message" style="display:none; text-align:center; padding:50px; color:var(--text-muted);">Nenhum produto encontrado.</div>
+    <div id="msg-vazio" class="empty-message">Nenhum produto encontrado.</div>
 
     <div class="social-float">
-        <a href="https://wa.me/551199507-9212" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://wa.me/5511995079212" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
         <a href="https://www.instagram.com/canetasdapaz?igsh=MWdhbXhmbmt3b2Z1eg==" target="_blank" class="btn-social" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)"><i class="fab fa-instagram"></i></a>
     </div>
 
@@ -618,7 +570,6 @@
                 <button class="nav-btn nav-prev" id="btn-prev" style="display:none;" onclick="mudarImagem(-1)"><i class="fas fa-chevron-left"></i></button>
                 <button class="nav-btn nav-next" id="btn-next" style="display:none;" onclick="mudarImagem(1)"><i class="fas fa-chevron-right"></i></button>
             </div>
-            
             <div class="modal-content">
                 <span id="d-tag" class="tag-tipo" style="position:static; margin-bottom:15px; display:inline-block; background:#fff">TIPO</span>
                 <h2 class="modal-titulo" id="d-nome">Nome</h2>
@@ -631,19 +582,19 @@
 
     <div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
         <div class="modal-box">
-            <div class="cart-header" style="padding:25px 30px; border-bottom:1px solid var(--glass-border);">
+            <div class="cart-header">
                 <h2 style="margin:0; font-size:1.4rem; font-weight:800;">Seu Carrinho</h2>
                 <button class="fechar-modal" style="position:static" onclick="fecharModal('modal-carrinho')">&times;</button>
             </div>
-            <div class="cart-items-container" id="lista-itens" style="padding: 10px 0; max-height: 50vh; overflow-y: auto;">
+            <div class="cart-items-container" id="lista-itens">
                 <p style="text-align:center; color:#555; padding:30px;">Seu carrinho está vazio.</p>
             </div>
-            <div class="cart-footer" id="cart-footer" style="display:none; padding:30px; border-top:1px solid var(--glass-border); background:rgba(0,0,0,0.2);">
-                <div class="cart-total" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; font-size:1.4rem; font-weight:800;">
+            <div class="cart-footer" id="cart-footer" style="display:none;">
+                <div class="cart-total">
                     <span>Total:</span> <span id="valor-total">R$ 0,00</span>
                 </div>
-                <button class="btn-finalizar-whats" onclick="finalizarCompra()" style="width:100%; background:var(--zap-color); color:#fff; padding:22px; border-radius:18px; font-weight:800; font-size:1rem; border:none; cursor:pointer; text-transform:uppercase; letter-spacing:1px; box-shadow:0 10px 25px rgba(37,211,102,0.3); transition:0.3s; display:flex; align-items:center; justify-content:center; gap:10px;">
-                    <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> FINALIZAR NO WHATSAPP
+                <button class="btn-finalizar-whats" onclick="finalizarCompra()">
+                    <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
                 </button>
             </div>
         </div>
@@ -665,128 +616,43 @@
             <div class="admin-form">
                 <input type="text" id="add-nome" class="admin-input" placeholder="Nome do Produto">
                 <input type="number" step="0.01" id="add-preco" class="admin-input" placeholder="Preço (Ex: 199.90)">
-                <select id="add-cat" class="admin-input" style="background:#1a1a24; border:1px solid var(--glass-border); padding:15px; border-radius:12px; color:#fff; font-size:16px; outline:none;">
+                <select id="add-cat" class="admin-input">
                     <option value="pod">PODS THC</option><option value="hibrida">Híbrida</option>
                     <option value="indica">Indica</option><option value="sativa">Sativa</option>
                     <option value="refil">Refil</option><option value="oleo">Óleos</option>
                 </select>
-                <textarea id="add-imgs" class="admin-input" placeholder="Links das imagens (separados por vírgula)" style="resize:vertical; min-height:80px;"></textarea>
-                <textarea id="add-desc" class="admin-input" placeholder="Descrição do Produto" style="resize:vertical; min-height:80px;"></textarea>
-                <button class="btn-confirmar" onclick="salvarProdutoSupabase()" id="btn-salvar">SALVAR NO BANCO DE DADOS</button>
+                <textarea id="add-imgs" class="admin-input" placeholder="Links das imagens (separados por vírgula)"></textarea>
+                <textarea id="add-desc" class="admin-input" placeholder="Descrição do Produto"></textarea>
+                <button class="btn-confirmar" id="btn-salvar" onclick="salvarProdutoSupabase()">SALVAR NO BANCO DE DADOS</button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
     <script>
-        // === TRAVAS DE ZOOM DEFINITIVAS PARA MOBILE ===
-        document.addEventListener('dblclick', function(event) { event.preventDefault(); }, { passive: false });
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            let now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) event.preventDefault();
-            lastTouchEnd = now;
-        }, { passive: false });
-        document.addEventListener('touchmove', function(event) {
-            if (event.touches.length > 1) event.preventDefault();
-        }, { passive: false });
-
         // === CONFIGURAÇÕES E ESTADO ===
-        const telefone = "551199507-9212"; 
-        const SENHA_HASH = "VEhFRU5E"; // Senha "THEEND" em base64
+        const telefone = "5511995079212"; 
+        const SENHA_HASH = "VEhFRU5E"; // Senha "THEEND"
         let carrinho = [];
         let produtoAtual = {}; 
         let imagensAtuais = [];
         let indiceAtual = 0;
-
         const cores = { pod:'var(--cat-pod)', hibrida:'var(--cat-hibrida)', indica:'var(--cat-indica)', sativa:'var(--cat-sativa)', refil:'var(--cat-refil)', oleo:'var(--cat-oleo)' };
 
-        // === INICIALIZAÇÃO SEGURA DO SUPABASE ===
-        let supabase;
-        if (window.supabase) {
-            supabase = window.supabase.createClient('https://vlosjvsxjmhksncmqmpk.supabase.co', 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc');
-        }
-
         // === INICIALIZAÇÃO ===
-        window.onload = async () => {
-            if (supabase) {
-                await carregarProdutosSupabase();
-            }
+        window.onload = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.card').forEach(card => observer.observe(card));
+            carregarProdutosSupabase();
         };
 
-        async function carregarProdutosSupabase() {
-            try {
-                const { data: produtos, error } = await supabase.from('produtos').select('*').order('created_at', { ascending: false });
-                if (produtos && produtos.length > 0) {
-                    const grade = document.getElementById('supa-produtos');
-                    grade.innerHTML = '';
-                    produtos.forEach(p => {
-                        const imgs = p.imagem.includes(',') ? p.imagem.split(',').map(i=>i.trim()) : [p.imagem];
-                        const c = p.categoria;
-                        
-                        const html = `
-                        <div class="card" data-categoria="${c}" onclick="abrirModalDetalhes('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${(p.descricao || '').replace(/'/g, "\\'")}', ${JSON.stringify(imgs).replace(/"/g, "'")}, '${c}')">
-                            <span class="tag-tipo" style="background:${cores[c] || '#fff'}">${c.toUpperCase()}</span>
-                            <div class="card-img-box"><img src="${imgs[0]}"></div>
-                            <div class="card-info">
-                                <div class="card-nome">${p.nome}</div>
-                                <div class="card-preco">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')} 
-                                <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${imgs[0]}')"><i class="fas fa-plus"></i></span></div>
-                            </div>
-                        </div>`;
-                        grade.insertAdjacentHTML('beforeend', html);
-                    });
-                }
-            } catch (err) {
-                console.error("Erro no Supabase:", err);
-            }
-        }
+        // === FUNÇÕES DE MODAL E UI (Garantindo que funcionem) ===
+        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function fecharModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
+        function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
+        function abrirCarrinho() { abrirModal('modal-carrinho'); }
 
-        async function salvarProdutoSupabase() {
-            if(!supabase) return alert("Banco de dados desconectado. Atualize a página.");
-            const btn = document.getElementById('btn-salvar');
-            const n = document.getElementById('add-nome').value.trim();
-            const p = parseFloat(document.getElementById('add-preco').value);
-            const c = document.getElementById('add-cat').value;
-            const i = document.getElementById('add-imgs').value.trim();
-            const d = document.getElementById('add-desc').value.trim();
-            
-            if(!n || isNaN(p) || !i) return alert("Preencha Nome, Preço e Imagem");
-
-            btn.innerText = "Salvando...";
-            btn.disabled = true;
-
-            try {
-                const { data, error } = await supabase
-                    .from('produtos')
-                    .insert([{ nome: n, preco: p, imagem: i, descricao: d, categoria: c }]);
-
-                if (error) throw error;
-
-                fecharModal('modal-admin');
-                mostrarToastMsg("Salvo no banco de dados!");
-                
-                document.getElementById('add-nome').value = '';
-                document.getElementById('add-preco').value = '';
-                document.getElementById('add-imgs').value = '';
-                document.getElementById('add-desc').value = '';
-
-                await carregarProdutosSupabase();
-
-            } catch (err) {
-                alert("Erro ao salvar. Verifique se as colunas da tabela estão certas.");
-            } finally {
-                btn.innerText = "SALVAR NO BANCO DE DADOS";
-                btn.disabled = false;
-            }
-        }
-
-        window.addEventListener('pageshow', function(event) {
-            atualizarCarrinhoUI();
-        });
-
-        // === PESQUISA E FILTROS ===
         function toggleSearch() {
             const bar = document.getElementById('search-bar');
             if (bar.style.display === 'block') {
@@ -803,17 +669,10 @@
             const termo = document.getElementById('search-input').value.toLowerCase();
             const msgVazio = document.getElementById('msg-vazio');
             let visiveis = 0;
-
             if(termo !== '') document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
-
             document.querySelectorAll('.card').forEach(card => {
                 const nome = card.querySelector('.card-nome').innerText.toLowerCase();
-                if (nome.includes(termo)) {
-                    card.style.display = 'block';
-                    visiveis++;
-                } else {
-                    card.style.display = 'none';
-                }
+                if (nome.includes(termo)) { card.style.display = 'block'; visiveis++; } else { card.style.display = 'none'; }
             });
             msgVazio.style.display = visiveis === 0 ? 'block' : 'none';
         }
@@ -821,64 +680,38 @@
         function filtrar(categoria, botaoClicado) {
             document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
             botaoClicado.classList.add('ativo');
-            
             document.getElementById('search-input').value = '';
             document.getElementById('search-bar').style.display = 'none';
-            
             let visiveis = 0;
-            const msgVazio = document.getElementById('msg-vazio');
-
             document.querySelectorAll('.card').forEach(card => {
-                if (categoria === 'todos' || card.dataset.categoria === categoria) {
-                    card.style.display = 'block';
-                    visiveis++;
-                } else {
-                    card.style.display = 'none';
-                }
+                if (categoria === 'todos' || card.dataset.categoria === categoria) { card.style.display = 'block'; visiveis++; } else { card.style.display = 'none'; }
             });
-            msgVazio.style.display = visiveis === 0 ? 'block' : 'none';
+            document.getElementById('msg-vazio').style.display = visiveis === 0 ? 'block' : 'none';
         }
 
-        // === ADMIN ===
-        function fazerLogin() {
-            if (btoa(document.getElementById('admin-senha').value) === SENHA_HASH) {
-                fecharModal('modal-login');
-                abrirModal('modal-admin');
-            } else alert("Senha incorreta");
-        }
-
-        // === DETALHES DO PRODUTO ===
         function abrirModalDetalhes(nome, preco, descricao, imagensInput, tipo) {
             imagensAtuais = Array.isArray(imagensInput) ? imagensInput : [imagensInput];
             indiceAtual = 0;
             produtoAtual = { nome, preco, imagem: imagensAtuais[0], tipo };
-            
             document.getElementById('d-nome').innerText = nome;
             document.getElementById('d-preco').innerText = `R$ ${parseFloat(preco).toFixed(2).replace('.', ',')}`;
-            
             const descEl = document.getElementById('d-desc');
             descEl.innerText = descricao || '';
             descEl.style.display = (descricao && descricao.trim() !== "") ? "block" : "none";
-            
             document.getElementById('d-tag').innerText = tipo.toUpperCase();
             document.getElementById('d-tag').style.background = cores[tipo] || '#fff';
-            
             updateImg();
             abrirModal('modal-detalhes');
         }
 
         function updateImg() {
             const imgEl = document.getElementById('d-img');
-            imgEl.style.opacity = 0;
-            setTimeout(() => { imgEl.src = imagensAtuais[indiceAtual]; imgEl.style.opacity = 1; }, 150);
-
+            imgEl.src = imagensAtuais[indiceAtual];
             const showNav = imagensAtuais.length > 1;
             document.getElementById('btn-prev').style.display = showNav ? 'flex' : 'none';
             document.getElementById('btn-next').style.display = showNav ? 'flex' : 'none';
-            
-            const counter = document.getElementById('img-counter');
-            counter.style.display = showNav ? 'block' : 'none';
-            counter.innerText = `${indiceAtual + 1}/${imagensAtuais.length}`;
+            document.getElementById('img-counter').style.display = showNav ? 'block' : 'none';
+            document.getElementById('img-counter').innerText = `${indiceAtual + 1}/${imagensAtuais.length}`;
         }
 
         function mudarImagem(direcao) {
@@ -888,112 +721,110 @@
             updateImg();
         }
 
-        function adicionarDoModal() {
-            adicionarAoCarrinho(produtoAtual.nome, produtoAtual.preco, produtoAtual.imagem);
-            fecharModal('modal-detalhes');
-        }
-
-        // === SISTEMA DE CARRINHO ===
         function adicionarAoCarrinho(nome, preco, imagem) {
             const itemExistente = carrinho.find(item => item.nome === nome);
-            if (itemExistente) {
-                itemExistente.qtd++;
-            } else {
-                carrinho.push({ nome, preco, imagem, qtd: 1 });
-            }
+            if (itemExistente) { itemExistente.qtd++; } else { carrinho.push({ nome, preco, imagem, qtd: 1 }); }
             atualizarCarrinhoUI();
             mostrarToastMsg("Adicionado ao carrinho!");
-            
-            const btnCart = document.getElementById('btn-carrinho');
-            btnCart.style.transform = 'scale(1.2)';
-            setTimeout(() => { btnCart.style.transform = 'scale(1)'; }, 200);
         }
 
-        function removerItem(index) {
-            carrinho[index].qtd--;
-            if (carrinho[index].qtd <= 0) carrinho.splice(index, 1);
-            atualizarCarrinhoUI();
-        }
-
-        function aumentarItem(index) {
-            carrinho[index].qtd++;
-            atualizarCarrinhoUI();
-        }
+        function adicionarDoModal() { adicionarAoCarrinho(produtoAtual.nome, produtoAtual.preco, produtoAtual.imagem); fecharModal('modal-detalhes'); }
 
         function atualizarCarrinhoUI() {
             const lista = document.getElementById('lista-itens');
             const totalEl = document.getElementById('valor-total');
             const contador = document.getElementById('cart-count');
             const footer = document.getElementById('cart-footer');
-            
             lista.innerHTML = '';
-            let total = 0;
-            let qtdTotal = 0;
-
+            let total = 0, qtdTotal = 0;
             if (carrinho.length === 0) {
-                lista.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:30px; font-size:1.1rem;"><i class="fas fa-box-open" style="font-size:2.5rem; display:block; margin-bottom:10px; opacity:0.5;"></i>Seu carrinho está vazio.</p>';
+                lista.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:30px;">Seu carrinho está vazio.</p>';
                 footer.style.display = 'none';
             } else {
                 carrinho.forEach((c, idx) => {
-                    total += c.preco * c.qtd;
-                    qtdTotal += c.qtd;
+                    total += c.preco * c.qtd; qtdTotal += c.qtd;
                     lista.innerHTML += `
-                        <div class="cart-item" style="display:flex; align-items:center; gap:15px; padding:15px 30px; border-bottom:1px solid var(--glass-border);">
-                            <img src="${c.imagem}" style="width:65px; height:65px; border-radius:14px; object-fit:cover; border:1px solid rgba(255,255,255,0.05);">
-                            <div style="flex:1; min-width:0;">
-                                <span style="font-weight:700; font-size:0.9rem; display:block; margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.nome}</span>
+                        <div class="cart-item">
+                            <img src="${c.imagem}" style="width:65px; height:65px; border-radius:12px; object-fit:cover;">
+                            <div style="flex:1;">
+                                <span style="font-weight:700; font-size:0.9rem;">${c.nome}</span><br>
                                 <span style="font-size:0.85rem; color:var(--text-muted);">R$ ${c.preco.toFixed(2).replace('.', ',')}</span>
                             </div>
-                            <div style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); padding:6px; border-radius:25px; border:1px solid var(--glass-border);">
-                                <div onclick="removerItem(${idx})" style="width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:0.2s; color:#fff;"><i class="fas fa-minus" style="font-size:0.7rem;"></i></div>
-                                <span style="font-weight:700; font-size:0.9rem; min-width:18px; text-align:center;">${c.qtd}</span>
-                                <div onclick="aumentarItem(${idx})" style="width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:0.2s; color:#fff;"><i class="fas fa-plus" style="font-size:0.7rem;"></i></div>
+                            <div class="cart-qty-ctrl">
+                                <div onclick="removerItem(${idx})" class="cart-qty-btn"><i class="fas fa-minus"></i></div>
+                                <span>${c.qtd}</span>
+                                <div onclick="aumentarItem(${idx})" class="cart-qty-btn"><i class="fas fa-plus"></i></div>
                             </div>
                         </div>`;
                 });
                 footer.style.display = 'block';
             }
-
             totalEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
             contador.innerText = qtdTotal;
             contador.style.display = qtdTotal > 0 ? 'flex' : 'none';
         }
 
-        // === FINALIZAR ===
-        function finalizarCompra() {
-            if (carrinho.length === 0) return alert("Adicione produtos primeiro!");
-            
-            let mensagem = "*PEDIDO CANETAS DA PAZ 🍁*\n\n"; 
-            let total = 0;
+        function removerItem(index) { carrinho[index].qtd--; if (carrinho[index].qtd <= 0) carrinho.splice(index, 1); atualizarCarrinhoUI(); }
+        function aumentarItem(index) { carrinho[index].qtd++; atualizarCarrinhoUI(); }
 
-            carrinho.forEach(c => {
-                const sub = c.preco * c.qtd; total += sub;
-                mensagem += `• ${c.qtd}x ${c.nome}\n(R$ ${sub.toFixed(2).replace('.', ',')})\n\n`;
-            });
-            mensagem += `*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-            
-            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`, '_blank');
-            
-            carrinho = []; 
-            atualizarCarrinhoUI(); 
-            fecharModal('modal-carrinho');
-            
-            setTimeout(() => {
-                mostrarToastMsg("Carrinho esvaziado após finalizar pedido.");
-            }, 500);
+        function finalizarCompra() {
+            if (carrinho.length === 0) return;
+            let msg = "*PEDIDO CANETAS DA PAZ 🍁*\n\n";
+            let total = 0;
+            carrinho.forEach(c => { total += (c.preco * c.qtd); msg += `• ${c.qtd}x ${c.nome}\n`; });
+            msg += `\n*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // === UTILS ===
-        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; document.body.style.overflow = ''; }
-        function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
-        function abrirCarrinho() { abrirModal('modal-carrinho'); }
-        
+        function fazerLogin() { if (btoa(document.getElementById('admin-senha').value) === SENHA_HASH) { fecharModal('modal-login'); abrirModal('modal-admin'); } else alert("Senha incorreta"); }
+
         function mostrarToastMsg(msg) { 
             const t = document.getElementById('toast');
-            t.innerHTML = `<i class="fas fa-check-circle" style="color:var(--cat-hibrida)"></i> ${msg}`;
+            document.getElementById('toast-msg').innerText = msg;
             t.classList.add('show'); 
             setTimeout(() => t.classList.remove('show'), 2500); 
+        }
+
+        // === SUPABASE (CARREGAMENTO DINÂMICO) ===
+        async function carregarProdutosSupabase() {
+            try {
+                if(!window.supabase) return;
+                const client = window.supabase.createClient('https://vlosjvsxjmhksncmqmpk.supabase.co', 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc');
+                const { data: produtos } = await client.from('produtos').select('*').order('created_at', { ascending: false });
+                if (produtos && produtos.length > 0) {
+                    const grade = document.getElementById('supa-produtos');
+                    produtos.forEach(p => {
+                        const imgs = p.imagem.includes(',') ? p.imagem.split(',').map(i=>i.trim()) : [p.imagem];
+                        const html = `
+                        <div class="card visible" data-categoria="${p.categoria}" onclick="abrirModalDetalhes('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${(p.descricao || '').replace(/'/g, "\\'")}', ${JSON.stringify(imgs).replace(/"/g, "'")}, '${p.categoria}')">
+                            <span class="tag-tipo" style="background:${cores[p.categoria] || '#fff'}">${p.categoria.toUpperCase()}</span>
+                            <div class="card-img-box"><img src="${imgs[0]}"></div>
+                            <div class="card-info">
+                                <div class="card-nome">${p.nome}</div>
+                                <div class="card-preco">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')} 
+                                <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${imgs[0]}')"><i class="fas fa-plus"></i></span></div>
+                            </div>
+                        </div>`;
+                        grade.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+            } catch(e) {}
+        }
+
+        async function salvarProdutoSupabase() {
+            const btn = document.getElementById('btn-salvar');
+            const n = document.getElementById('add-nome').value.trim();
+            const p = parseFloat(document.getElementById('add-preco').value);
+            const c = document.getElementById('add-cat').value;
+            const i = document.getElementById('add-imgs').value.trim();
+            const d = document.getElementById('add-desc').value.trim();
+            if(!n || isNaN(p) || !i) return alert("Preencha tudo!");
+            btn.innerText = "Salvando..."; btn.disabled = true;
+            try {
+                const client = window.supabase.createClient('https://vlosjvsxjmhksncmqmpk.supabase.co', 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc');
+                await client.from('produtos').insert([{ nome: n, preco: p, imagem: i, descricao: d, categoria: c }]);
+                location.reload();
+            } catch (err) { alert("Erro ao salvar."); btn.innerText = "SALVAR NO BANCO DE DADOS"; btn.disabled = false; }
         }
     </script>
 </body>
