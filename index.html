@@ -47,10 +47,8 @@ html, body {
 
 header {
     background: rgba(10, 10, 15, 0.85);
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    padding: 20px 0 10px;
-    position: sticky; top: 0; z-index: 1000;
+    backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+    padding: 20px 0 10px; position: sticky; top: 0; z-index: 1000;
     border-bottom: 1px solid var(--glass-border);
 }
 .header-top { display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 15px; padding: 0 25px; }
@@ -59,8 +57,7 @@ header h1 {
     margin: 0; font-family: 'Playfair Display', serif; font-size: 1.6rem;
     font-weight: 900; text-align: center; letter-spacing: 3px; text-transform: uppercase;
     background: linear-gradient(135deg, #fff, #94a3b8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; display: block; color: var(--text-muted); -webkit-text-fill-color: var(--text-muted); font-weight: 700; margin-top: 3px; }
 
@@ -82,9 +79,8 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 
 .card {
     background: var(--glass-card); border: 1px solid var(--glass-border); border-radius: 28px;
-    overflow: hidden; position: relative;
-    transition: 0.3s; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    cursor: pointer;
+    overflow: hidden; position: relative; transition: 0.3s;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4); cursor: pointer;
     animation: fadeIn 0.4s ease;
 }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -105,11 +101,7 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 .card-btn-add { background: rgba(255,255,255,0.1); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); transition: 0.3s; color: #fff; }
 .card-btn-add:active { background: #fff; color: #000; transform: scale(0.9); }
 
-.modal-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-    z-index: 9999; align-items: flex-end; justify-content: center;
-    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-}
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: flex-end; justify-content: center; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
 .modal-overlay.active { display: flex; }
 
 .modal-box {
@@ -120,7 +112,6 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
     animation: slideUp 0.4s ease;
 }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
 .modal-box::-webkit-scrollbar { width: 6px; }
 .modal-box::-webkit-scrollbar-track { background: transparent; }
 .modal-box::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
@@ -160,15 +151,15 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 .btn-carrinho-float { position: fixed; bottom: 30px; right: 25px; width: 68px; height: 68px; border-radius: 50%; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; z-index: 900; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: none; cursor: pointer; }
 .contador-carrinho { position: absolute; top: -2px; right: -2px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 800; min-width: 24px; height: 24px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-deep); }
 
-/* ========== ADMIN PANEL UPGRADED ========== */
+/* ========== ADMIN PANEL ========== */
 .admin-modal-box { max-width: 800px !important; height: auto; max-height: 92vh; padding: 0; border-radius: 32px; overflow: hidden; }
-.admin-header { padding: 25px 30px; border-bottom: 1px solid var(--glass-border); background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: space-between; }
-.admin-header-title { display: flex; align-items: center; gap: 12px; }
-.admin-logo { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--cat-hibrida), var(--cat-indica)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; }
+.admin-header { padding: 25px 30px; border-bottom: 1px solid var(--glass-border); background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(139,92,246,0.05)); display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+.admin-header-title { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+.admin-logo { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--cat-hibrida), var(--cat-indica)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; flex-shrink: 0; }
 .admin-title-group h2 { margin: 0; font-size: 1.3rem; color: #fff; }
 .admin-title-group p { margin: 0; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-.status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+.status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; flex-shrink: 0; }
 .status-badge.online { background: rgba(16,185,129,0.15); color: var(--cat-hibrida); border: 1px solid rgba(16,185,129,0.3); }
 .status-badge.offline { background: rgba(239,68,68,0.15); color: var(--error-color); border: 1px solid rgba(239,68,68,0.3); }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 2s infinite; }
@@ -176,10 +167,10 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 
 .admin-tabs { display: flex; gap: 0; background: rgba(0,0,0,0.3); padding: 0; overflow-x: auto; scrollbar-width: none; }
 .admin-tabs::-webkit-scrollbar { display: none; }
-.admin-tab { padding: 16px 22px; cursor: pointer; color: var(--text-muted); font-weight: 600; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 0.8rem; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+.admin-tab { padding: 16px 18px; cursor: pointer; color: var(--text-muted); font-weight: 600; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 0.78rem; white-space: nowrap; display: flex; align-items: center; gap: 7px; }
 .admin-tab:hover { color: #fff; background: rgba(255,255,255,0.02); }
 .admin-tab.active { color: #fff; border-bottom-color: var(--cat-hibrida); background: rgba(16,185,129,0.05); }
-.admin-tab i { font-size: 0.9rem; }
+.admin-tab i { font-size: 0.85rem; }
 
 .admin-content { padding: 25px 30px; max-height: calc(92vh - 220px); overflow-y: auto; }
 .admin-content::-webkit-scrollbar { width: 6px; }
@@ -189,7 +180,6 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 .admin-section { display: none; animation: fadeIn 0.3s ease; }
 .admin-section.active { display: block; }
 
-/* Dashboard */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 25px; }
 .stat-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 16px; padding: 18px; transition: 0.3s; }
 .stat-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
@@ -197,16 +187,13 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 .stat-value { font-size: 1.8rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; }
 .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
 
-.cat-breakdown { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-.cat-breakdown h3 { margin: 0 0 15px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.cat-breakdown, .recent-list { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+.cat-breakdown h3, .recent-list h3 { margin: 0 0 15px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 .cat-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--glass-border); }
 .cat-row:last-child { border-bottom: none; }
 .cat-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .cat-name { flex: 1; color: #fff; font-weight: 600; font-size: 0.85rem; }
 .cat-count { background: rgba(255,255,255,0.08); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: #fff; }
-
-.recent-list { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px; }
-.recent-list h3 { margin: 0 0 15px; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 .recent-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--glass-border); }
 .recent-item:last-child { border-bottom: none; }
 .recent-item img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
@@ -214,21 +201,22 @@ header h1 span { font-size: 0.6rem; letter-spacing: 2px; font-family: 'Montserra
 .recent-item-info strong { display: block; color: #fff; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .recent-item-info small { color: var(--text-muted); font-size: 0.7rem; }
 
-/* Forms */
 .admin-form { display: flex; flex-direction: column; gap: 14px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; padding-left: 4px; }
+.form-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; padding-left: 4px; display: flex; align-items: center; gap: 6px; }
 .form-label .required { color: var(--error-color); }
+.form-help { font-size: 0.7rem; color: var(--text-muted); padding-left: 4px; line-height: 1.4; }
+.form-help code { background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 4px; font-family: 'SF Mono', monospace; font-size: 0.7rem; color: var(--cat-hibrida); }
 .admin-input { width: 100%; padding: 14px 16px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; font-size: 16px !important; outline: none; font-family: 'Montserrat'; transition: 0.3s; }
 .admin-input:focus { border-color: var(--cat-hibrida); background: rgba(255,255,255,0.08); }
 .admin-input::placeholder { color: var(--text-muted); opacity: 0.6; }
+.admin-input.mono { font-family: 'SF Mono', 'Courier New', monospace; font-size: 13px !important; word-break: break-all; }
 textarea.admin-input { resize: vertical; min-height: 80px; font-family: 'Montserrat'; }
 select.admin-input { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; background-size: 12px; padding-right: 40px; }
 
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 @media (max-width: 600px) { .form-row-2 { grid-template-columns: 1fr; } }
 
-/* Live preview card */
 .preview-section { background: rgba(255,255,255,0.03); border: 1px dashed var(--glass-border); border-radius: 16px; padding: 20px; margin-top: 5px; }
 .preview-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 .preview-card-mini { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; max-width: 220px; margin: 0 auto; position: relative; }
@@ -240,7 +228,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 .preview-nome { color: #fff; font-weight: 600; font-size: 0.8rem; margin-bottom: 10px; min-height: 36px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .preview-preco { color: #fff; font-weight: 800; font-size: 1rem; }
 
-/* Toolbar in manage tab */
 .manage-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
 .manage-search { flex: 1; min-width: 180px; }
 .manage-filter { min-width: 130px; }
@@ -266,12 +253,11 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 .btn-duplicate-mini { background: rgba(245,158,11,0.15); color: var(--warning-color); border: 1px solid rgba(245,158,11,0.3); }
 .btn-delete-mini { background: rgba(239,68,68,0.15); color: var(--error-color); border: 1px solid rgba(239,68,68,0.3); }
 
-/* Diagnostic */
 .diag-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
-.diag-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--glass-border); }
+.diag-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--glass-border); gap: 10px; }
 .diag-row:last-child { border-bottom: none; }
-.diag-label { color: var(--text-muted); font-size: 0.8rem; }
-.diag-value { color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'SF Mono', monospace; }
+.diag-label { color: var(--text-muted); font-size: 0.8rem; flex-shrink: 0; }
+.diag-value { color: #fff; font-weight: 600; font-size: 0.85rem; font-family: 'SF Mono', monospace; text-align: right; word-break: break-all; }
 
 .diag-alert { padding: 16px; border-radius: 12px; margin-bottom: 12px; font-size: 0.85rem; line-height: 1.5; }
 .diag-alert.warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--warning-color); }
@@ -279,12 +265,26 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 .diag-alert.success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--success-color); }
 .diag-alert.error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--error-color); }
 .diag-alert strong { display: block; margin-bottom: 5px; }
-.diag-alert code { background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; }
+.diag-alert code { background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; word-break: break-all; }
 
-.btn-action { padding: 12px 20px; border-radius: 12px; border: none; cursor: pointer; font-weight: 700; font-size: 0.8rem; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.btn-action { padding: 12px 18px; border-radius: 12px; border: none; cursor: pointer; font-weight: 700; font-size: 0.78rem; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 .btn-action.primary { background: var(--cat-hibrida); color: #fff; }
 .btn-action.secondary { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid var(--glass-border); }
+.btn-action.danger { background: rgba(239,68,68,0.15); color: var(--error-color); border: 1px solid rgba(239,68,68,0.3); }
 .btn-action:active { transform: scale(0.97); }
+.btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Config Tab */
+.config-section-title { font-size: 0.95rem; color: #fff; font-weight: 700; margin: 0 0 5px; display: flex; align-items: center; gap: 8px; }
+.config-section-title i { color: var(--cat-hibrida); }
+.config-section-desc { font-size: 0.8rem; color: var(--text-muted); margin: 0 0 15px; line-height: 1.5; }
+
+.test-result { margin-top: 12px; padding: 14px; border-radius: 10px; font-size: 0.8rem; line-height: 1.5; display: none; }
+.test-result.show { display: block; }
+.test-result strong { display: block; margin-bottom: 5px; }
+.test-result code { background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-family: 'SF Mono', monospace; font-size: 0.75rem; word-break: break-all; }
 
 /* Toast */
 .toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-150px); background: #fff; color: #000; padding: 15px 25px; border-radius: 40px; font-weight: 700; z-index: 99999; transition: 0.4s; box-shadow: 0 10px 40px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; max-width: 90vw; font-size: 0.85rem; }
@@ -301,13 +301,11 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 .loading-msg { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.85rem; }
 .loading-msg i { font-size: 1.5rem; margin-bottom: 10px; display: block; }
 
-/* Status indicator floating */
 .connection-indicator { position: fixed; bottom: 110px; right: 25px; padding: 6px 12px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; z-index: 800; transition: 0.4s; opacity: 0; pointer-events: none; }
 .connection-indicator.show { opacity: 1; }
 .connection-indicator.online { background: rgba(16,185,129,0.15); color: var(--cat-hibrida); border: 1px solid rgba(16,185,129,0.3); }
 .connection-indicator.offline { background: rgba(239,68,68,0.15); color: var(--error-color); border: 1px solid rgba(239,68,68,0.3); }
 
-/* Refresh animation */
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .spinning { animation: spin 1s linear infinite; }
 </style>
@@ -354,8 +352,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     <div class="contador-carrinho" id="cart-count" style="display:none">0</div>
 </button>
 
-<!-- ========== MODAIS ========== -->
-
+<!-- MODAL DETALHES -->
 <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
     <div class="modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-detalhes')"><i class="fas fa-times"></i></button>
@@ -373,6 +370,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
+<!-- MODAL CARRINHO -->
 <div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
     <div class="modal-box">
         <div class="cart-header">
@@ -383,9 +381,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
             <p class="loading-msg">Seu carrinho está vazio.</p>
         </div>
         <div class="cart-footer" id="cart-footer" style="display:none;">
-            <div class="cart-total">
-                <span>Total:</span> <span id="valor-total">R$ 0,00</span>
-            </div>
+            <div class="cart-total"><span>Total:</span> <span id="valor-total">R$ 0,00</span></div>
             <button class="btn-finalizar-whats" onclick="finalizarCompra()">
                 <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> FINALIZAR NO WHATSAPP
             </button>
@@ -393,6 +389,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
+<!-- MODAL LOGIN -->
 <div class="modal-overlay" id="modal-login" onclick="fecharSeClicarFora(event, 'modal-login')">
     <div class="modal-box" style="height:auto; padding:40px 30px; border-radius:32px; max-width:400px; align-self:center;">
         <button class="fechar-modal" onclick="fecharModal('modal-login')"><i class="fas fa-times"></i></button>
@@ -406,7 +403,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
-<!-- ========== ADMIN PANEL UPGRADED ========== -->
+<!-- MODAL ADMIN -->
 <div class="modal-overlay" id="modal-admin" onclick="fecharSeClicarFora(event, 'modal-admin')">
     <div class="modal-box admin-modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-admin')"><i class="fas fa-times"></i></button>
@@ -428,12 +425,13 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
             <div class="admin-tab active" data-tab="dashboard" onclick="trocarAbaAdmin('dashboard')"><i class="fas fa-chart-pie"></i> Dashboard</div>
             <div class="admin-tab" data-tab="adicionar" onclick="trocarAbaAdmin('adicionar')"><i class="fas fa-plus-circle"></i> Adicionar</div>
             <div class="admin-tab" data-tab="gerenciar" onclick="trocarAbaAdmin('gerenciar')"><i class="fas fa-boxes"></i> Gerenciar</div>
+            <div class="admin-tab" data-tab="configuracoes" onclick="trocarAbaAdmin('configuracoes')"><i class="fas fa-key"></i> Config</div>
             <div class="admin-tab" data-tab="diagnostico" onclick="trocarAbaAdmin('diagnostico')"><i class="fas fa-stethoscope"></i> Diagnóstico</div>
         </div>
 
         <div class="admin-content">
 
-            <!-- TAB: DASHBOARD -->
+            <!-- DASHBOARD -->
             <div id="admin-dashboard" class="admin-section active">
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -469,14 +467,13 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                 </div>
             </div>
 
-            <!-- TAB: ADICIONAR -->
+            <!-- ADICIONAR -->
             <div id="admin-adicionar" class="admin-section">
                 <div class="admin-form">
                     <div class="form-group">
                         <label class="form-label">Nome do Produto <span class="required">*</span></label>
                         <input type="text" id="add-nome" class="admin-input" placeholder="Ex: Kush Premium 3.5g" oninput="atualizarPreview()">
                     </div>
-                    
                     <div class="form-row-2">
                         <div class="form-group">
                             <label class="form-label">Preço (R$) <span class="required">*</span></label>
@@ -494,17 +491,14 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                             </select>
                         </div>
                     </div>
-                    
                     <div class="form-group">
                         <label class="form-label">URL da Imagem <span class="required">*</span></label>
                         <input type="text" id="add-imgs" class="admin-input" placeholder="https://..." oninput="atualizarPreview()">
                     </div>
-                    
                     <div class="form-group">
                         <label class="form-label">Descrição (opcional)</label>
                         <textarea id="add-desc" class="admin-input" placeholder="Descrição do produto..." rows="3"></textarea>
                     </div>
-
                     <div class="preview-section">
                         <div class="preview-label"><i class="fas fa-eye"></i> Preview Ao Vivo</div>
                         <div class="preview-card-mini">
@@ -519,14 +513,13 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                             </div>
                         </div>
                     </div>
-
                     <button class="btn-confirmar" id="btn-salvar" onclick="salvarProdutoSupabase()" style="margin-top:10px;">
                         <i class="fas fa-cloud-upload-alt"></i> SALVAR PRODUTO
                     </button>
                 </div>
             </div>
 
-            <!-- TAB: GERENCIAR -->
+            <!-- GERENCIAR -->
             <div id="admin-gerenciar" class="admin-section">
                 <div class="manage-toolbar">
                     <input type="text" id="manage-search" class="admin-input manage-search" placeholder="🔍 Buscar produto..." oninput="renderListaGerenciar()">
@@ -551,7 +544,44 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                 </div>
             </div>
 
-            <!-- TAB: DIAGNOSTICO -->
+            <!-- CONFIGURAÇÕES -->
+            <div id="admin-configuracoes" class="admin-section">
+                <h3 class="config-section-title"><i class="fas fa-database"></i> Conexão com Banco de Dados</h3>
+                <p class="config-section-desc">Configure aqui as credenciais do seu projeto Supabase. Os valores ficam salvos no seu navegador.</p>
+
+                <div class="admin-form">
+                    <div class="form-group">
+                        <label class="form-label">URL do Projeto <span class="required">*</span></label>
+                        <input type="text" id="cfg-url" class="admin-input mono" placeholder="https://xxxxx.supabase.co">
+                        <p class="form-help">Encontre em: Supabase → Project Settings → Data API → <code>Project URL</code></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Chave Pública (anon / publishable) <span class="required">*</span></label>
+                        <input type="text" id="cfg-key" class="admin-input mono" placeholder="sb_publishable_... ou eyJhbG...">
+                        <p class="form-help">Use a chave <code>anon public</code> ou <code>publishable key</code> (NÃO use a service_role)</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nome da Tabela</label>
+                        <input type="text" id="cfg-tabela" class="admin-input mono" placeholder="produtos" value="produtos">
+                        <p class="form-help">Nome da tabela onde os produtos estão (padrão: <code>produtos</code>)</p>
+                    </div>
+
+                    <div class="btn-row" style="margin-top:5px;">
+                        <button class="btn-action primary" onclick="testarConfiguracao()" id="btn-testar"><i class="fas fa-vial"></i> Testar</button>
+                        <button class="btn-action secondary" onclick="salvarConfiguracao()"><i class="fas fa-save"></i> Salvar</button>
+                        <button class="btn-action danger" onclick="resetarConfiguracao()"><i class="fas fa-undo"></i> Resetar</button>
+                    </div>
+
+                    <div id="test-result" class="test-result"></div>
+                </div>
+
+                <div class="diag-alert info" style="margin-top:20px;">
+                    <strong><i class="fas fa-lightbulb"></i> Dica importante sobre RLS</strong>
+                    Se conectar mas nada aparecer, é provável que o <strong>Row Level Security (RLS)</strong> esteja bloqueando. No Supabase, vá em <code>Authentication → Policies</code> e crie uma policy de <code>SELECT</code> e <code>INSERT</code> para a role <code>anon</code> na tabela <code>produtos</code>.
+                </div>
+            </div>
+
+            <!-- DIAGNÓSTICO -->
             <div id="admin-diagnostico" class="admin-section">
                 <div id="diag-alerts"></div>
                 
@@ -559,23 +589,25 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                     <h3 style="margin:0 0 12px; color:#fff; font-size:0.95rem;"><i class="fas fa-database" style="color: var(--cat-hibrida);"></i> Conexão Supabase</h3>
                     <div class="diag-row"><span class="diag-label">Status</span><span class="diag-value" id="diag-status">—</span></div>
                     <div class="diag-row"><span class="diag-label">URL</span><span class="diag-value" id="diag-url">—</span></div>
-                    <div class="diag-row"><span class="diag-label">Última sincronização</span><span class="diag-value" id="diag-last-sync">—</span></div>
+                    <div class="diag-row"><span class="diag-label">Tabela</span><span class="diag-value" id="diag-tabela">—</span></div>
+                    <div class="diag-row"><span class="diag-label">Última sync</span><span class="diag-value" id="diag-last-sync">—</span></div>
                     <div class="diag-row"><span class="diag-label">Produtos no banco</span><span class="diag-value" id="diag-count">—</span></div>
+                    <div class="diag-row"><span class="diag-label">Último erro</span><span class="diag-value" id="diag-error" style="color:var(--error-color);">—</span></div>
                 </div>
 
                 <div class="diag-card">
                     <h3 style="margin:0 0 12px; color:#fff; font-size:0.95rem;"><i class="fas fa-flask" style="color: var(--cat-sativa);"></i> Testes</h3>
                     <p style="font-size:0.8rem; color:var(--text-muted); margin: 0 0 12px;">Execute testes para verificar se tudo está funcionando.</p>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <div class="btn-row">
                         <button class="btn-action primary" onclick="testarConexao()"><i class="fas fa-plug"></i> Testar Conexão</button>
-                        <button class="btn-action secondary" onclick="recarregarTudo()"><i class="fas fa-sync"></i> Recarregar Dados</button>
+                        <button class="btn-action secondary" onclick="recarregarTudo()"><i class="fas fa-sync"></i> Recarregar</button>
                     </div>
                 </div>
 
                 <div class="diag-card">
-                    <h3 style="margin:0 0 12px; color:#fff; font-size:0.95rem;"><i class="fas fa-info-circle" style="color: var(--info-color);"></i> Informações</h3>
+                    <h3 style="margin:0 0 12px; color:#fff; font-size:0.95rem;"><i class="fas fa-info-circle" style="color: var(--info-color);"></i> Como funciona</h3>
                     <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.6; margin:0;">
-                        Os produtos cadastrados aqui são salvos no banco de dados <strong style="color:#fff;">Supabase</strong> e aparecem automaticamente no site para todos os visitantes. Os 43 produtos fixos do catálogo permanecem sempre visíveis.
+                        Os produtos cadastrados são salvos no banco de dados <strong style="color:#fff;">Supabase</strong> e aparecem automaticamente no site. Os 43 produtos fixos do catálogo permanecem sempre visíveis.
                     </p>
                 </div>
             </div>
@@ -591,57 +623,62 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
         <h2 style="text-align:center; margin-bottom:20px; color:#fff;"><i class="fas fa-edit" style="color:var(--info-color);"></i> Editar Produto</h2>
         <div class="admin-form">
             <input type="hidden" id="edit-id">
-            <div class="form-group">
-                <label class="form-label">Nome</label>
-                <input type="text" id="edit-nome" class="admin-input">
-            </div>
+            <div class="form-group"><label class="form-label">Nome</label><input type="text" id="edit-nome" class="admin-input"></div>
             <div class="form-row-2">
-                <div class="form-group">
-                    <label class="form-label">Preço</label>
-                    <input type="number" step="0.01" id="edit-preco" class="admin-input">
-                </div>
+                <div class="form-group"><label class="form-label">Preço</label><input type="number" step="0.01" id="edit-preco" class="admin-input"></div>
                 <div class="form-group">
                     <label class="form-label">Categoria</label>
                     <select id="edit-cat" class="admin-input">
-                        <option value="pod">PODS THC</option>
-                        <option value="hibrida">Híbrida</option>
-                        <option value="indica">Indica</option>
-                        <option value="sativa">Sativa</option>
-                        <option value="refil">Refil</option>
-                        <option value="oleo">Óleos</option>
+                        <option value="pod">PODS THC</option><option value="hibrida">Híbrida</option><option value="indica">Indica</option><option value="sativa">Sativa</option><option value="refil">Refil</option><option value="oleo">Óleos</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">URL da Imagem</label>
-                <input type="text" id="edit-imgs" class="admin-input">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Descrição</label>
-                <textarea id="edit-desc" class="admin-input" rows="3"></textarea>
-            </div>
-            <button class="btn-confirmar" onclick="atualizarProdutoSupabase()">
-                <i class="fas fa-check"></i> SALVAR ALTERAÇÕES
-            </button>
+            <div class="form-group"><label class="form-label">URL da Imagem</label><input type="text" id="edit-imgs" class="admin-input"></div>
+            <div class="form-group"><label class="form-label">Descrição</label><textarea id="edit-desc" class="admin-input" rows="3"></textarea></div>
+            <button class="btn-confirmar" onclick="atualizarProdutoSupabase()"><i class="fas fa-check"></i> SALVAR ALTERAÇÕES</button>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Supabase JS v2.46+ — compatível com sb_publishable_* -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.46.1/dist/umd/supabase.js"></script>
 
 <script>
 'use strict';
 
 // ============================================================
-// CONFIGURAÇÕES
+// CONFIGURAÇÕES PADRÃO (podem ser sobrescritas no admin)
 // ============================================================
 const TELEFONE = "5511995079212";
 const SENHA_HASH = "VEhFRU5E"; // Senha: THEEND
-const SUPABASE_URL = 'https://vlosjvsxjmhksncmqmpk.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc';
+const STORAGE_KEY = 'cdp_supabase_config';
+
+const CONFIG_DEFAULT = {
+    url: 'https://vlosjvsxjmhksncmqmpk.supabase.co',
+    key: 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc',
+    tabela: 'produtos'
+};
+
+// Carrega config salva ou usa default
+function carregarConfig() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const cfg = JSON.parse(saved);
+            return {
+                url: cfg.url || CONFIG_DEFAULT.url,
+                key: cfg.key || CONFIG_DEFAULT.key,
+                tabela: cfg.tabela || CONFIG_DEFAULT.tabela
+            };
+        }
+    } catch(e) { console.warn('Erro ao ler config:', e); }
+    return Object.assign({}, CONFIG_DEFAULT);
+}
+
+let CONFIG = carregarConfig();
 
 // ============================================================
-// 43 PRODUTOS FIXOS (sempre visíveis)
+// 43 PRODUTOS FIXOS
 // ============================================================
 const PRODUTOS_FIXOS = [
     { nome: "Hallu Labz 3.0 - Strawberry Cheesecake (Indica)", preco: 300.00, imagem: "https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg", descricao: "Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.", categoria: "pod" },
@@ -689,11 +726,7 @@ const PRODUTOS_FIXOS = [
     { nome: "Óleo de CBD Delta-9 THC + CBD", preco: 349.99, imagem: "https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg", descricao: "Mix definitivo alívio de estresse full spectrum.", categoria: "oleo" }
 ];
 
-// Marcar todos os produtos fixos
-PRODUTOS_FIXOS.forEach(function(p, i) {
-    p.id = 'fix_' + i;
-    p.fixo = true;
-});
+PRODUTOS_FIXOS.forEach(function(p, i) { p.id = 'fix_' + i; p.fixo = true; });
 
 // ============================================================
 // ESTADO GLOBAL
@@ -705,6 +738,7 @@ let produtoAtual = {};
 let categoriaAtiva = 'todos';
 let conexaoOK = false;
 let ultimaSync = null;
+let ultimoErro = null;
 let supabaseRetries = 0;
 
 const CORES = {
@@ -728,14 +762,10 @@ function escapeHTML(str) {
     });
 }
 
-function formatarPreco(preco) {
-    return 'R$ ' + parseFloat(preco).toFixed(2).replace('.', ',');
-}
-
+function formatarPreco(preco) { return 'R$ ' + parseFloat(preco).toFixed(2).replace('.', ','); }
 function formatarData(data) {
     if (!data) return '—';
-    const d = new Date(data);
-    return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+    return new Date(data).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
 }
 
 // ============================================================
@@ -743,23 +773,13 @@ function formatarData(data) {
 // ============================================================
 function abrirModal(id) {
     const modal = $(id);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+    if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
 }
-
 function fecharModal(id) {
     const modal = $(id);
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+    if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
 }
-
-function fecharSeClicarFora(e, id) {
-    if (e.target.id === id) fecharModal(id);
-}
+function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
 
 // ============================================================
 // TOAST
@@ -768,16 +788,13 @@ function mostrarToast(mensagem, tipo) {
     tipo = tipo || 'success';
     const toast = $('toast');
     toast.className = 'toast';
-    
     const icones = {
         success: '<i class="fas fa-check-circle"></i>',
         error: '<i class="fas fa-exclamation-circle"></i>',
         info: '<i class="fas fa-info-circle"></i>'
     };
-    
     toast.classList.add(tipo);
     toast.innerHTML = (icones[tipo] || icones.success) + ' <span>' + escapeHTML(mensagem) + '</span>';
-    
     setTimeout(function() { toast.classList.add('show'); }, 10);
     setTimeout(function() { toast.classList.remove('show'); }, 3500);
 }
@@ -802,40 +819,26 @@ function aplicarFiltros() {
     const termo = ($('search-input').value || '').toLowerCase().trim();
     const cards = document.querySelectorAll('#grade-produtos .card');
     let visiveis = 0;
-    
     cards.forEach(function(card) {
         const cat = card.dataset.categoria;
         const nome = (card.querySelector('.card-nome').innerText || '').toLowerCase();
-        
         const matchCat = (categoriaAtiva === 'todos' || cat === categoriaAtiva);
         const matchSearch = (!termo || nome.indexOf(termo) !== -1);
-        
-        if (matchCat && matchSearch) {
-            card.style.display = 'block';
-            visiveis++;
-        } else {
-            card.style.display = 'none';
-        }
+        if (matchCat && matchSearch) { card.style.display = 'block'; visiveis++; }
+        else card.style.display = 'none';
     });
-    
     $('msg-vazio').style.display = visiveis === 0 ? 'block' : 'none';
 }
 
 // ============================================================
-// RENDERIZAÇÃO UNIFICADA — A CHAVE DA CORREÇÃO
+// RENDERIZAÇÃO
 // ============================================================
 function getTodosProdutos() {
-    // Combina fixos + Supabase em uma lista única
     return PRODUTOS_FIXOS.concat(produtosSupabase.map(function(p) {
         return {
-            id: p.id,
-            nome: p.nome,
-            preco: parseFloat(p.preco),
-            imagem: p.imagem,
-            descricao: p.descricao || '',
-            categoria: p.categoria,
-            fixo: false,
-            created_at: p.created_at
+            id: p.id, nome: p.nome, preco: parseFloat(p.preco),
+            imagem: p.imagem, descricao: p.descricao || '', categoria: p.categoria,
+            fixo: false, created_at: p.created_at
         };
     }));
 }
@@ -847,8 +850,7 @@ function criarCard(produto) {
     card.dataset.categoria = produto.categoria;
     card.dataset.id = produto.id;
     
-    const isNovo = !produto.fixo;
-    const tagNovo = isNovo ? '<span class="tag-novo">NOVO</span>' : '';
+    const tagNovo = produto.fixo ? '' : '<span class="tag-novo">NOVO</span>';
     
     card.innerHTML = 
         '<span class="tag-tipo" style="background:' + cor.hex + '">' + escapeHTML(cor.label) + '</span>' +
@@ -859,32 +861,19 @@ function criarCard(produto) {
             '<div class="card-preco">' + formatarPreco(produto.preco) + ' <span class="card-btn-add"><i class="fas fa-plus"></i></span></div>' +
         '</div>';
     
-    // Eventos no card e no botão (fechamento de variável protegido)
-    card.addEventListener('click', function() {
-        abrirModalDetalhes(produto);
+    card.addEventListener('click', function() { abrirModalDetalhes(produto); });
+    card.querySelector('.card-btn-add').addEventListener('click', function(e) {
+        e.stopPropagation(); adicionarAoCarrinho(produto);
     });
-    
-    const btnAdd = card.querySelector('.card-btn-add');
-    btnAdd.addEventListener('click', function(e) {
-        e.stopPropagation();
-        adicionarAoCarrinho(produto);
-    });
-    
     return card;
 }
 
 function renderTodosProdutos() {
     const grade = $('grade-produtos');
     grade.innerHTML = '';
-    
     const todos = getTodosProdutos();
     console.log('🎨 Renderizando ' + todos.length + ' produtos (' + PRODUTOS_FIXOS.length + ' fixos + ' + produtosSupabase.length + ' do banco)');
-    
-    todos.forEach(function(p) {
-        grade.appendChild(criarCard(p));
-    });
-    
-    // Reaplica filtros atuais
+    todos.forEach(function(p) { grade.appendChild(criarCard(p)); });
     aplicarFiltros();
 }
 
@@ -894,16 +883,13 @@ function renderTodosProdutos() {
 function abrirModalDetalhes(produto) {
     produtoAtual = produto;
     const cor = CORES[produto.categoria] || { hex: '#fff', label: produto.categoria };
-    
     $('d-nome').innerText = produto.nome;
     $('d-preco').innerText = formatarPreco(produto.preco);
     $('d-desc').innerText = produto.descricao || 'Produto premium de alta qualidade.';
     $('d-img').src = produto.imagem;
-    
     const tag = $('d-tag');
     tag.innerText = cor.label;
     tag.style.background = cor.hex;
-    
     abrirModal('modal-detalhes');
 }
 
@@ -917,18 +903,8 @@ function adicionarDoModal() {
 // ============================================================
 function adicionarAoCarrinho(produto) {
     const idx = carrinho.findIndex(function(c) { return c.nome === produto.nome; });
-    
-    if (idx >= 0) {
-        carrinho[idx].qtd++;
-    } else {
-        carrinho.push({
-            nome: produto.nome,
-            preco: parseFloat(produto.preco),
-            imagem: produto.imagem,
-            qtd: 1
-        });
-    }
-    
+    if (idx >= 0) carrinho[idx].qtd++;
+    else carrinho.push({ nome: produto.nome, preco: parseFloat(produto.preco), imagem: produto.imagem, qtd: 1 });
     atualizarCarrinhoUI();
     mostrarToast('Adicionado ao carrinho!', 'success');
 }
@@ -936,33 +912,18 @@ function adicionarAoCarrinho(produto) {
 function atualizarCarrinhoUI() {
     const lista = $('lista-itens');
     let total = 0, qtdTotal = 0;
-    
     if (carrinho.length === 0) {
         lista.innerHTML = '<p class="loading-msg">Seu carrinho está vazio.</p>';
         $('cart-footer').style.display = 'none';
     } else {
         let html = '';
         carrinho.forEach(function(c, i) {
-            total += c.preco * c.qtd;
-            qtdTotal += c.qtd;
-            
-            html += '<div class="cart-item">';
-            html += '<img src="' + escapeHTML(c.imagem) + '">';
-            html += '<div style="flex:1; min-width:0;">';
-            html += '<strong style="color:#fff; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + escapeHTML(c.nome) + '</strong>';
-            html += '<span style="color:var(--text-muted); font-size:0.9rem;">' + formatarPreco(c.preco) + '</span>';
-            html += '</div>';
-            html += '<div class="cart-qty-ctrl">';
-            html += '<div onclick="removerItem(' + i + ')" class="cart-qty-btn">-</div>';
-            html += '<span style="min-width:25px; text-align:center; color:#fff; font-weight:600;">' + c.qtd + '</span>';
-            html += '<div onclick="aumentarItem(' + i + ')" class="cart-qty-btn">+</div>';
-            html += '</div>';
-            html += '</div>';
+            total += c.preco * c.qtd; qtdTotal += c.qtd;
+            html += '<div class="cart-item"><img src="' + escapeHTML(c.imagem) + '"><div style="flex:1; min-width:0;"><strong style="color:#fff; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + escapeHTML(c.nome) + '</strong><span style="color:var(--text-muted); font-size:0.9rem;">' + formatarPreco(c.preco) + '</span></div><div class="cart-qty-ctrl"><div onclick="removerItem(' + i + ')" class="cart-qty-btn">-</div><span style="min-width:25px; text-align:center; color:#fff; font-weight:600;">' + c.qtd + '</span><div onclick="aumentarItem(' + i + ')" class="cart-qty-btn">+</div></div></div>';
         });
         lista.innerHTML = html;
         $('cart-footer').style.display = 'block';
     }
-    
     $('valor-total').innerText = formatarPreco(total);
     const counter = $('cart-count');
     counter.innerText = qtdTotal;
@@ -974,30 +935,18 @@ function removerItem(idx) {
     else carrinho.splice(idx, 1);
     atualizarCarrinhoUI();
 }
-
-function aumentarItem(idx) {
-    carrinho[idx].qtd++;
-    atualizarCarrinhoUI();
-}
+function aumentarItem(idx) { carrinho[idx].qtd++; atualizarCarrinhoUI(); }
 
 function finalizarCompra() {
-    if (carrinho.length === 0) {
-        mostrarToast('Carrinho vazio', 'error');
-        return;
-    }
-    
+    if (carrinho.length === 0) { mostrarToast('Carrinho vazio', 'error'); return; }
     let msg = '*PEDIDO CANETAS DA PAZ 🍁*\n\n';
     let total = 0;
-    
     carrinho.forEach(function(c) {
         total += c.preco * c.qtd;
         msg += '• ' + c.qtd + 'x ' + c.nome + ' - ' + formatarPreco(c.preco * c.qtd) + '\n';
     });
-    
     msg += '\n*TOTAL: ' + formatarPreco(total) + '*';
-    
     window.open('https://wa.me/' + TELEFONE + '?text=' + encodeURIComponent(msg), '_blank');
-    
     carrinho = [];
     atualizarCarrinhoUI();
     fecharModal('modal-carrinho');
@@ -1005,11 +954,10 @@ function finalizarCompra() {
 }
 
 // ============================================================
-// LOGIN ADMIN
+// LOGIN
 // ============================================================
 function fazerLogin() {
     const senha = $('admin-senha').value;
-    
     if (btoa(senha) === SENHA_HASH) {
         fecharModal('modal-login');
         $('admin-senha').value = '';
@@ -1023,68 +971,53 @@ function fazerLogin() {
 }
 
 // ============================================================
-// ADMIN — TABS
+// ADMIN TABS
 // ============================================================
 function trocarAbaAdmin(aba) {
     document.querySelectorAll('.admin-tab').forEach(function(t) { t.classList.remove('active'); });
     document.querySelectorAll('.admin-section').forEach(function(s) { s.classList.remove('active'); });
-    
     document.querySelector('[data-tab="' + aba + '"]').classList.add('active');
     $('admin-' + aba).classList.add('active');
-    
     if (aba === 'dashboard') atualizarDashboard();
     if (aba === 'gerenciar') renderListaGerenciar();
+    if (aba === 'configuracoes') carregarFormConfiguracao();
     if (aba === 'diagnostico') atualizarDiagnostico();
 }
 
 // ============================================================
-// ADMIN — DASHBOARD
+// DASHBOARD
 // ============================================================
 function atualizarDashboard() {
     $('stat-supabase').innerText = produtosSupabase.length;
     $('stat-fixos').innerText = PRODUTOS_FIXOS.length;
     $('stat-total').innerText = PRODUTOS_FIXOS.length + produtosSupabase.length;
     
-    // Categorias com produtos
     const todos = getTodosProdutos();
     const cats = {};
-    todos.forEach(function(p) {
-        cats[p.categoria] = (cats[p.categoria] || 0) + 1;
-    });
+    todos.forEach(function(p) { cats[p.categoria] = (cats[p.categoria] || 0) + 1; });
     $('stat-cats').innerText = Object.keys(cats).length;
     
-    // Lista de categorias
     let catsHTML = '';
     Object.keys(CORES).forEach(function(cat) {
         const count = cats[cat] || 0;
-        catsHTML += '<div class="cat-row">';
-        catsHTML += '<div class="cat-dot" style="background:' + CORES[cat].hex + '"></div>';
-        catsHTML += '<div class="cat-name">' + CORES[cat].label + '</div>';
-        catsHTML += '<div class="cat-count">' + count + '</div>';
-        catsHTML += '</div>';
+        catsHTML += '<div class="cat-row"><div class="cat-dot" style="background:' + CORES[cat].hex + '"></div><div class="cat-name">' + CORES[cat].label + '</div><div class="cat-count">' + count + '</div></div>';
     });
     $('cat-list').innerHTML = catsHTML;
     
-    // Recentes (últimos 5 do Supabase)
     const recentes = produtosSupabase.slice(0, 5);
     if (recentes.length === 0) {
         $('recent-products').innerHTML = '<div class="empty-state" style="padding:20px;"><i class="fas fa-inbox" style="font-size:2rem;"></i><p>Nenhum produto adicionado ainda</p><p style="font-size:0.75rem;">Clique em "Adicionar" para começar</p></div>';
     } else {
         let recentHTML = '';
         recentes.forEach(function(p) {
-            recentHTML += '<div class="recent-item">';
-            recentHTML += '<img src="' + escapeHTML(p.imagem) + '" onerror="this.src=\'https://via.placeholder.com/40\'">';
-            recentHTML += '<div class="recent-item-info">';
-            recentHTML += '<strong>' + escapeHTML(p.nome) + '</strong>';
-            recentHTML += '<small>' + formatarPreco(p.preco) + ' • ' + (CORES[p.categoria] || {}).label + '</small>';
-            recentHTML += '</div></div>';
+            recentHTML += '<div class="recent-item"><img src="' + escapeHTML(p.imagem) + '" onerror="this.src=\'https://via.placeholder.com/40\'"><div class="recent-item-info"><strong>' + escapeHTML(p.nome) + '</strong><small>' + formatarPreco(p.preco) + ' • ' + (CORES[p.categoria] || {}).label + '</small></div></div>';
         });
         $('recent-products').innerHTML = recentHTML;
     }
 }
 
 // ============================================================
-// ADMIN — PREVIEW AO VIVO
+// PREVIEW AO VIVO
 // ============================================================
 function atualizarPreview() {
     const nome = $('add-nome').value.trim() || 'Nome do produto aparecerá aqui';
@@ -1111,7 +1044,7 @@ function atualizarPreview() {
 }
 
 // ============================================================
-// ADMIN — GERENCIAR
+// GERENCIAR
 // ============================================================
 function renderListaGerenciar() {
     const lista = $('lista-produtos');
@@ -1119,14 +1052,8 @@ function renderListaGerenciar() {
     const filtroCat = $('manage-filter').value;
     
     let filtrados = produtosSupabase.slice();
-    
-    if (filtroCat !== 'todos') {
-        filtrados = filtrados.filter(function(p) { return p.categoria === filtroCat; });
-    }
-    
-    if (termo) {
-        filtrados = filtrados.filter(function(p) { return (p.nome || '').toLowerCase().indexOf(termo) !== -1; });
-    }
+    if (filtroCat !== 'todos') filtrados = filtrados.filter(function(p) { return p.categoria === filtroCat; });
+    if (termo) filtrados = filtrados.filter(function(p) { return (p.nome || '').toLowerCase().indexOf(termo) !== -1; });
     
     $('manage-count').innerText = filtrados.length;
     
@@ -1134,9 +1061,8 @@ function renderListaGerenciar() {
         lista.innerHTML = '<div class="empty-state"><i class="fas fa-box-open"></i><p>Nenhum produto cadastrado ainda</p><p style="font-size:0.75rem;">Vá para a aba "Adicionar" para criar seu primeiro produto</p></div>';
         return;
     }
-    
     if (filtrados.length === 0) {
-        lista.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>Nenhum produto encontrado</p><p style="font-size:0.75rem;">Tente outro filtro ou termo de busca</p></div>';
+        lista.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>Nenhum produto encontrado</p></div>';
         return;
     }
     
@@ -1145,42 +1071,156 @@ function renderListaGerenciar() {
         const cor = CORES[p.categoria] || { hex: '#fff', label: p.categoria };
         html += '<div class="produto-item">';
         html += '<img src="' + escapeHTML(p.imagem) + '" onerror="this.src=\'https://via.placeholder.com/60\'">';
-        html += '<div class="produto-item-info">';
-        html += '<strong>' + escapeHTML(p.nome) + '</strong>';
-        html += '<small>';
-        html += '<span class="produto-item-cat-tag" style="background:' + cor.hex + '">' + cor.label + '</span>';
-        html += '<span>' + formatarPreco(p.preco) + '</span>';
-        html += '</small>';
-        html += '</div>';
+        html += '<div class="produto-item-info"><strong>' + escapeHTML(p.nome) + '</strong><small><span class="produto-item-cat-tag" style="background:' + cor.hex + '">' + cor.label + '</span><span>' + formatarPreco(p.preco) + '</span></small></div>';
         html += '<div class="produto-item-actions">';
         html += '<button class="btn-mini btn-edit-mini" onclick="editarProduto(' + p.id + ')" title="Editar"><i class="fas fa-edit"></i></button>';
         html += '<button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto(' + p.id + ')" title="Duplicar"><i class="fas fa-clone"></i></button>';
         html += '<button class="btn-mini btn-delete-mini" onclick="confirmarExclusao(' + p.id + ')" title="Excluir"><i class="fas fa-trash"></i></button>';
-        html += '</div>';
-        html += '</div>';
+        html += '</div></div>';
     });
     lista.innerHTML = html;
 }
 
 // ============================================================
-// ADMIN — DIAGNÓSTICO
+// CONFIGURAÇÕES (NOVO!)
+// ============================================================
+function carregarFormConfiguracao() {
+    $('cfg-url').value = CONFIG.url || '';
+    $('cfg-key').value = CONFIG.key || '';
+    $('cfg-tabela').value = CONFIG.tabela || 'produtos';
+    $('test-result').className = 'test-result';
+    $('test-result').innerHTML = '';
+}
+
+function mostrarResultadoTeste(tipo, titulo, mensagem) {
+    const div = $('test-result');
+    div.className = 'test-result diag-alert ' + tipo + ' show';
+    div.innerHTML = '<strong><i class="fas fa-' + (tipo === 'success' ? 'check-circle' : tipo === 'error' ? 'times-circle' : 'info-circle') + '"></i> ' + titulo + '</strong>' + mensagem;
+}
+
+async function testarConfiguracao() {
+    const url = $('cfg-url').value.trim();
+    const key = $('cfg-key').value.trim();
+    const tabela = $('cfg-tabela').value.trim() || 'produtos';
+    
+    if (!url || !key) {
+        mostrarResultadoTeste('error', 'Campos vazios', 'Preencha URL e Chave antes de testar.');
+        return;
+    }
+    
+    // Validações básicas
+    if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
+        mostrarResultadoTeste('error', 'URL inválida', 'A URL deve começar com <code>https://</code> e terminar com <code>.supabase.co</code>');
+        return;
+    }
+    
+    if (typeof window.supabase === 'undefined') {
+        mostrarResultadoTeste('error', 'Biblioteca não carregada', 'A biblioteca Supabase JS ainda não carregou. Aguarde alguns segundos e tente novamente.');
+        return;
+    }
+    
+    const btn = $('btn-testar');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testando...';
+    
+    try {
+        const tempClient = window.supabase.createClient(url, key);
+        const res = await tempClient.from(tabela).select('*', { count: 'exact', head: false }).limit(1);
+        
+        if (res.error) {
+            let dica = '';
+            const msg = (res.error.message || '').toLowerCase();
+            if (msg.includes('permission denied') || msg.includes('rls')) {
+                dica = '<br><br><strong style="color:#fff;">Solução:</strong> O RLS está bloqueando. No Supabase, vá em <code>Authentication → Policies</code>, selecione a tabela <code>' + tabela + '</code> e crie policies de SELECT e INSERT para a role <code>anon</code>.';
+            } else if (msg.includes('not found') || msg.includes('does not exist')) {
+                dica = '<br><br><strong style="color:#fff;">Solução:</strong> A tabela <code>' + tabela + '</code> não existe. Crie ela no Supabase com as colunas: id, nome, preco, imagem, descricao, categoria, created_at.';
+            } else if (msg.includes('invalid api key') || msg.includes('jwt')) {
+                dica = '<br><br><strong style="color:#fff;">Solução:</strong> A chave está incorreta. Verifique em <code>Project Settings → API</code> e copie a chave <code>anon public</code> (NÃO a service_role).';
+            } else if (msg.includes('failed to fetch') || msg.includes('network')) {
+                dica = '<br><br><strong style="color:#fff;">Solução:</strong> Erro de rede. Verifique se a URL está correta e se você tem internet.';
+            }
+            mostrarResultadoTeste('error', 'Erro: ' + res.error.message, '<code>' + escapeHTML(JSON.stringify(res.error)) + '</code>' + dica);
+        } else {
+            const count = res.count !== null ? res.count : (res.data || []).length;
+            mostrarResultadoTeste('success', '✅ Conexão funcionando!', 'Encontrados <strong>' + count + ' produto(s)</strong> na tabela <code>' + tabela + '</code>.<br><br>Clique em <strong>"Salvar"</strong> para usar essa configuração permanentemente.');
+        }
+    } catch (e) {
+        mostrarResultadoTeste('error', 'Erro inesperado', escapeHTML(e.message || String(e)));
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-vial"></i> Testar';
+    }
+}
+
+function salvarConfiguracao() {
+    const url = $('cfg-url').value.trim();
+    const key = $('cfg-key').value.trim();
+    const tabela = $('cfg-tabela').value.trim() || 'produtos';
+    
+    if (!url || !key) {
+        mostrarToast('Preencha URL e Chave', 'error');
+        return;
+    }
+    
+    try {
+        const novoConfig = { url: url, key: key, tabela: tabela };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(novoConfig));
+        CONFIG = novoConfig;
+        
+        // Recria o cliente Supabase
+        if (typeof window.supabase !== 'undefined') {
+            supabaseClient = window.supabase.createClient(CONFIG.url, CONFIG.key);
+        }
+        
+        mostrarToast('Configuração salva!', 'success');
+        
+        // Recarrega produtos
+        carregarProdutosSupabase();
+    } catch (e) {
+        mostrarToast('Erro ao salvar: ' + e.message, 'error');
+    }
+}
+
+function resetarConfiguracao() {
+    if (!confirm('Resetar para os valores padrão?\n\nIsso vai apagar suas configurações personalizadas.')) return;
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+        CONFIG = Object.assign({}, CONFIG_DEFAULT);
+        carregarFormConfiguracao();
+        if (typeof window.supabase !== 'undefined') {
+            supabaseClient = window.supabase.createClient(CONFIG.url, CONFIG.key);
+        }
+        mostrarToast('Configuração resetada', 'success');
+        carregarProdutosSupabase();
+    } catch (e) {
+        mostrarToast('Erro: ' + e.message, 'error');
+    }
+}
+
+// ============================================================
+// DIAGNÓSTICO
 // ============================================================
 function atualizarDiagnostico() {
     $('diag-status').innerHTML = conexaoOK ? 
         '<span style="color:var(--success-color);">● Conectado</span>' : 
         '<span style="color:var(--error-color);">● Desconectado</span>';
-    $('diag-url').innerText = SUPABASE_URL.replace('https://', '').substring(0, 25) + '...';
+    $('diag-url').innerText = (CONFIG.url || '—').replace('https://', '').substring(0, 30);
+    $('diag-tabela').innerText = CONFIG.tabela || 'produtos';
     $('diag-last-sync').innerText = formatarData(ultimaSync);
     $('diag-count').innerText = produtosSupabase.length + ' produto(s)';
+    $('diag-error').innerText = ultimoErro || '—';
     
-    // Alertas inteligentes
     let alerts = '';
     if (!conexaoOK) {
-        alerts += '<div class="diag-alert error"><strong><i class="fas fa-times-circle"></i> Sem conexão com Supabase</strong>Não foi possível conectar ao banco de dados. Verifique sua internet ou a configuração.</div>';
+        alerts += '<div class="diag-alert error"><strong><i class="fas fa-times-circle"></i> Sem conexão com o banco</strong>';
+        if (ultimoErro) {
+            alerts += 'Erro: <code>' + escapeHTML(ultimoErro) + '</code><br><br>';
+        }
+        alerts += '<strong style="color:#fff;">Vá para a aba "Config"</strong> e teste sua URL e chave do Supabase.</div>';
     } else if (produtosSupabase.length === 0) {
-        alerts += '<div class="diag-alert info"><strong><i class="fas fa-info-circle"></i> Banco vazio</strong>Nenhum produto cadastrado ainda. Vá para a aba "Adicionar" para criar o primeiro.</div>';
+        alerts += '<div class="diag-alert info"><strong><i class="fas fa-info-circle"></i> Conectado mas vazio</strong>Conexão OK mas o banco não tem produtos. Vá em "Adicionar" para criar o primeiro.<br><br><strong>Importante:</strong> se você JÁ adicionou produtos e eles não aparecem aqui, o RLS pode estar bloqueando o SELECT. Veja a aba "Config" para mais detalhes.</div>';
     } else {
-        alerts += '<div class="diag-alert success"><strong><i class="fas fa-check-circle"></i> Tudo funcionando</strong>Conectado ao banco e <strong>' + produtosSupabase.length + ' produto(s)</strong> sendo exibido(s) no site.</div>';
+        alerts += '<div class="diag-alert success"><strong><i class="fas fa-check-circle"></i> Tudo funcionando</strong>Conectado e <strong>' + produtosSupabase.length + ' produto(s)</strong> sendo exibidos no site.</div>';
     }
     $('diag-alerts').innerHTML = alerts;
 }
@@ -1188,17 +1228,18 @@ function atualizarDiagnostico() {
 async function testarConexao() {
     mostrarToast('Testando conexão...', 'info');
     if (!supabaseClient) {
-        mostrarToast('Cliente Supabase não inicializado', 'error');
+        mostrarToast('Cliente não inicializado. Vá em Config.', 'error');
         return;
     }
     try {
-        const res = await supabaseClient.from('produtos').select('count', { count: 'exact', head: true });
+        const res = await supabaseClient.from(CONFIG.tabela).select('count', { count: 'exact', head: true });
         if (res.error) throw res.error;
-        mostrarToast('Conexão OK! ' + (res.count || 0) + ' produtos no banco', 'success');
+        mostrarToast('Conexão OK! ' + (res.count || 0) + ' produtos', 'success');
         atualizarDiagnostico();
     } catch (e) {
-        console.error(e);
-        mostrarToast('Erro: ' + e.message, 'error');
+        ultimoErro = e.message || String(e);
+        mostrarToast('Erro: ' + ultimoErro, 'error');
+        atualizarDiagnostico();
     }
 }
 
@@ -1211,7 +1252,7 @@ async function recarregarTudo() {
 }
 
 // ============================================================
-// SUPABASE — INICIALIZAÇÃO
+// SUPABASE
 // ============================================================
 function setStatusConexao(online) {
     conexaoOK = online;
@@ -1238,71 +1279,83 @@ function inicializarSupabase() {
     try {
         if (typeof window.supabase === 'undefined') {
             supabaseRetries++;
-            if (supabaseRetries > 20) {
-                console.error('❌ Biblioteca Supabase não carregou após 20 tentativas');
+            if (supabaseRetries > 30) {
+                console.error('❌ Biblioteca Supabase não carregou');
+                ultimoErro = 'Biblioteca Supabase JS não carregou. Verifique sua internet.';
                 setStatusConexao(false);
                 return;
             }
-            console.warn('⏳ Aguardando biblioteca Supabase... (tentativa ' + supabaseRetries + ')');
             setTimeout(inicializarSupabase, 300);
             return;
         }
         
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        if (!CONFIG.url || !CONFIG.key) {
+            ultimoErro = 'URL ou chave não configuradas. Vá em Config.';
+            setStatusConexao(false);
+            return;
+        }
+        
+        supabaseClient = window.supabase.createClient(CONFIG.url, CONFIG.key);
         console.log('✅ Cliente Supabase criado');
         carregarProdutosSupabase();
     } catch (e) {
         console.error('❌ Erro Supabase:', e);
+        ultimoErro = e.message || String(e);
         setStatusConexao(false);
     }
 }
 
 async function carregarProdutosSupabase() {
     if (!supabaseClient) {
-        console.warn('⚠️ Cliente Supabase não disponível');
         renderTodosProdutos();
         return;
     }
     
-    console.log('🔄 Buscando produtos do Supabase...');
+    console.log('🔄 Buscando produtos...');
     
     try {
         const res = await supabaseClient
-            .from('produtos')
+            .from(CONFIG.tabela)
             .select('*')
             .order('created_at', { ascending: false });
         
         if (res.error) {
             console.error('❌ Erro Supabase:', res.error);
+            ultimoErro = res.error.message || JSON.stringify(res.error);
             setStatusConexao(false);
-            renderTodosProdutos(); // Mostra os fixos pelo menos
+            renderTodosProdutos();
+            
+            // Atualiza UI se admin aberto
+            if ($('modal-admin').classList.contains('active')) {
+                atualizarDiagnostico();
+            }
             return;
         }
         
         produtosSupabase = res.data || [];
         ultimaSync = new Date();
+        ultimoErro = null;
         setStatusConexao(true);
         
-        console.log('✅ ' + produtosSupabase.length + ' produto(s) carregado(s) do banco');
+        console.log('✅ ' + produtosSupabase.length + ' produto(s) carregado(s)');
         
-        // RENDERIZAÇÃO UNIFICADA
         renderTodosProdutos();
         
-        // Atualiza painel se aberto
         if ($('modal-admin').classList.contains('active')) {
             atualizarDashboard();
             if ($('admin-gerenciar').classList.contains('active')) renderListaGerenciar();
             if ($('admin-diagnostico').classList.contains('active')) atualizarDiagnostico();
         }
     } catch (e) {
-        console.error('❌ Erro ao carregar:', e);
+        console.error('❌ Erro:', e);
+        ultimoErro = e.message || String(e);
         setStatusConexao(false);
         renderTodosProdutos();
     }
 }
 
 // ============================================================
-// SUPABASE — CRUD
+// CRUD
 // ============================================================
 async function salvarProdutoSupabase() {
     const nome = $('add-nome').value.trim();
@@ -1312,51 +1365,34 @@ async function salvarProdutoSupabase() {
     const descricao = $('add-desc').value.trim();
     
     if (!nome || !imagem || isNaN(preco)) {
-        mostrarToast('Preencha Nome, Preço e Imagem', 'error');
-        return;
+        mostrarToast('Preencha Nome, Preço e Imagem', 'error'); return;
     }
-    if (preco <= 0) {
-        mostrarToast('Preço deve ser maior que zero', 'error');
-        return;
-    }
-    if (!supabaseClient) {
-        mostrarToast('Conexão indisponível. Recarregue a página.', 'error');
-        return;
-    }
+    if (preco <= 0) { mostrarToast('Preço deve ser maior que zero', 'error'); return; }
+    if (!supabaseClient) { mostrarToast('Sem conexão. Vá em Config.', 'error'); return; }
     
     const btn = $('btn-salvar');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SALVANDO...';
     
     try {
-        const res = await supabaseClient
-            .from('produtos')
+        const res = await supabaseClient.from(CONFIG.tabela)
             .insert([{ nome: nome, preco: preco, imagem: imagem, descricao: descricao, categoria: categoria }])
             .select();
         
         if (res.error) {
-            console.error('Erro Supabase:', res.error);
+            console.error('Erro:', res.error);
             mostrarToast('Erro: ' + res.error.message, 'error');
             return;
         }
         
-        mostrarToast('Produto adicionado com sucesso!', 'success');
-        
-        // Limpa form
-        $('add-nome').value = '';
-        $('add-preco').value = '';
-        $('add-imgs').value = '';
-        $('add-desc').value = '';
+        mostrarToast('Produto adicionado!', 'success');
+        $('add-nome').value = ''; $('add-preco').value = '';
+        $('add-imgs').value = ''; $('add-desc').value = '';
         atualizarPreview();
-        
-        // Recarrega tudo (vai mostrar no site)
         await carregarProdutosSupabase();
-        
-        // Volta para dashboard pra ver
         trocarAbaAdmin('dashboard');
     } catch (e) {
-        console.error('Erro:', e);
-        mostrarToast('Erro ao salvar: ' + e.message, 'error');
+        mostrarToast('Erro: ' + e.message, 'error');
     } finally {
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> SALVAR PRODUTO';
@@ -1364,16 +1400,11 @@ async function salvarProdutoSupabase() {
 }
 
 function editarProduto(id) {
-    const produto = produtosSupabase.find(function(p) { return p.id === id; });
-    if (!produto) return;
-    
-    $('edit-id').value = produto.id;
-    $('edit-nome').value = produto.nome;
-    $('edit-preco').value = produto.preco;
-    $('edit-cat').value = produto.categoria;
-    $('edit-imgs').value = produto.imagem;
-    $('edit-desc').value = produto.descricao || '';
-    
+    const p = produtosSupabase.find(function(x) { return x.id === id; });
+    if (!p) return;
+    $('edit-id').value = p.id; $('edit-nome').value = p.nome;
+    $('edit-preco').value = p.preco; $('edit-cat').value = p.categoria;
+    $('edit-imgs').value = p.imagem; $('edit-desc').value = p.descricao || '';
     abrirModal('modal-editar');
 }
 
@@ -1385,105 +1416,60 @@ async function atualizarProdutoSupabase() {
     const imagem = $('edit-imgs').value.trim();
     const descricao = $('edit-desc').value.trim();
     
-    if (!nome || isNaN(preco) || !imagem) {
-        mostrarToast('Preencha todos os campos obrigatórios', 'error');
-        return;
-    }
+    if (!nome || isNaN(preco) || !imagem) { mostrarToast('Preencha tudo', 'error'); return; }
     
     try {
-        const res = await supabaseClient
-            .from('produtos')
+        const res = await supabaseClient.from(CONFIG.tabela)
             .update({ nome: nome, preco: preco, imagem: imagem, descricao: descricao, categoria: categoria })
             .eq('id', id);
-        
-        if (res.error) {
-            mostrarToast('Erro ao atualizar: ' + res.error.message, 'error');
-            return;
-        }
-        
-        mostrarToast('Atualizado com sucesso!', 'success');
+        if (res.error) { mostrarToast('Erro: ' + res.error.message, 'error'); return; }
+        mostrarToast('Atualizado!', 'success');
         await carregarProdutosSupabase();
         fecharModal('modal-editar');
-    } catch (e) {
-        mostrarToast('Erro: ' + e.message, 'error');
-    }
+    } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
 async function duplicarProduto(id) {
-    const produto = produtosSupabase.find(function(p) { return p.id === id; });
-    if (!produto) return;
-    
-    if (!confirm('Duplicar "' + produto.nome + '"?')) return;
-    
+    const p = produtosSupabase.find(function(x) { return x.id === id; });
+    if (!p || !confirm('Duplicar "' + p.nome + '"?')) return;
     try {
-        const res = await supabaseClient
-            .from('produtos')
-            .insert([{
-                nome: produto.nome + ' (Cópia)',
-                preco: produto.preco,
-                imagem: produto.imagem,
-                descricao: produto.descricao,
-                categoria: produto.categoria
-            }]);
-        
-        if (res.error) {
-            mostrarToast('Erro ao duplicar', 'error');
-            return;
-        }
-        
-        mostrarToast('Produto duplicado!', 'success');
+        const res = await supabaseClient.from(CONFIG.tabela)
+            .insert([{ nome: p.nome + ' (Cópia)', preco: p.preco, imagem: p.imagem, descricao: p.descricao, categoria: p.categoria }]);
+        if (res.error) { mostrarToast('Erro ao duplicar', 'error'); return; }
+        mostrarToast('Duplicado!', 'success');
         await carregarProdutosSupabase();
-    } catch (e) {
-        mostrarToast('Erro: ' + e.message, 'error');
-    }
+    } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
 async function confirmarExclusao(id) {
-    const produto = produtosSupabase.find(function(p) { return p.id === id; });
-    if (!produto) return;
-    
-    if (!confirm('Tem certeza que deseja excluir "' + produto.nome + '"?\n\nEsta ação não pode ser desfeita.')) return;
-    
+    const p = produtosSupabase.find(function(x) { return x.id === id; });
+    if (!p || !confirm('Excluir "' + p.nome + '"?\nEsta ação não pode ser desfeita.')) return;
     try {
-        const res = await supabaseClient.from('produtos').delete().eq('id', id);
-        
-        if (res.error) {
-            mostrarToast('Erro ao excluir', 'error');
-            return;
-        }
-        
-        mostrarToast('Produto excluído', 'success');
+        const res = await supabaseClient.from(CONFIG.tabela).delete().eq('id', id);
+        if (res.error) { mostrarToast('Erro ao excluir', 'error'); return; }
+        mostrarToast('Excluído', 'success');
         await carregarProdutosSupabase();
-    } catch (e) {
-        mostrarToast('Erro: ' + e.message, 'error');
-    }
+    } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
 // ============================================================
 // INICIALIZAÇÃO
 // ============================================================
 function inicializar() {
-    console.log('🚀 Canetas da Paz — Iniciando...');
-    
-    // 1. Renderiza produtos fixos IMEDIATAMENTE (antes mesmo do Supabase)
+    console.log('🚀 Canetas da Paz iniciando...');
+    console.log('📦 Config carregado:', { url: CONFIG.url, tabela: CONFIG.tabela, key: CONFIG.key.substring(0, 20) + '...' });
     renderTodosProdutos();
-    console.log('✅ ' + PRODUTOS_FIXOS.length + ' produtos fixos carregados');
-    
-    // 2. Inicializa Supabase em paralelo
     inicializarSupabase();
 }
 
-// Garante que roda após DOM completo
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', inicializar);
 } else {
     inicializar();
 }
 
-// Backup: roda no load também
 window.addEventListener('load', function() {
     if (!supabaseClient && typeof window.supabase !== 'undefined') {
-        console.log('🔄 Tentando inicializar Supabase no load...');
         inicializarSupabase();
     }
 });
