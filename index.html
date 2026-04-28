@@ -636,7 +636,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 'use strict';
 
 // ============================================================
-// CONFIGURAÇÕES PADRÃO 
+// CONFIGURAÇÕES PADRÃO
 // ============================================================
 const TELEFONE = "5511995079212";
 const SENHA_HASH = "VEhFRU5E"; // THEEND
@@ -757,7 +757,7 @@ function formatarData(data) {
 }
 
 // ============================================================
-// MODAIS E EVENTOS DE CLIQUE
+// MODAIS
 // ============================================================
 function abrirModal(id) {
     const modal = $(id);
@@ -826,7 +826,7 @@ function getTodosProdutos() {
         return {
             id: p.id, nome: p.nome, preco: parseFloat(p.preco),
             imagem: p.imagem, descricao: p.descricao || '', categoria: p.categoria,
-            fixo: false
+            fixo: false, created_at: p.created_at
         };
     }));
 }
@@ -1032,7 +1032,7 @@ function atualizarPreview() {
 }
 
 // ============================================================
-// GERENCIAR 
+// GERENCIAR
 // ============================================================
 function renderListaGerenciar() {
     const lista = $('lista-produtos');
@@ -1058,7 +1058,9 @@ function renderListaGerenciar() {
     filtrados.forEach(function(p) {
         const cor = CORES[p.categoria] || { hex: '#fff', label: p.categoria };
         
-        // CORREÇÃO CRÍTICA DO BUG DE STRING NAS FUNÇÕES ONCLICK
+        // Garante que o ID não retorne o valor string "undefined" caso ocorra uma falha
+        const safeId = (p.id !== undefined && p.id !== null) ? p.id : '';
+        
         html += `<div class="produto-item">
             <img src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/60'">
             <div class="produto-item-info">
@@ -1066,9 +1068,9 @@ function renderListaGerenciar() {
                 <small><span class="produto-item-cat-tag" style="background:${cor.hex}">${cor.label}</span><span>${formatarPreco(p.preco)}</span></small>
             </div>
             <div class="produto-item-actions">
-                <button class="btn-mini btn-edit-mini" onclick="editarProduto('${p.id}')" title="Editar"><i class="fas fa-edit"></i></button>
-                <button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto('${p.id}')" title="Duplicar"><i class="fas fa-clone"></i></button>
-                <button class="btn-mini btn-delete-mini" onclick="confirmarExclusao('${p.id}')" title="Excluir"><i class="fas fa-trash"></i></button>
+                <button class="btn-mini btn-edit-mini" onclick="editarProduto('${safeId}')" title="Editar"><i class="fas fa-edit"></i></button>
+                <button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto('${safeId}')" title="Duplicar"><i class="fas fa-clone"></i></button>
+                <button class="btn-mini btn-delete-mini" onclick="confirmarExclusao('${safeId}')" title="Excluir"><i class="fas fa-trash"></i></button>
             </div>
         </div>`;
     });
@@ -1126,7 +1128,7 @@ async function testarConfiguracao() {
             if (msg.includes('permission denied') || msg.includes('rls')) {
                 dica = '<br><br><strong style="color:#fff;">Solução:</strong> O RLS está bloqueando. No Supabase, vá em <code>Authentication → Policies</code>, selecione a tabela <code>' + tabela + '</code> e crie policies de SELECT e INSERT para a role <code>anon</code>.';
             } else if (msg.includes('not found') || msg.includes('does not exist')) {
-                dica = '<br><br><strong style="color:#fff;">Solução:</strong> A tabela <code>' + tabela + '</code> não existe. Crie ela no Supabase com as colunas: id, nome, preco, imagem, descricao, categoria.';
+                dica = '<br><br><strong style="color:#fff;">Solução:</strong> A tabela <code>' + tabela + '</code> não existe. Verifique se o nome está correto.';
             } else if (msg.includes('invalid api key') || msg.includes('jwt')) {
                 dica = '<br><br><strong style="color:#fff;">Solução:</strong> A chave está incorreta. Verifique em <code>Project Settings → API</code> e copie a chave <code>anon public</code> (NÃO a service_role).';
             } else if (msg.includes('failed to fetch') || msg.includes('network')) {
@@ -1208,7 +1210,7 @@ function atualizarDiagnostico() {
         }
         alerts += '<strong style="color:#fff;">Vá para a aba "Config"</strong> e teste sua URL e chave do Supabase.</div>';
     } else if (produtosSupabase.length === 0) {
-        alerts += '<div class="diag-alert info"><strong><i class="fas fa-info-circle"></i> Conectado mas vazio</strong>Conexão OK mas o banco não tem produtos. Vá em "Adicionar" para criar o primeiro.<br><br><strong>Importante:</strong> se você JÁ adicionou produtos e eles não aparecem aqui, o RLS pode estar bloqueando o SELECT. Veja a aba "Config" para mais detalhes.</div>';
+        alerts += '<div class="diag-alert info"><strong><i class="fas fa-info-circle"></i> Conectado mas vazio</strong>Conexão OK mas o banco não tem produtos. Vá em "Adicionar" para criar o primeiro.</div>';
     } else {
         alerts += '<div class="diag-alert success"><strong><i class="fas fa-check-circle"></i> Tudo funcionando</strong>Conectado e <strong>' + produtosSupabase.length + ' produto(s)</strong> sendo exibidos no site.</div>';
     }
@@ -1304,7 +1306,7 @@ async function carregarProdutosSupabase() {
     console.log('🔄 Buscando produtos...');
     
     try {
-        // AQUI FOI CORRIGIDO O ERRO DE BUSCA - Retirado o .order('created_at')
+        // A BUSCA NÃO USA MAIS O .order('created_at') PARA EVITAR BUGS SE A COLUNA NÃO EXISTIR!
         const res = await supabaseClient
             .from(CONFIG.tabela)
             .select('*');
@@ -1344,7 +1346,7 @@ async function carregarProdutosSupabase() {
 }
 
 // ============================================================
-// CRUD OTIMIZADO PARA TIPOS DE IDS E ERROS
+// CRUD OTIMIZADO PARA TIPOS DE IDS (BIGINT E STRING) E ERROS
 // ============================================================
 async function salvarProdutoSupabase() {
     const nome = $('add-nome').value.trim();
@@ -1364,8 +1366,22 @@ async function salvarProdutoSupabase() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SALVANDO...';
     
     try {
+        // Envia o id (número seguro) e o created_at (data), garantindo que as colunas serão preenchidas.
+        const idCalculado = Date.now();
+        const dataCriacao = new Date().toISOString();
+
+        const payload = { 
+            id: idCalculado,
+            nome: nome, 
+            preco: preco, 
+            imagem: imagem, 
+            descricao: descricao, 
+            categoria: categoria,
+            created_at: dataCriacao
+        };
+
         const res = await supabaseClient.from(CONFIG.tabela)
-            .insert([{ nome: nome, preco: preco, imagem: imagem, descricao: descricao, categoria: categoria }])
+            .insert([payload])
             .select();
         
         if (res.error) {
@@ -1388,15 +1404,24 @@ async function salvarProdutoSupabase() {
     }
 }
 
-// Função de edição segura convertendo id em String para busca no array
+// Converte de forma segura o ID para evitar que o Supabase receba strings vazias ou NaN
 function editarProduto(idRaw) {
-    const p = produtosSupabase.find(x => String(x.id) === String(idRaw));
-    if (!p) return;
+    if (!idRaw || idRaw === 'undefined' || idRaw === 'null') {
+        mostrarToast('Erro: ID do produto é inválido.', 'error');
+        return;
+    }
+
+    const p = produtosSupabase.find(function(x) { return String(x.id) === String(idRaw); });
+    if (!p) {
+        mostrarToast('Erro: Produto não encontrado na memória.', 'error');
+        return;
+    }
+
     $('edit-id').value = p.id; 
     $('edit-nome').value = p.nome;
     $('edit-preco').value = p.preco; 
     $('edit-cat').value = p.categoria;
-    $('edit-imgs').value = Array.isArray(p.imagem) ? p.imagem.join(', ') : p.imagem; 
+    $('edit-imgs').value = p.imagem; 
     $('edit-desc').value = p.descricao || '';
     abrirModal('modal-editar');
 }
@@ -1409,9 +1434,10 @@ async function atualizarProdutoSupabase() {
     const imagem = $('edit-imgs').value.trim();
     const descricao = $('edit-desc').value.trim();
     
+    if (!idRaw || idRaw === 'undefined') { mostrarToast('Erro: ID inválido para edição.', 'error'); return; }
     if (!nome || isNaN(preco) || !imagem) { mostrarToast('Preencha tudo', 'error'); return; }
     
-    // Tratamento de conversão caso o banco de dados exija ID tipo Inteiro
+    // Converte para Int se o ID for apenas números, senão mantém a string
     let formatId = /^\d+$/.test(idRaw) ? parseInt(idRaw, 10) : idRaw;
 
     try {
@@ -1427,28 +1453,47 @@ async function atualizarProdutoSupabase() {
 }
 
 async function duplicarProduto(idRaw) {
-    const p = produtosSupabase.find(x => String(x.id) === String(idRaw));
+    if (!idRaw || idRaw === 'undefined') return;
+    const p = produtosSupabase.find(function(x) { return String(x.id) === String(idRaw); });
     if (!p || !confirm('Duplicar "' + p.nome + '"?')) return;
+    
     try {
+        const idCalculado = Date.now();
+        const dataCriacao = new Date().toISOString();
+
+        const payload = { 
+            id: idCalculado,
+            nome: p.nome + ' (Cópia)', 
+            preco: p.preco, 
+            imagem: p.imagem, 
+            descricao: p.descricao, 
+            categoria: p.categoria,
+            created_at: dataCriacao
+        };
+
         const res = await supabaseClient.from(CONFIG.tabela)
-            .insert([{ nome: p.nome + ' (Cópia)', preco: p.preco, imagem: p.imagem, descricao: p.descricao, categoria: p.categoria }]);
+            .insert([payload]);
             
-        if (res.error) { mostrarToast('Erro ao duplicar', 'error'); return; }
+        if (res.error) { mostrarToast('Erro ao duplicar: ' + res.error.message, 'error'); return; }
         mostrarToast('Duplicado!', 'success');
         await carregarProdutosSupabase();
     } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
 async function confirmarExclusao(idRaw) {
-    const p = produtosSupabase.find(x => String(x.id) === String(idRaw));
+    if (!idRaw || idRaw === 'undefined') {
+        mostrarToast('Erro: ID não encontrado.', 'error'); return;
+    }
+
+    const p = produtosSupabase.find(function(x) { return String(x.id) === String(idRaw); });
     if (!p || !confirm('Excluir "' + p.nome + '"?\nEsta ação não pode ser desfeita.')) return;
     
-    // Tratamento de conversão caso o banco de dados exija ID tipo Inteiro
+    // Converte para Int se o ID for apenas números
     let formatId = /^\d+$/.test(idRaw) ? parseInt(idRaw, 10) : idRaw;
 
     try {
         const res = await supabaseClient.from(CONFIG.tabela).delete().eq('id', formatId);
-        if (res.error) { mostrarToast('Erro ao excluir', 'error'); return; }
+        if (res.error) { mostrarToast('Erro ao excluir: ' + res.error.message, 'error'); return; }
         mostrarToast('Excluído', 'success');
         await carregarProdutosSupabase();
     } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
