@@ -1035,7 +1035,12 @@ function inicializarSupabase() {
 }
 
 function carregarProdutosSupabase() {
-    if (!supabaseClient) return;
+    if (!supabaseClient) {
+        console.warn('⚠️ Supabase não conectado ainda');
+        return;
+    }
+    
+    console.log('🔄 Buscando produtos no Supabase...');
     
     supabaseClient
         .from('produtos')
@@ -1043,36 +1048,73 @@ function carregarProdutosSupabase() {
         .order('created_at', { ascending: false })
         .then(function(res) {
             if (res.error) {
-                console.error('Erro:', res.error);
+                console.error('❌ Erro ao buscar produtos:', res.error);
                 return;
             }
             
             produtosSupabase = res.data || [];
-            console.log('Produtos do banco:', produtosSupabase.length);
+            console.log('✅ Produtos carregados:', produtosSupabase.length);
             
-            var grade = document.getElementById('supa-produtos');
-            grade.innerHTML = '';
+            var container = document.getElementById('supa-produtos');
+            if (!container) {
+                console.error('❌ Container #supa-produtos não encontrado!');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            if (produtosSupabase.length === 0) {
+                console.log('ℹ️ Nenhum produto no banco ainda');
+                return;
+            }
             
             for (var i = 0; i < produtosSupabase.length; i++) {
                 var p = produtosSupabase[i];
-                var nomeEsc = String(p.nome).replace(/'/g, "\\'");
-                var descEsc = String(p.descricao || '').replace(/'/g, "\\'");
+                
+                // Criar o card
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-categoria', p.categoria);
+                
                 var corCat = cores[p.categoria] || '#fff';
+                var labelCat = p.categoria === 'pod' ? 'POD THC' : 
+                               p.categoria === 'hibrida' ? 'Híbrida' :
+                               p.categoria === 'indica' ? 'Indica' :
+                               p.categoria === 'sativa' ? 'Sativa' :
+                               p.categoria === 'refil' ? 'Refil' : 'Óleo';
                 
-                var html = '<div class="card" data-categoria="' + p.categoria + '" onclick="abrirModalDetalhes(\'' + nomeEsc + '\', ' + p.preco + ', \'' + descEsc + '\', \'' + p.imagem + '\', \'' + p.categoria + '\')">';
-                html += '<span class="tag-tipo" style="background:' + corCat + '">' + String(p.categoria).toUpperCase() + '</span>';
-                html += '<div class="card-img-box"><img src="' + p.imagem + '"></div>';
-                html += '<div class="card-info">';
-                html += '<div class="card-nome">' + p.nome + '</div>';
-                html += '<div class="card-preco">R$ ' + parseFloat(p.preco).toFixed(2).replace('.', ',') + ' ';
-                html += '<span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho(\'' + nomeEsc + '\', ' + p.preco + ', \'' + p.imagem + '\')"><i class="fas fa-plus"></i></span>';
-                html += '</div></div></div>';
+                card.innerHTML = 
+                    '<span class="tag-tipo" style="background:' + corCat + '">' + labelCat + '</span>' +
+                    '<div class="card-img-box"><img src="' + p.imagem + '" alt="' + p.nome + '"></div>' +
+                    '<div class="card-info">' +
+                        '<div class="card-nome">' + p.nome + '</div>' +
+                        '<div class="card-preco">R$ ' + parseFloat(p.preco).toFixed(2).replace('.', ',') + ' ' +
+                            '<span class="card-btn-add"><i class="fas fa-plus"></i></span>' +
+                        '</div>' +
+                    '</div>';
                 
-                grade.insertAdjacentHTML('beforeend', html);
+                // Adicionar evento de clique no card
+                (function(produto) {
+                    card.onclick = function() {
+                        abrirModalDetalhes(produto.nome, produto.preco, produto.descricao || '', produto.imagem, produto.categoria);
+                    };
+                    
+                    // Adicionar evento no botão +
+                    var btnAdd = card.querySelector('.card-btn-add');
+                    btnAdd.onclick = function(e) {
+                        e.stopPropagation();
+                        adicionarAoCarrinho(produto.nome, produto.preco, produto.imagem);
+                    };
+                })(p);
+                
+                container.appendChild(card);
+                console.log('➕ Card adicionado:', p.nome);
             }
+            
+            console.log('✅ Todos os ' + produtosSupabase.length + ' produtos renderizados!');
         })
         .catch(function(e) {
-            console.error('Erro ao carregar:', e);
+            console.error('❌ Erro ao carregar produtos:', e);
         });
 }
 
