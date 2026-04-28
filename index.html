@@ -87,13 +87,13 @@
         .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 20px; }
         @media (min-width: 768px) { .container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); } }
 
+        /* TRAVA DE OPACIDADE REMOVIDA PARA EVITAR TELA PRETA */
         .card { 
             background: var(--glass-card); border: 1px solid var(--glass-border); border-radius: 28px; 
-            overflow: hidden; position: relative; opacity: 0; transform: translateY(30px); 
+            overflow: hidden; position: relative; 
             transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
             cursor: pointer;
         }
-        .card.visible { opacity: 1; transform: translateY(0); }
         .card:active { transform: scale(0.96); }
 
         .tag-tipo { position: absolute; top: 15px; left: 15px; font-size: 0.55rem; padding: 6px 12px; border-radius: 12px; font-weight: 900; color: #000; z-index: 5; text-transform: uppercase; }
@@ -205,6 +205,7 @@
     </header>
 
     <div class="container" id="grade-produtos">
+        
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Strawberry Cheesecake (Indica)', 300.00, 'Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.', 'https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg"></div>
@@ -591,6 +592,7 @@
                 <div class="card-preco">R$ 349,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Óleo de CBD Delta-9 THC + CBD', 349.99, 'https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
+
         <div id="supa-produtos" style="display: contents;"></div>
 
     </div>
@@ -700,65 +702,49 @@
 
         const cores = { pod:'var(--cat-pod)', hibrida:'var(--cat-hibrida)', indica:'var(--cat-indica)', sativa:'var(--cat-sativa)', refil:'var(--cat-refil)', oleo:'var(--cat-oleo)' };
 
-        // === CONFIGURAÇÃO SUPABASE COM TRAVA DE SEGURANÇA ===
+        // === INICIALIZAÇÃO SEGURA DO SUPABASE ===
         let supabase;
-        try {
-            const supabaseUrl = 'https://vlosjvsxjmhksncmqmpk.supabase.co';
-            const supabaseKey = 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc';
-            supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        } catch(e) {
-            console.error("Erro ao iniciar Supabase", e);
+        if (window.supabase) {
+            supabase = window.supabase.createClient('https://vlosjvsxjmhksncmqmpk.supabase.co', 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc');
         }
 
         // === INICIALIZAÇÃO ===
         window.onload = async () => {
-            // ISSO AQUI GARANTE QUE SEUS 43 PRODUTOS APAREÇAM COM EFEITO
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.card').forEach(card => observer.observe(card));
-
-            // Puxa os novos do banco e joga no final da lista
-            if(supabase) {
+            if (supabase) {
                 await carregarProdutosSupabase();
             }
         };
 
         async function carregarProdutosSupabase() {
-            const containerSupa = document.getElementById('supa-produtos');
             try {
-                const { data: produtos, error } = await supabase
-                    .from('produtos')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
+                const { data: produtos, error } = await supabase.from('produtos').select('*').order('created_at', { ascending: false });
                 if (produtos && produtos.length > 0) {
+                    const grade = document.getElementById('supa-produtos');
+                    grade.innerHTML = '';
                     produtos.forEach(p => {
-                        const imagensArray = p.imagem.includes(',') ? p.imagem.split(',').map(i => i.trim()) : [p.imagem];
+                        const imgs = p.imagem.includes(',') ? p.imagem.split(',').map(i=>i.trim()) : [p.imagem];
                         const c = p.categoria;
                         
                         const html = `
-                        <div class="card visible" data-categoria="${c}" onclick="abrirModalDetalhes('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${(p.descricao || '').replace(/'/g, "\\'")}', ${JSON.stringify(imagensArray).replace(/"/g, "'")}, '${c}')">
-                            <span class="tag-tipo" style="background:${cores[c]}">${c.toUpperCase()}</span>
-                            <div class="card-img-box"><img src="${imagensArray[0]}"></div>
+                        <div class="card" data-categoria="${c}" onclick="abrirModalDetalhes('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${(p.descricao || '').replace(/'/g, "\\'")}', ${JSON.stringify(imgs).replace(/"/g, "'")}, '${c}')">
+                            <span class="tag-tipo" style="background:${cores[c] || '#fff'}">${c.toUpperCase()}</span>
+                            <div class="card-img-box"><img src="${imgs[0]}"></div>
                             <div class="card-info">
                                 <div class="card-nome">${p.nome}</div>
                                 <div class="card-preco">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')} 
-                                <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${imagensArray[0]}')"><i class="fas fa-plus"></i></span></div>
+                                <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${imgs[0]}')"><i class="fas fa-plus"></i></span></div>
                             </div>
                         </div>`;
-                        containerSupa.insertAdjacentHTML('beforeend', html);
+                        grade.insertAdjacentHTML('beforeend', html);
                     });
                 }
             } catch (err) {
-                console.error("Erro ao carregar do banco:", err);
+                console.error("Erro no Supabase:", err);
             }
         }
 
         async function salvarProdutoSupabase() {
-            if(!supabase) return alert("Banco de dados não conectado.");
+            if(!supabase) return alert("Banco de dados desconectado. Atualize a página.");
             const btn = document.getElementById('btn-salvar');
             const n = document.getElementById('add-nome').value.trim();
             const p = parseFloat(document.getElementById('add-preco').value);
@@ -779,14 +765,17 @@
                 if (error) throw error;
 
                 fecharModal('modal-admin');
-                mostrarToastMsg("Produto salvo no banco de dados!");
+                mostrarToastMsg("Salvo no banco de dados!");
                 
-                // Limpa o formulário e recarrega a página para puxar do banco
-                setTimeout(() => location.reload(), 1500);
+                document.getElementById('add-nome').value = '';
+                document.getElementById('add-preco').value = '';
+                document.getElementById('add-imgs').value = '';
+                document.getElementById('add-desc').value = '';
+
+                await carregarProdutosSupabase();
 
             } catch (err) {
-                console.error("Erro:", err);
-                alert("Erro ao salvar. Verifique o banco de dados.");
+                alert("Erro ao salvar. Verifique se as colunas da tabela estão certas.");
             } finally {
                 btn.innerText = "SALVAR NO BANCO DE DADOS";
                 btn.disabled = false;
@@ -818,12 +807,10 @@
             if(termo !== '') document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
 
             document.querySelectorAll('.card').forEach(card => {
-                card.classList.remove('visible');
                 const nome = card.querySelector('.card-nome').innerText.toLowerCase();
                 if (nome.includes(termo)) {
                     card.style.display = 'block';
                     visiveis++;
-                    setTimeout(() => card.classList.add('visible'), 10);
                 } else {
                     card.style.display = 'none';
                 }
@@ -842,11 +829,9 @@
             const msgVazio = document.getElementById('msg-vazio');
 
             document.querySelectorAll('.card').forEach(card => {
-                card.classList.remove('visible');
                 if (categoria === 'todos' || card.dataset.categoria === categoria) {
                     card.style.display = 'block';
                     visiveis++;
-                    setTimeout(() => card.classList.add('visible'), 50);
                 } else {
                     card.style.display = 'none';
                 }
