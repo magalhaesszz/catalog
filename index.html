@@ -591,7 +591,6 @@
                 <div class="card-preco">R$ 349,99 <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('Óleo de CBD Delta-9 THC + CBD', 349.99, 'https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg')"><i class="fas fa-plus"></i></span></div>
             </div>
         </div>
-
         <div id="supa-produtos" style="display: contents;"></div>
 
     </div>
@@ -599,7 +598,7 @@
     <div id="msg-vazio" class="empty-message" style="display:none; text-align:center; padding:50px; color:var(--text-muted);">Nenhum produto encontrado.</div>
 
     <div class="social-float">
-        <a href="https://wa.me/5511995079212" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://wa.me/551199507-9212" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
         <a href="https://www.instagram.com/canetasdapaz?igsh=MWdhbXhmbmt3b2Z1eg==" target="_blank" class="btn-social" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)"><i class="fab fa-instagram"></i></a>
     </div>
 
@@ -676,14 +675,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
     <script>
-        // === CONFIGURAÇÃO SUPABASE ===
-        const supabaseUrl = 'https://vlosjvsxjmhksncmqmpk.supabase.co';
-        const supabaseKey = 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
         // === TRAVAS DE ZOOM DEFINITIVAS PARA MOBILE ===
         document.addEventListener('dblclick', function(event) { event.preventDefault(); }, { passive: false });
         let lastTouchEnd = 0;
@@ -697,7 +691,7 @@
         }, { passive: false });
 
         // === CONFIGURAÇÕES E ESTADO ===
-        const telefone = "5511995079212"; 
+        const telefone = "551199507-9212"; 
         const SENHA_HASH = "VEhFRU5E"; // Senha "THEEND" em base64
         let carrinho = [];
         let produtoAtual = {}; 
@@ -706,16 +700,28 @@
 
         const cores = { pod:'var(--cat-pod)', hibrida:'var(--cat-hibrida)', indica:'var(--cat-indica)', sativa:'var(--cat-sativa)', refil:'var(--cat-refil)', oleo:'var(--cat-oleo)' };
 
-        // === INICIALIZAÇÃO E SUPABASE FETCH ===
+        // === CONFIGURAÇÃO SUPABASE COM TRAVA DE SEGURANÇA ===
+        let supabase;
+        try {
+            const supabaseUrl = 'https://vlosjvsxjmhksncmqmpk.supabase.co';
+            const supabaseKey = 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc';
+            supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        } catch(e) {
+            console.error("Erro ao iniciar Supabase", e);
+        }
+
+        // === INICIALIZAÇÃO ===
         window.onload = async () => {
-            // Efeito Scroll nos fixos
+            // ISSO AQUI GARANTE QUE SEUS 43 PRODUTOS APAREÇAM COM EFEITO
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.card').forEach(card => observer.observe(card));
 
-            // Puxa os novos do banco
-            await carregarProdutosSupabase();
+            // Puxa os novos do banco e joga no final da lista
+            if(supabase) {
+                await carregarProdutosSupabase();
+            }
         };
 
         async function carregarProdutosSupabase() {
@@ -729,7 +735,6 @@
                 if (error) throw error;
 
                 if (produtos && produtos.length > 0) {
-                    containerSupa.innerHTML = '';
                     produtos.forEach(p => {
                         const imagensArray = p.imagem.includes(',') ? p.imagem.split(',').map(i => i.trim()) : [p.imagem];
                         const c = p.categoria;
@@ -748,11 +753,12 @@
                     });
                 }
             } catch (err) {
-                console.error("Erro ao carregar produtos:", err);
+                console.error("Erro ao carregar do banco:", err);
             }
         }
 
         async function salvarProdutoSupabase() {
+            if(!supabase) return alert("Banco de dados não conectado.");
             const btn = document.getElementById('btn-salvar');
             const n = document.getElementById('add-nome').value.trim();
             const p = parseFloat(document.getElementById('add-preco').value);
@@ -775,16 +781,12 @@
                 fecharModal('modal-admin');
                 mostrarToastMsg("Produto salvo no banco de dados!");
                 
-                document.getElementById('add-nome').value = '';
-                document.getElementById('add-preco').value = '';
-                document.getElementById('add-imgs').value = '';
-                document.getElementById('add-desc').value = '';
-
-                await carregarProdutosSupabase();
+                // Limpa o formulário e recarrega a página para puxar do banco
+                setTimeout(() => location.reload(), 1500);
 
             } catch (err) {
                 console.error("Erro:", err);
-                alert("Erro ao salvar. Verifique se a tabela foi configurada certinho.");
+                alert("Erro ao salvar. Verifique o banco de dados.");
             } finally {
                 btn.innerText = "SALVAR NO BANCO DE DADOS";
                 btn.disabled = false;
