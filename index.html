@@ -352,7 +352,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     <div class="contador-carrinho" id="cart-count" style="display:none">0</div>
 </button>
 
-<!-- MODAL DETALHES -->
 <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
     <div class="modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-detalhes')"><i class="fas fa-times"></i></button>
@@ -370,7 +369,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
-<!-- MODAL CARRINHO -->
 <div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
     <div class="modal-box">
         <div class="cart-header">
@@ -389,7 +387,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
-<!-- MODAL LOGIN -->
 <div class="modal-overlay" id="modal-login" onclick="fecharSeClicarFora(event, 'modal-login')">
     <div class="modal-box" style="height:auto; padding:40px 30px; border-radius:32px; max-width:400px; align-self:center;">
         <button class="fechar-modal" onclick="fecharModal('modal-login')"><i class="fas fa-times"></i></button>
@@ -403,7 +400,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
-<!-- MODAL ADMIN -->
 <div class="modal-overlay" id="modal-admin" onclick="fecharSeClicarFora(event, 'modal-admin')">
     <div class="modal-box admin-modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-admin')"><i class="fas fa-times"></i></button>
@@ -431,7 +427,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 
         <div class="admin-content">
 
-            <!-- DASHBOARD -->
             <div id="admin-dashboard" class="admin-section active">
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -467,7 +462,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                 </div>
             </div>
 
-            <!-- ADICIONAR -->
             <div id="admin-adicionar" class="admin-section">
                 <div class="admin-form">
                     <div class="form-group">
@@ -519,7 +513,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                 </div>
             </div>
 
-            <!-- GERENCIAR -->
             <div id="admin-gerenciar" class="admin-section">
                 <div class="manage-toolbar">
                     <input type="text" id="manage-search" class="admin-input manage-search" placeholder="🔍 Buscar produto..." oninput="renderListaGerenciar()">
@@ -544,7 +537,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                 </div>
             </div>
 
-            <!-- CONFIGURAÇÕES -->
             <div id="admin-configuracoes" class="admin-section">
                 <h3 class="config-section-title"><i class="fas fa-database"></i> Conexão com Banco de Dados</h3>
                 <p class="config-section-desc">Configure aqui as credenciais do seu projeto Supabase. Os valores ficam salvos no seu navegador.</p>
@@ -581,7 +573,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
                 </div>
             </div>
 
-            <!-- DIAGNÓSTICO -->
             <div id="admin-diagnostico" class="admin-section">
                 <div id="diag-alerts"></div>
                 
@@ -616,7 +607,6 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
-<!-- MODAL EDITAR -->
 <div class="modal-overlay" id="modal-editar" onclick="fecharSeClicarFora(event, 'modal-editar')">
     <div class="modal-box" style="height:auto; padding:30px; border-radius:32px; max-width:550px;">
         <button class="fechar-modal" onclick="fecharModal('modal-editar')"><i class="fas fa-times"></i></button>
@@ -640,17 +630,16 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
     </div>
 </div>
 
-<!-- Supabase JS v2.46+ — compatível com sb_publishable_* -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.46.1/dist/umd/supabase.js"></script>
 
 <script>
 'use strict';
 
 // ============================================================
-// CONFIGURAÇÕES PADRÃO (podem ser sobrescritas no admin)
+// CONFIGURAÇÕES PADRÃO
 // ============================================================
 const TELEFONE = "5511995079212";
-const SENHA_HASH = "VEhFRU5E"; // 
+const SENHA_HASH = "VEhFRU5E"; // THEEND
 const STORAGE_KEY = 'cdp_supabase_config';
 
 const CONFIG_DEFAULT = {
@@ -659,7 +648,6 @@ const CONFIG_DEFAULT = {
     tabela: 'produtos'
 };
 
-// Carrega config salva ou usa default
 function carregarConfig() {
     try {
         const saved = localStorage.getItem(STORAGE_KEY);
@@ -838,7 +826,7 @@ function getTodosProdutos() {
         return {
             id: p.id, nome: p.nome, preco: parseFloat(p.preco),
             imagem: p.imagem, descricao: p.descricao || '', categoria: p.categoria,
-            fixo: false, created_at: p.created_at
+            fixo: false
         };
     }));
 }
@@ -1073,16 +1061,17 @@ function renderListaGerenciar() {
         html += '<img src="' + escapeHTML(p.imagem) + '" onerror="this.src=\'https://via.placeholder.com/60\'">';
         html += '<div class="produto-item-info"><strong>' + escapeHTML(p.nome) + '</strong><small><span class="produto-item-cat-tag" style="background:' + cor.hex + '">' + cor.label + '</span><span>' + formatarPreco(p.preco) + '</span></small></div>';
         html += '<div class="produto-item-actions">';
-        html += '<button class="btn-mini btn-edit-mini" onclick="editarProduto(' + p.id + ')" title="Editar"><i class="fas fa-edit"></i></button>';
-        html += '<button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto(' + p.id + ')" title="Duplicar"><i class="fas fa-clone"></i></button>';
-        html += '<button class="btn-mini btn-delete-mini" onclick="confirmarExclusao(' + p.id + ')" title="Excluir"><i class="fas fa-trash"></i></button>';
+        // Adicionadas aspas ao redor do p.id para garantir que funcione com UUIDs
+        html += '<button class="btn-mini btn-edit-mini" onclick="editarProduto(\'' + p.id + '\')" title="Editar"><i class="fas fa-edit"></i></button>';
+        html += '<button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto(\'' + p.id + '\')" title="Duplicar"><i class="fas fa-clone"></i></button>';
+        html += '<button class="btn-mini btn-delete-mini" onclick="confirmarExclusao(\'' + p.id + '\')" title="Excluir"><i class="fas fa-trash"></i></button>';
         html += '</div></div>';
     });
     lista.innerHTML = html;
 }
 
 // ============================================================
-// CONFIGURAÇÕES (NOVO!)
+// CONFIGURAÇÕES
 // ============================================================
 function carregarFormConfiguracao() {
     $('cfg-url').value = CONFIG.url || '';
@@ -1108,7 +1097,6 @@ async function testarConfiguracao() {
         return;
     }
     
-    // Validações básicas
     if (!url.startsWith('https://') || !url.includes('.supabase.co')) {
         mostrarResultadoTeste('error', 'URL inválida', 'A URL deve começar com <code>https://</code> e terminar com <code>.supabase.co</code>');
         return;
@@ -1133,7 +1121,7 @@ async function testarConfiguracao() {
             if (msg.includes('permission denied') || msg.includes('rls')) {
                 dica = '<br><br><strong style="color:#fff;">Solução:</strong> O RLS está bloqueando. No Supabase, vá em <code>Authentication → Policies</code>, selecione a tabela <code>' + tabela + '</code> e crie policies de SELECT e INSERT para a role <code>anon</code>.';
             } else if (msg.includes('not found') || msg.includes('does not exist')) {
-                dica = '<br><br><strong style="color:#fff;">Solução:</strong> A tabela <code>' + tabela + '</code> não existe. Crie ela no Supabase com as colunas: id, nome, preco, imagem, descricao, categoria, created_at.';
+                dica = '<br><br><strong style="color:#fff;">Solução:</strong> A tabela <code>' + tabela + '</code> não existe. Crie ela no Supabase com as colunas: id, nome, preco, imagem, descricao, categoria.';
             } else if (msg.includes('invalid api key') || msg.includes('jwt')) {
                 dica = '<br><br><strong style="color:#fff;">Solução:</strong> A chave está incorreta. Verifique em <code>Project Settings → API</code> e copie a chave <code>anon public</code> (NÃO a service_role).';
             } else if (msg.includes('failed to fetch') || msg.includes('network')) {
@@ -1167,14 +1155,11 @@ function salvarConfiguracao() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(novoConfig));
         CONFIG = novoConfig;
         
-        // Recria o cliente Supabase
         if (typeof window.supabase !== 'undefined') {
             supabaseClient = window.supabase.createClient(CONFIG.url, CONFIG.key);
         }
         
         mostrarToast('Configuração salva!', 'success');
-        
-        // Recarrega produtos
         carregarProdutosSupabase();
     } catch (e) {
         mostrarToast('Erro ao salvar: ' + e.message, 'error');
@@ -1314,10 +1299,11 @@ async function carregarProdutosSupabase() {
     console.log('🔄 Buscando produtos...');
     
     try {
+        // AQUI ESTAVA O SEU ERRO. A linha de `.order('created_at', ...)` foi 
+        // REMOVIDA para não dar crash se o banco não tiver essa exata coluna.
         const res = await supabaseClient
             .from(CONFIG.tabela)
-            .select('*')
-            .order('created_at', { ascending: false });
+            .select('*');
         
         if (res.error) {
             console.error('❌ Erro Supabase:', res.error);
@@ -1325,7 +1311,6 @@ async function carregarProdutosSupabase() {
             setStatusConexao(false);
             renderTodosProdutos();
             
-            // Atualiza UI se admin aberto
             if ($('modal-admin').classList.contains('active')) {
                 atualizarDiagnostico();
             }
@@ -1400,16 +1385,19 @@ async function salvarProdutoSupabase() {
 }
 
 function editarProduto(id) {
-    const p = produtosSupabase.find(function(x) { return x.id === id; });
+    const p = produtosSupabase.find(function(x) { return x.id == id; });
     if (!p) return;
-    $('edit-id').value = p.id; $('edit-nome').value = p.nome;
-    $('edit-preco').value = p.preco; $('edit-cat').value = p.categoria;
-    $('edit-imgs').value = p.imagem; $('edit-desc').value = p.descricao || '';
+    $('edit-id').value = p.id; 
+    $('edit-nome').value = p.nome;
+    $('edit-preco').value = p.preco; 
+    $('edit-cat').value = p.categoria;
+    $('edit-imgs').value = p.imagem; 
+    $('edit-desc').value = p.descricao || '';
     abrirModal('modal-editar');
 }
 
 async function atualizarProdutoSupabase() {
-    const id = parseInt($('edit-id').value);
+    const id = $('edit-id').value;
     const nome = $('edit-nome').value.trim();
     const preco = parseFloat($('edit-preco').value);
     const categoria = $('edit-cat').value;
@@ -1430,7 +1418,7 @@ async function atualizarProdutoSupabase() {
 }
 
 async function duplicarProduto(id) {
-    const p = produtosSupabase.find(function(x) { return x.id === id; });
+    const p = produtosSupabase.find(function(x) { return x.id == id; });
     if (!p || !confirm('Duplicar "' + p.nome + '"?')) return;
     try {
         const res = await supabaseClient.from(CONFIG.tabela)
@@ -1442,7 +1430,7 @@ async function duplicarProduto(id) {
 }
 
 async function confirmarExclusao(id) {
-    const p = produtosSupabase.find(function(x) { return x.id === id; });
+    const p = produtosSupabase.find(function(x) { return x.id == id; });
     if (!p || !confirm('Excluir "' + p.nome + '"?\nEsta ação não pode ser desfeita.')) return;
     try {
         const res = await supabaseClient.from(CONFIG.tabela).delete().eq('id', id);
