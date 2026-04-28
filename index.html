@@ -205,7 +205,6 @@
     </header>
 
     <div class="container" id="grade-produtos">
-        
         <div class="card" data-categoria="pod" onclick="abrirModalDetalhes('Hallu Labz 3.0 - Strawberry Cheesecake (Indica)', 300.00, 'Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.', 'https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg', 'pod')">
             <span class="tag-tipo" style="background:var(--cat-pod)">POD THC</span>
             <div class="card-img-box"><img src="https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg"></div>
@@ -593,6 +592,8 @@
             </div>
         </div>
 
+        <div id="supa-produtos" style="display: contents;"></div>
+
     </div>
 
     <div id="msg-vazio" class="empty-message" style="display:none; text-align:center; padding:50px; color:var(--text-muted);">Nenhum produto encontrado.</div>
@@ -670,13 +671,19 @@
                 </select>
                 <textarea id="add-imgs" class="admin-input" placeholder="Links das imagens (separados por vírgula)" style="resize:vertical; min-height:80px;"></textarea>
                 <textarea id="add-desc" class="admin-input" placeholder="Descrição do Produto" style="resize:vertical; min-height:80px;"></textarea>
-                <button class="btn-confirmar" onclick="salvarProduto()">SALVAR NO CATÁLOGO LOCAL</button>
-                <button onclick="limparNovos()" style="background:none; border:none; color:#ef4444; cursor:pointer; margin-top:15px; width:100%; text-decoration:underline">Apagar todos os produtos extras</button>
+                <button class="btn-confirmar" onclick="salvarProdutoSupabase()" id="btn-salvar">SALVAR NO BANCO DE DADOS</button>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
+        // === CONFIGURAÇÃO SUPABASE ===
+        const supabaseUrl = 'https://vlosjvsxjmhksncmqmpk.supabase.co';
+        const supabaseKey = 'sb_publishable_PBg31WjFHz_cf_Pm_aRGDA_DfgirJfc';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
         // === TRAVAS DE ZOOM DEFINITIVAS PARA MOBILE ===
         document.addEventListener('dblclick', function(event) { event.preventDefault(); }, { passive: false });
         let lastTouchEnd = 0;
@@ -699,22 +706,91 @@
 
         const cores = { pod:'var(--cat-pod)', hibrida:'var(--cat-hibrida)', indica:'var(--cat-indica)', sativa:'var(--cat-sativa)', refil:'var(--cat-refil)', oleo:'var(--cat-oleo)' };
 
-        // === INICIALIZAÇÃO E EFEITO SCROLL ===
-        window.onload = () => {
-            const salvos = localStorage.getItem('canetas_extras_html');
-            if(salvos) document.getElementById('grade-produtos').insertAdjacentHTML('beforeend', salvos);
-            
+        // === INICIALIZAÇÃO E SUPABASE FETCH ===
+        window.onload = async () => {
+            // Efeito Scroll nos fixos
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
             }, { threshold: 0.1 });
             document.querySelectorAll('.card').forEach(card => observer.observe(card));
 
-            // Carrega carrinho do localStorage se existir (opcional)
-            // carrinho = JSON.parse(localStorage.getItem('carrinho_paz')) || [];
-            // if(carrinho.length > 0) atualizarCarrinhoUI();
+            // Puxa os novos do banco
+            await carregarProdutosSupabase();
         };
 
-        // Garante que o carrinho aparece limpo se o usuário voltar da página do WhatsApp
+        async function carregarProdutosSupabase() {
+            const containerSupa = document.getElementById('supa-produtos');
+            try {
+                const { data: produtos, error } = await supabase
+                    .from('produtos')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (produtos && produtos.length > 0) {
+                    containerSupa.innerHTML = '';
+                    produtos.forEach(p => {
+                        const imagensArray = p.imagem.includes(',') ? p.imagem.split(',').map(i => i.trim()) : [p.imagem];
+                        const c = p.categoria;
+                        
+                        const html = `
+                        <div class="card visible" data-categoria="${c}" onclick="abrirModalDetalhes('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${(p.descricao || '').replace(/'/g, "\\'")}', ${JSON.stringify(imagensArray).replace(/"/g, "'")}, '${c}')">
+                            <span class="tag-tipo" style="background:${cores[c]}">${c.toUpperCase()}</span>
+                            <div class="card-img-box"><img src="${imagensArray[0]}"></div>
+                            <div class="card-info">
+                                <div class="card-nome">${p.nome}</div>
+                                <div class="card-preco">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')} 
+                                <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('${p.nome.replace(/'/g, "\\'")}', ${p.preco}, '${imagensArray[0]}')"><i class="fas fa-plus"></i></span></div>
+                            </div>
+                        </div>`;
+                        containerSupa.insertAdjacentHTML('beforeend', html);
+                    });
+                }
+            } catch (err) {
+                console.error("Erro ao carregar produtos:", err);
+            }
+        }
+
+        async function salvarProdutoSupabase() {
+            const btn = document.getElementById('btn-salvar');
+            const n = document.getElementById('add-nome').value.trim();
+            const p = parseFloat(document.getElementById('add-preco').value);
+            const c = document.getElementById('add-cat').value;
+            const i = document.getElementById('add-imgs').value.trim();
+            const d = document.getElementById('add-desc').value.trim();
+            
+            if(!n || isNaN(p) || !i) return alert("Preencha Nome, Preço e Imagem");
+
+            btn.innerText = "Salvando...";
+            btn.disabled = true;
+
+            try {
+                const { data, error } = await supabase
+                    .from('produtos')
+                    .insert([{ nome: n, preco: p, imagem: i, descricao: d, categoria: c }]);
+
+                if (error) throw error;
+
+                fecharModal('modal-admin');
+                mostrarToastMsg("Produto salvo no banco de dados!");
+                
+                document.getElementById('add-nome').value = '';
+                document.getElementById('add-preco').value = '';
+                document.getElementById('add-imgs').value = '';
+                document.getElementById('add-desc').value = '';
+
+                await carregarProdutosSupabase();
+
+            } catch (err) {
+                console.error("Erro:", err);
+                alert("Erro ao salvar. Verifique se a tabela foi configurada certinho.");
+            } finally {
+                btn.innerText = "SALVAR NO BANCO DE DADOS";
+                btn.disabled = false;
+            }
+        }
+
         window.addEventListener('pageshow', function(event) {
             atualizarCarrinhoUI();
         });
@@ -776,40 +852,13 @@
             msgVazio.style.display = visiveis === 0 ? 'block' : 'none';
         }
 
-        // === ADMIN (Local) ===
+        // === ADMIN ===
         function fazerLogin() {
             if (btoa(document.getElementById('admin-senha').value) === SENHA_HASH) {
                 fecharModal('modal-login');
                 abrirModal('modal-admin');
             } else alert("Senha incorreta");
         }
-
-        function salvarProduto() {
-            const n = document.getElementById('add-nome').value.trim();
-            const p = parseFloat(document.getElementById('add-preco').value);
-            const c = document.getElementById('add-cat').value;
-            const i = document.getElementById('add-imgs').value.split(',').map(s=>s.trim());
-            const d = document.getElementById('add-desc').value.trim();
-            
-            if(!n || isNaN(p) || !i[0]) return alert("Preencha Nome, Preço e Imagem");
-
-            const imgList = JSON.stringify(i).replace(/"/g, "'");
-            const html = `
-            <div class="card visible" data-categoria="${c}" onclick="abrirModalDetalhes('${n.replace(/'/g, "\\'")}', ${p}, '${d.replace(/'/g, "\\'")}', ${imgList}, '${c}')">
-                <span class="tag-tipo" style="background:${cores[c]}">${c.toUpperCase()}</span>
-                <div class="card-img-box"><img src="${i[0]}"></div>
-                <div class="card-info">
-                    <div class="card-nome">${n}</div>
-                    <div class="card-preco">R$ ${p.toFixed(2).replace('.',',')} 
-                    <span class="card-btn-add" onclick="event.stopPropagation(); adicionarAoCarrinho('${n.replace(/'/g, "\\'")}', ${p}, '${i[0]}')"><i class="fas fa-plus"></i></span></div>
-                </div>
-            </div>`;
-            
-            let salvos = localStorage.getItem('canetas_extras_html') || "";
-            localStorage.setItem('canetas_extras_html', salvos + html);
-            location.reload();
-        }
-        function limparNovos() { if(confirm("Apagar todos os produtos extras criados neste navegador?")) { localStorage.removeItem('canetas_extras_html'); location.reload(); } }
 
         // === DETALHES DO PRODUTO ===
         function abrirModalDetalhes(nome, preco, descricao, imagensInput, tipo) {
@@ -857,7 +906,7 @@
             fecharModal('modal-detalhes');
         }
 
-        // === SISTEMA DE CARRINHO OTIMIZADO (+ e -) ===
+        // === SISTEMA DE CARRINHO ===
         function adicionarAoCarrinho(nome, preco, imagem) {
             const itemExistente = carrinho.find(item => item.nome === nome);
             if (itemExistente) {
@@ -868,7 +917,6 @@
             atualizarCarrinhoUI();
             mostrarToastMsg("Adicionado ao carrinho!");
             
-            // Efeito de pulso no botão do carrinho principal
             const btnCart = document.getElementById('btn-carrinho');
             btnCart.style.transform = 'scale(1.2)';
             setTimeout(() => { btnCart.style.transform = 'scale(1)'; }, 200);
@@ -924,7 +972,7 @@
             contador.style.display = qtdTotal > 0 ? 'flex' : 'none';
         }
 
-        // === FINALIZAR E DESMANCHAR CARRINHO ===
+        // === FINALIZAR ===
         function finalizarCompra() {
             if (carrinho.length === 0) return alert("Adicione produtos primeiro!");
             
@@ -937,10 +985,8 @@
             });
             mensagem += `*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
             
-            // Abre o WhatsApp
             window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`, '_blank');
             
-            // ESVAZIA O CARRINHO IMEDIATAMENTE APÓS O CLIQUE
             carrinho = []; 
             atualizarCarrinhoUI(); 
             fecharModal('modal-carrinho');
