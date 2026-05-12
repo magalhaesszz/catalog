@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Canetas da Paz 🍁 — Catálogo Premium</title>
+<title>Canetas da Paz 🍁 & Cyto — Catálogos</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
@@ -12,7 +11,7 @@
 
 <style>
 /* ==========================================
-   1. VARIÁVEIS E RESET GLOBAL
+   1. VARIÁVEIS GLOBAIS E TEMAS
    ========================================== */
 :root {
     --spacing-xs: 4px;
@@ -23,34 +22,6 @@
     --spacing-2xl: 32px;
     --spacing-3xl: 48px;
     --spacing-4xl: 64px;
-
-    --bg-deep: #05050a;
-    --bg-card: #0f0f17;
-    --bg-card-light: #14141c;
-    --glass-card: rgba(15, 15, 23, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.06);
-    --text-main: #fafbfc;
-    --text-secondary: #d1d5db;
-    --text-muted: #8b94a8;
-    --text-muted-dark: #6b7280;
-
-    --accent-gold: #d4af37;
-    --accent-gold-soft: #e8c870;
-    --accent-gold-lighter: #f0d97a;
-
-    --cat-hibrida: #10b981;
-    --cat-indica: #8b5cf6;
-    --cat-sativa: #f59e0b;
-    --cat-refil: #06b6d4;
-    --cat-oleo: #eab308;
-    --cat-pod: #d946ef;
-    --cat-comestiveis: #f43f5e;
-
-    --zap-color: #25d366;
-    --error-color: #ef4444;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --info-color: #3b82f6;
 
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.18);
@@ -65,6 +36,64 @@
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fluid: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --zap-color: #25d366;
+    --error-color: #ef4444;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+}
+
+/* === TEMA CANETAS (escuro/dourado) === */
+body[data-theme="canetas"] {
+    --bg-deep: #05050a;
+    --bg-card: #0f0f17;
+    --bg-card-light: #14141c;
+    --glass-card: rgba(15, 15, 23, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --text-main: #fafbfc;
+    --text-secondary: #d1d5db;
+    --text-muted: #8b94a8;
+    --text-muted-dark: #6b7280;
+
+    --accent-primary: #d4af37;
+    --accent-soft: #e8c870;
+    --accent-lighter: #f0d97a;
+    --accent-text-on: #1a1208;
+
+    --cat-hibrida: #10b981;
+    --cat-indica: #8b5cf6;
+    --cat-sativa: #f59e0b;
+    --cat-refil: #06b6d4;
+    --cat-oleo: #eab308;
+    --cat-pod: #d946ef;
+    --cat-comestiveis: #f43f5e;
+}
+
+/* === TEMA CYTO (branco/vermelho - farmácia) === */
+body[data-theme="cyto"] {
+    --bg-deep: #f7f8fa;
+    --bg-card: #ffffff;
+    --bg-card-light: #fafbfc;
+    --glass-card: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(220, 38, 38, 0.08);
+    --text-main: #1a1a1a;
+    --text-secondary: #404040;
+    --text-muted: #6b7280;
+    --text-muted-dark: #9ca3af;
+
+    --accent-primary: #dc2626;
+    --accent-soft: #ef4444;
+    --accent-lighter: #f87171;
+    --accent-text-on: #ffffff;
+
+    --cat-hibrida: #059669;
+    --cat-indica: #2563eb;
+    --cat-sativa: #d97706;
+    --cat-refil: #0891b2;
+    --cat-oleo: #ca8a04;
+    --cat-pod: #db2777;
+    --cat-comestiveis: #e11d48;
 }
 
 * { 
@@ -87,10 +116,11 @@ html, body {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color var(--transition-smooth), color var(--transition-smooth);
 }
 
 /* ==========================================
-   2. BACKGROUND ANIMADO
+   2. BACKGROUND ANIMADO (só no tema escuro)
    ========================================== */
 .ambient-light { 
     position: fixed; 
@@ -100,6 +130,8 @@ html, body {
     pointer-events: none; 
 }
 
+body[data-theme="cyto"] .ambient-light { display: none; }
+
 .light-blob { 
     position: absolute; 
     border-radius: 50%; 
@@ -108,30 +140,9 @@ html, body {
     animation: float 35s infinite alternate; 
 }
 
-.blob-1 { 
-    top: -15%; 
-    left: -8%; 
-    width: 500px; 
-    height: 500px; 
-    background: radial-gradient(circle at center, var(--cat-hibrida), transparent 70%); 
-}
-
-.blob-2 { 
-    bottom: -12%; 
-    right: -10%; 
-    width: 550px; 
-    height: 550px; 
-    background: radial-gradient(circle at center, var(--cat-indica), transparent 70%); 
-}
-
-.blob-3 { 
-    top: 35%; 
-    left: 25%; 
-    width: 400px; 
-    height: 400px; 
-    background: radial-gradient(circle at center, var(--accent-gold), transparent 75%); 
-    opacity: 0.06; 
-}
+.blob-1 { top: -15%; left: -8%; width: 500px; height: 500px; background: radial-gradient(circle at center, #10b981, transparent 70%); }
+.blob-2 { bottom: -12%; right: -10%; width: 550px; height: 550px; background: radial-gradient(circle at center, #8b5cf6, transparent 70%); }
+.blob-3 { top: 35%; left: 25%; width: 400px; height: 400px; background: radial-gradient(circle at center, #d4af37, transparent 75%); opacity: 0.06; }
 
 @keyframes float { 
     0% { transform: translate(0, 0); } 
@@ -140,18 +151,107 @@ html, body {
 }
 
 /* ==========================================
-   3. CABEÇALHO REFINADO
+   3. ABAS PRINCIPAIS (CANETAS / CYTO)
+   ========================================== */
+.main-tabs-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--glass-border);
+    transition: background-color var(--transition-smooth);
+}
+
+body[data-theme="canetas"] .main-tabs-bar {
+    background: rgba(5, 5, 10, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+body[data-theme="cyto"] .main-tabs-bar {
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.main-tabs-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.main-tab {
+    flex: 1;
+    max-width: 200px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    font-family: 'Inter';
+    transition: all var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.main-tab:hover {
+    color: var(--text-main);
+    border-color: var(--accent-primary);
+}
+
+.main-tab.active {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-soft));
+    color: var(--accent-text-on);
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+body[data-theme="canetas"] .main-tab.active {
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.25);
+}
+
+body[data-theme="cyto"] .main-tab.active {
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+}
+
+.main-tab i {
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   4. CABEÇALHO REFINADO
    ========================================== */
 header {
+    padding: var(--spacing-xl) 0 var(--spacing-md);
+    position: sticky; 
+    top: 60px; 
+    z-index: 1000;
+    border-bottom: 1px solid var(--glass-border);
+    transition: background-color var(--transition-smooth);
+}
+
+body[data-theme="canetas"] header {
     background: rgba(5, 5, 10, 0.8);
     backdrop-filter: blur(32px); 
     -webkit-backdrop-filter: blur(32px);
-    padding: var(--spacing-xl) 0 var(--spacing-md);
-    position: sticky; 
-    top: 0; 
-    z-index: 1000;
-    border-bottom: 1px solid var(--glass-border);
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+body[data-theme="cyto"] header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
 }
 
 .header-top { 
@@ -171,11 +271,18 @@ header h1 {
     text-align: center; 
     letter-spacing: 1.5px; 
     text-transform: uppercase;
-    background: linear-gradient(135deg, #fff 0%, var(--accent-gold-soft) 100%);
+    line-height: 1.2;
+}
+
+body[data-theme="canetas"] header h1 {
+    background: linear-gradient(135deg, #fff 0%, var(--accent-soft) 100%);
     -webkit-background-clip: text; 
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 1.2;
+}
+
+body[data-theme="cyto"] header h1 {
+    color: var(--accent-primary);
 }
 
 header h1 span {
@@ -183,8 +290,8 @@ header h1 span {
     letter-spacing: 2.5px; 
     font-family: 'Inter', sans-serif;
     display: block; 
-    color: var(--accent-gold); 
-    -webkit-text-fill-color: var(--accent-gold);
+    color: var(--accent-primary); 
+    -webkit-text-fill-color: var(--accent-primary);
     font-weight: 700; 
     margin-top: var(--spacing-sm);
 }
@@ -201,16 +308,14 @@ header h1 span {
     border-radius: 50%;
 }
 
-.btn-admin-login:hover { 
-    opacity: 0.6;
-}
+.btn-admin-login:hover { opacity: 0.6; }
 
 .btn-search-toggle { 
     position: absolute; 
     right: var(--spacing-xl);
-    background: rgba(255, 255, 255, 0.06); 
+    background: rgba(127, 127, 127, 0.08); 
     border: 1px solid var(--glass-border); 
-    color: #fff; 
+    color: var(--text-main); 
     width: 40px; 
     height: 40px; 
     border-radius: 50%; 
@@ -222,8 +327,8 @@ header h1 span {
 }
 
 .btn-search-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(127, 127, 127, 0.15);
+    border-color: var(--accent-primary);
 }
 
 .search-container { 
@@ -236,8 +341,8 @@ header h1 span {
     padding: var(--spacing-md) var(--spacing-lg); 
     border-radius: 30px; 
     border: 1px solid var(--glass-border); 
-    background: rgba(255, 255, 255, 0.04); 
-    color: #fff; 
+    background: rgba(127, 127, 127, 0.06); 
+    color: var(--text-main); 
     font-size: 15px !important; 
     outline: none; 
     font-family: 'Inter'; 
@@ -245,8 +350,8 @@ header h1 span {
 }
 
 .search-input:focus {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(212, 175, 55, 0.3);
+    background: rgba(127, 127, 127, 0.12);
+    border-color: var(--accent-primary);
 }
 
 .filtros-container { 
@@ -257,9 +362,7 @@ header h1 span {
     scroll-padding: var(--spacing-lg);
 }
 
-.filtros-container::-webkit-scrollbar { 
-    display: none; 
-}
+.filtros-container::-webkit-scrollbar { display: none; }
 
 .filtros { 
     display: inline-flex; 
@@ -267,7 +370,7 @@ header h1 span {
 }
 
 .btn-filtro { 
-    background: rgba(255, 255, 255, 0.02); 
+    background: rgba(127, 127, 127, 0.04); 
     border: 1px solid var(--glass-border); 
     color: var(--text-muted); 
     padding: var(--spacing-sm) var(--spacing-lg); 
@@ -283,19 +386,19 @@ header h1 span {
 }
 
 .btn-filtro:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(127, 127, 127, 0.1);
+    color: var(--text-main);
 }
 
 .btn-filtro.ativo { 
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-soft));
-    color: #1a1208; 
-    border-color: var(--accent-gold);
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.25);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-soft));
+    color: var(--accent-text-on); 
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* ==========================================
-   4. HERO SECTION PREMIUM
+   5. HERO SECTION PREMIUM
    ========================================== */
 .hero-section {
     max-width: 1360px;
@@ -311,10 +414,17 @@ header h1 span {
     aspect-ratio: 16/9;
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
+}
+
+body[data-theme="canetas"] .hero-container {
     box-shadow: 
         0 0 1px rgba(212, 175, 55, 0.2),
         0 0 32px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+body[data-theme="cyto"] .hero-container {
+    box-shadow: 0 16px 40px rgba(220, 38, 38, 0.08);
 }
 
 .hero-video-wrap {
@@ -331,18 +441,55 @@ header h1 span {
     transform: scale(1.08);
 }
 
+/* Hero estático para Cyto (sem vídeo) */
+.hero-static-bg {
+    position: absolute; 
+    inset: 0;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #991b1b 100%);
+}
+
+.hero-static-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+}
+
+.hero-static-bg::after {
+    content: '\f7f2'; /* fa-mortar-pestle */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(120px, 25vw, 280px);
+    color: rgba(255, 255, 255, 0.08);
+    z-index: 1;
+}
+
 .hero-overlay {
     position: absolute; 
     inset: 0;
-    background:
-        linear-gradient(180deg, rgba(5, 5, 10, 0.35) 0%, rgba(5, 5, 10, 0.8) 70%, rgba(5, 5, 10, 0.95) 100%),
-        radial-gradient(ellipse 800px 400px at center 30%, rgba(212, 175, 55, 0.08), transparent 70%);
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     justify-content: flex-end;
     padding: var(--spacing-3xl) var(--spacing-2xl) var(--spacing-2xl);
     text-align: center;
+    z-index: 2;
+}
+
+body[data-theme="canetas"] .hero-overlay {
+    background:
+        linear-gradient(180deg, rgba(5, 5, 10, 0.35) 0%, rgba(5, 5, 10, 0.8) 70%, rgba(5, 5, 10, 0.95) 100%),
+        radial-gradient(ellipse 800px 400px at center 30%, rgba(212, 175, 55, 0.08), transparent 70%);
+}
+
+body[data-theme="cyto"] .hero-overlay {
+    background: linear-gradient(180deg, rgba(220, 38, 38, 0.1) 0%, rgba(153, 27, 27, 0.5) 70%, rgba(127, 29, 29, 0.85) 100%);
 }
 
 .hero-eyebrow {
@@ -351,9 +498,6 @@ header h1 span {
     gap: var(--spacing-sm);
     padding: var(--spacing-sm) var(--spacing-lg); 
     border-radius: 24px;
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    color: var(--accent-gold-soft);
     font-size: 0.65rem; 
     font-weight: 700; 
     letter-spacing: 1.5px; 
@@ -362,11 +506,23 @@ header h1 span {
     backdrop-filter: blur(12px);
 }
 
+body[data-theme="canetas"] .hero-eyebrow {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    color: var(--accent-soft);
+}
+
+body[data-theme="cyto"] .hero-eyebrow {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
 .hero-eyebrow .pulse-dot {
     width: 5px; 
     height: 5px; 
     border-radius: 50%; 
-    background: var(--accent-gold);
+    background: currentColor;
     animation: pulseDot 2s infinite;
 }
 
@@ -381,25 +537,36 @@ header h1 span {
     font-weight: 900; 
     line-height: 1.15; 
     margin: 0 0 var(--spacing-xl);
-    background: linear-gradient(135deg, #fff 0%, #fff 55%, var(--accent-gold-soft) 100%);
+    max-width: 900px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+body[data-theme="canetas"] .hero-headline {
+    background: linear-gradient(135deg, #fff 0%, #fff 55%, var(--accent-soft) 100%);
     -webkit-background-clip: text; 
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    max-width: 900px;
-    letter-spacing: -0.02em;
 }
 
 .hero-headline em {
     font-style: italic;
-    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-lighter) 100%);
+}
+
+body[data-theme="canetas"] .hero-headline em {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-lighter) 100%);
     -webkit-background-clip: text; 
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+body[data-theme="cyto"] .hero-headline em {
+    color: #fef3c7;
+}
+
 .hero-subheadline {
     font-size: clamp(0.9rem, 2vw, 1.05rem);
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.85);
     max-width: 640px;
     line-height: 1.6;
     margin: 0 0 var(--spacing-2xl);
@@ -419,8 +586,6 @@ header h1 span {
     align-items: center; 
     gap: var(--spacing-sm);
     padding: var(--spacing-lg) var(--spacing-2xl);
-    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-soft) 100%);
-    color: #1a1208;
     font-weight: 800; 
     font-size: 0.8rem; 
     text-transform: uppercase; 
@@ -428,32 +593,48 @@ header h1 span {
     border: none; 
     border-radius: 28px; 
     cursor: pointer;
-    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.3);
     transition: all var(--transition-smooth);
     font-family: 'Inter';
 }
 
+body[data-theme="canetas"] .hero-cta-primary {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-soft) 100%);
+    color: var(--accent-text-on);
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.3);
+}
+
+body[data-theme="cyto"] .hero-cta-primary {
+    background: #ffffff;
+    color: var(--accent-primary);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
 .hero-cta-primary:hover { 
     transform: translateY(-2px); 
+}
+
+body[data-theme="canetas"] .hero-cta-primary:hover {
     box-shadow: 0 16px 44px rgba(212, 175, 55, 0.45);
 }
 
-.hero-cta-primary:active { 
-    transform: scale(0.97); 
+body[data-theme="cyto"] .hero-cta-primary:hover {
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.25);
 }
+
+.hero-cta-primary:active { transform: scale(0.97); }
 
 .hero-cta-secondary {
     display: inline-flex; 
     align-items: center; 
     gap: var(--spacing-sm);
     padding: var(--spacing-lg) var(--spacing-2xl);
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.12);
     color: #fff;
     font-weight: 600; 
     font-size: 0.8rem; 
     text-transform: uppercase; 
     letter-spacing: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.15); 
+    border: 1px solid rgba(255, 255, 255, 0.25); 
     border-radius: 28px; 
     cursor: pointer;
     backdrop-filter: blur(12px);
@@ -463,8 +644,8 @@ header h1 span {
 }
 
 .hero-cta-secondary:hover { 
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 @media (max-width: 768px) {
@@ -475,7 +656,7 @@ header h1 span {
 }
 
 /* ==========================================
-   5. STATS BAR REFINADO
+   6. STATS BAR REFINADO (apenas 2 itens agora p/ canetas)
    ========================================== */
 .stats-bar {
     max-width: 1360px;
@@ -485,13 +666,13 @@ header h1 span {
 
 .stats-bar-inner {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* AGORA 2 itens */
     gap: 1px;
     background: var(--glass-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .stat-pill {
@@ -501,20 +682,31 @@ header h1 span {
     transition: all var(--transition-smooth);
 }
 
-.stat-pill:hover {
+body[data-theme="canetas"] .stat-pill:hover {
     background: rgba(15, 15, 23, 0.95);
+}
+
+body[data-theme="cyto"] .stat-pill:hover {
+    background: rgba(220, 38, 38, 0.02);
 }
 
 .stat-pill-value {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.6rem, 4vw, 2.4rem);
     font-weight: 900;
-    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-soft) 100%);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+body[data-theme="canetas"] .stat-pill-value {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-soft) 100%);
     -webkit-background-clip: text; 
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 1;
-    letter-spacing: -0.02em;
+}
+
+body[data-theme="cyto"] .stat-pill-value {
+    color: var(--accent-primary);
 }
 
 .stat-pill-label {
@@ -526,12 +718,8 @@ header h1 span {
     margin-top: var(--spacing-md);
 }
 
-@media (max-width: 768px) {
-    .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
-}
-
 /* ==========================================
-   6. SEÇÃO PROVA SOCIAL REFINADA
+   7. SEÇÃO PROVA SOCIAL
    ========================================== */
 .section-divider {
     max-width: 1360px;
@@ -542,7 +730,7 @@ header h1 span {
 
 .section-eyebrow {
     display: inline-block;
-    color: var(--accent-gold);
+    color: var(--accent-primary);
     font-size: 0.65rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -555,17 +743,24 @@ header h1 span {
     font-size: clamp(1.8rem, 5vw, 2.8rem);
     font-weight: 900;
     margin: 0 0 var(--spacing-lg);
-    color: #fff;
+    color: var(--text-main);
     line-height: 1.2;
     letter-spacing: -0.01em;
 }
 
 .section-title em {
     font-style: italic;
-    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-soft) 100%);
+}
+
+body[data-theme="canetas"] .section-title em {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-soft) 100%);
     -webkit-background-clip: text; 
     background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+body[data-theme="cyto"] .section-title em {
+    color: var(--accent-primary);
 }
 
 .section-subtitle {
@@ -577,19 +772,20 @@ header h1 span {
     font-weight: 400;
 }
 
+/* Prova Social - agora só 1 card (centralizado) */
 .references-grid {
-    max-width: 1360px;
+    max-width: 700px;
     margin: 0 auto var(--spacing-3xl);
     padding: 0 var(--spacing-lg);
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: var(--spacing-lg);
 }
 
 .reference-card {
     border-radius: var(--radius-lg);
     overflow: hidden;
-    aspect-ratio: 1;
+    aspect-ratio: 16/10;
     position: relative;
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
@@ -598,15 +794,10 @@ header h1 span {
     box-shadow: var(--shadow-md);
 }
 
-.reference-card:nth-child(1) { 
-    aspect-ratio: 1; 
-    grid-row: span 2; 
-}
-
 .reference-card:hover { 
     transform: translateY(-6px); 
-    border-color: rgba(212, 175, 55, 0.25);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-primary);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
 }
 
 .reference-card img { 
@@ -616,50 +807,39 @@ header h1 span {
     transition: transform var(--transition-fluid);
 }
 
-.reference-card:hover img { 
-    transform: scale(1.04); 
-}
+.reference-card:hover img { transform: scale(1.04); }
 
 .reference-card-badge {
     position: absolute;
     top: var(--spacing-lg);
     left: var(--spacing-lg);
-    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(12px);
-    color: var(--accent-gold-soft);
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: 18px;
     font-size: 0.6rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+body[data-theme="canetas"] .reference-card-badge {
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--accent-soft);
     border: 1px solid rgba(212, 175, 55, 0.15);
 }
 
-@media (max-width: 900px) {
-    .references-grid { 
-        grid-template-columns: 1fr 1fr; 
-        gap: var(--spacing-md); 
-    }
-    .reference-card:nth-child(1) { 
-        grid-column: span 2; 
-        aspect-ratio: 16/9; 
-        grid-row: auto; 
-    }
+body[data-theme="cyto"] .reference-card-badge {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--accent-primary);
+    border: 1px solid rgba(220, 38, 38, 0.15);
 }
 
 @media (max-width: 600px) {
-    .references-grid { 
-        grid-template-columns: 1fr;
-    }
-    .reference-card:nth-child(1) { 
-        grid-column: auto;
-        aspect-ratio: 4/3;
-    }
+    .reference-card { aspect-ratio: 4/3; }
 }
 
 /* ==========================================
-   7. CATÁLOGO DE PRODUTOS REFINADO
+   8. CATÁLOGO DE PRODUTOS
    ========================================== */
 .catalog-header {
     max-width: 1360px;
@@ -703,25 +883,17 @@ header h1 span {
 }
 
 @keyframes fadeIn { 
-    from { 
-        opacity: 0; 
-        transform: translateY(12px); 
-    } 
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    } 
+    from { opacity: 0; transform: translateY(12px); } 
+    to { opacity: 1; transform: translateY(0); } 
 }
 
 .card:hover { 
     transform: translateY(-6px); 
-    border-color: rgba(212, 175, 55, 0.2); 
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    border-color: var(--accent-primary); 
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
 }
 
-.card:active { 
-    transform: scale(0.98); 
-}
+.card:active { transform: scale(0.98); }
 
 .tag-tipo { 
     position: absolute; 
@@ -758,14 +930,14 @@ header h1 span {
 .card-img-box { 
     height: 200px; 
     width: 100%; 
-    background: var(--bg-deep);
     overflow: hidden;
 }
 
+body[data-theme="canetas"] .card-img-box { background: var(--bg-deep); }
+body[data-theme="cyto"] .card-img-box { background: #f3f4f6; }
+
 @media (min-width: 768px) { 
-    .card-img-box { 
-        height: 260px; 
-    } 
+    .card-img-box { height: 260px; } 
 }
 
 .card-img-box img { 
@@ -781,9 +953,7 @@ header h1 span {
     opacity: 1; 
 }
 
-.card-info { 
-    padding: var(--spacing-lg); 
-}
+.card-info { padding: var(--spacing-lg); }
 
 .card-nome { 
     font-weight: 600; 
@@ -794,7 +964,7 @@ header h1 span {
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical; 
     margin-bottom: var(--spacing-md); 
-    color: #fff; 
+    color: var(--text-main); 
     line-height: 1.3;
 }
 
@@ -804,11 +974,11 @@ header h1 span {
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    color: #fff; 
+    color: var(--text-main); 
 }
 
 .card-btn-add { 
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-soft)); 
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-soft)); 
     width: 36px; 
     height: 36px; 
     border-radius: 50%; 
@@ -816,23 +986,27 @@ header h1 span {
     align-items: center; 
     justify-content: center; 
     transition: all var(--transition-smooth);
-    color: #1a1208; 
-    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
+    color: var(--accent-text-on); 
     border: none;
     cursor: pointer;
 }
 
+body[data-theme="canetas"] .card-btn-add {
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
+}
+
+body[data-theme="cyto"] .card-btn-add {
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+}
+
 .card-btn-add:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
 }
 
-.card-btn-add:active { 
-    transform: scale(0.9); 
-}
+.card-btn-add:active { transform: scale(0.9); }
 
 /* ==========================================
-   8. MODAIS REFINADAS
+   9. MODAIS
    ========================================== */
 .modal-overlay { 
     display: none; 
@@ -846,9 +1020,7 @@ header h1 span {
     -webkit-backdrop-filter: blur(20px);
 }
 
-.modal-overlay.active { 
-    display: flex; 
-}
+.modal-overlay.active { display: flex; }
 
 .modal-box {
     background: var(--bg-deep); 
@@ -870,18 +1042,9 @@ header h1 span {
     to { transform: translateY(0); } 
 }
 
-.modal-box::-webkit-scrollbar { 
-    width: 6px; 
-}
-
-.modal-box::-webkit-scrollbar-track { 
-    background: transparent; 
-}
-
-.modal-box::-webkit-scrollbar-thumb { 
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 10px; 
-}
+.modal-box::-webkit-scrollbar { width: 6px; }
+.modal-box::-webkit-scrollbar-track { background: transparent; }
+.modal-box::-webkit-scrollbar-thumb { background: rgba(127, 127, 127, 0.2); border-radius: 10px; }
 
 .fechar-modal { 
     position: absolute; 
@@ -944,18 +1107,20 @@ header h1 span {
     font-size: 1.8rem; 
     font-weight: 900; 
     margin-bottom: var(--spacing-md); 
-    color: #fff; 
+    color: var(--text-main); 
     line-height: 1.2;
 }
 
 .modal-preco { 
     font-size: 2.2rem; 
     font-weight: 300; 
-    color: var(--accent-gold-soft); 
+    color: var(--accent-primary); 
     margin-bottom: var(--spacing-xl); 
     display: block;
     letter-spacing: -0.02em;
 }
+
+body[data-theme="canetas"] .modal-preco { color: var(--accent-soft); }
 
 .modal-desc { 
     color: var(--text-muted); 
@@ -972,29 +1137,36 @@ header h1 span {
     font-weight: 800; 
     text-transform: uppercase; 
     cursor: pointer; 
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-soft)); 
-    color: #1a1208; 
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-soft)); 
+    color: var(--accent-text-on); 
     transition: all var(--transition-smooth);
     font-size: 0.8rem; 
     letter-spacing: 1px; 
-    box-shadow: 0 10px 28px rgba(212, 175, 55, 0.25); 
     font-family: 'Inter'; 
+}
+
+body[data-theme="canetas"] .btn-confirmar {
+    box-shadow: 0 10px 28px rgba(212, 175, 55, 0.25);
+}
+
+body[data-theme="cyto"] .btn-confirmar {
+    box-shadow: 0 10px 28px rgba(220, 38, 38, 0.25);
 }
 
 .btn-confirmar:hover { 
     transform: translateY(-2px); 
-    box-shadow: 0 14px 36px rgba(212, 175, 55, 0.4); 
 }
 
-.btn-confirmar:active { 
-    transform: scale(0.98); 
+body[data-theme="canetas"] .btn-confirmar:hover {
+    box-shadow: 0 14px 36px rgba(212, 175, 55, 0.4);
 }
 
-.btn-confirmar:disabled { 
-    opacity: 0.5; 
-    cursor: not-allowed; 
-    transform: none; 
+body[data-theme="cyto"] .btn-confirmar:hover {
+    box-shadow: 0 14px 36px rgba(220, 38, 38, 0.4);
 }
+
+.btn-confirmar:active { transform: scale(0.98); }
+.btn-confirmar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* Carrinho */
 .cart-header { 
@@ -1009,7 +1181,8 @@ header h1 span {
     margin: 0; 
     font-family: 'Playfair Display', serif; 
     font-size: 1.5rem; 
-    font-weight: 800; 
+    font-weight: 800;
+    color: var(--text-main);
 }
 
 .cart-items-container { 
@@ -1028,7 +1201,7 @@ header h1 span {
 }
 
 .cart-item:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(127, 127, 127, 0.04);
 }
 
 .cart-item img { 
@@ -1042,7 +1215,7 @@ header h1 span {
     display: flex; 
     align-items: center; 
     gap: var(--spacing-xs);
-    background: rgba(255, 255, 255, 0.04); 
+    background: rgba(127, 127, 127, 0.06); 
     padding: var(--spacing-xs); 
     border-radius: 20px; 
     border: 1px solid var(--glass-border); 
@@ -1052,32 +1225,34 @@ header h1 span {
     width: 30px; 
     height: 30px; 
     border-radius: 50%; 
-    background: rgba(255, 255, 255, 0.06); 
+    background: rgba(127, 127, 127, 0.08); 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     cursor: pointer; 
-    color: #fff; 
+    color: var(--text-main); 
     font-size: 0.8rem;
     transition: all var(--transition-smooth);
     border: none;
 }
 
 .cart-qty-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(127, 127, 127, 0.15);
 }
 
 .cart-qty-btn:active { 
-    background: var(--accent-gold); 
-    color: #000; 
+    background: var(--accent-primary); 
+    color: var(--accent-text-on); 
     transform: scale(0.88); 
 }
 
 .cart-footer { 
     padding: var(--spacing-xl); 
     border-top: 1px solid var(--glass-border); 
-    background: rgba(0, 0, 0, 0.3); 
 }
+
+body[data-theme="canetas"] .cart-footer { background: rgba(0, 0, 0, 0.3); }
+body[data-theme="cyto"] .cart-footer { background: rgba(220, 38, 38, 0.02); }
 
 .cart-total { 
     display: flex; 
@@ -1086,13 +1261,16 @@ header h1 span {
     margin-bottom: var(--spacing-xl); 
     font-size: 1.3rem; 
     font-weight: 800; 
+    color: var(--text-main);
 }
 
 .cart-total span:last-child { 
-    color: var(--accent-gold-soft); 
+    color: var(--accent-primary); 
     font-family: 'Playfair Display'; 
     font-size: 1.7rem; 
 }
+
+body[data-theme="canetas"] .cart-total span:last-child { color: var(--accent-soft); }
 
 .btn-finalizar-whats { 
     width: 100%; 
@@ -1120,12 +1298,10 @@ header h1 span {
     box-shadow: 0 14px 36px rgba(37, 211, 102, 0.4);
 }
 
-.btn-finalizar-whats:active { 
-    transform: scale(0.98); 
-}
+.btn-finalizar-whats:active { transform: scale(0.98); }
 
 /* ==========================================
-   9. ELEMENTOS FLUTUANTES
+   10. ELEMENTOS FLUTUANTES
    ========================================== */
 .social-float { 
     position: fixed; 
@@ -1151,13 +1327,8 @@ header h1 span {
     transition: all var(--transition-smooth);
 }
 
-.btn-social:hover { 
-    transform: scale(1.12);
-}
-
-.btn-social:active {
-    transform: scale(0.94);
-}
+.btn-social:hover { transform: scale(1.12); }
+.btn-social:active { transform: scale(0.94); }
 
 .btn-carrinho-float { 
     position: fixed; 
@@ -1166,26 +1337,28 @@ header h1 span {
     width: 64px; 
     height: 64px; 
     border-radius: 50%; 
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-soft)); 
-    color: #1a1208; 
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-soft)); 
+    color: var(--accent-text-on); 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     font-size: 1.5rem; 
     z-index: 900; 
-    box-shadow: 0 16px 40px rgba(212, 175, 55, 0.4); 
     border: none; 
     cursor: pointer;
     transition: all var(--transition-smooth);
 }
 
-.btn-carrinho-float:hover {
-    transform: scale(1.08);
+body[data-theme="canetas"] .btn-carrinho-float {
+    box-shadow: 0 16px 40px rgba(212, 175, 55, 0.4);
 }
 
-.btn-carrinho-float:active{
-    transform: scale(0.94);
+body[data-theme="cyto"] .btn-carrinho-float {
+    box-shadow: 0 16px 40px rgba(220, 38, 38, 0.4);
 }
+
+.btn-carrinho-float:hover { transform: scale(1.08); }
+.btn-carrinho-float:active { transform: scale(0.94); }
 
 .contador-carrinho { 
     position: absolute; 
@@ -1205,7 +1378,7 @@ header h1 span {
 }
 
 /* ==========================================
-   10. ADMIN PANEL REFINADO
+   11. ADMIN PANEL
    ========================================== */
 .admin-modal-box { 
     max-width: 800px !important; 
@@ -1237,7 +1410,7 @@ header h1 span {
 .admin-title-group h2 { 
     margin: 0; 
     font-size: 1.2rem; 
-    color: #fff; 
+    color: var(--text-main); 
     font-family: 'Playfair Display'; 
     font-weight: 800; 
 }
@@ -1264,7 +1437,7 @@ header h1 span {
 
 .status-badge.online { 
     background: rgba(16, 185, 129, 0.12); 
-    color: var(--cat-hibrida); 
+    color: #10b981; 
     border: 1px solid rgba(16, 185, 129, 0.25); 
 }
 
@@ -1284,15 +1457,13 @@ header h1 span {
 
 .admin-tabs { 
     display: flex; 
-    background: rgba(0, 0, 0, 0.2); 
+    background: rgba(127, 127, 127, 0.04); 
     overflow-x: auto; 
     scrollbar-width: none; 
     border-bottom: 1px solid var(--glass-border);
 }
 
-.admin-tabs::-webkit-scrollbar { 
-    display: none; 
-}
+.admin-tabs::-webkit-scrollbar { display: none; }
 
 .admin-tab { 
     padding: var(--spacing-md) var(--spacing-lg);
@@ -1308,13 +1479,11 @@ header h1 span {
     gap: var(--spacing-sm); 
 }
 
-.admin-tab:hover { 
-    color: #fff; 
-}
+.admin-tab:hover { color: var(--text-main); }
 
 .admin-tab.active { 
-    color: #fff; 
-    border-bottom-color: var(--accent-gold); 
+    color: var(--text-main); 
+    border-bottom-color: var(--accent-primary); 
     background: rgba(212, 175, 55, 0.05); 
 }
 
@@ -1324,27 +1493,16 @@ header h1 span {
     overflow-y: auto; 
 }
 
-.admin-content::-webkit-scrollbar { 
-    width: 6px; 
-}
-
-.admin-content::-webkit-scrollbar-track { 
-    background: transparent; 
-}
-
-.admin-content::-webkit-scrollbar-thumb { 
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 10px; 
-}
+.admin-content::-webkit-scrollbar { width: 6px; }
+.admin-content::-webkit-scrollbar-track { background: transparent; }
+.admin-content::-webkit-scrollbar-thumb { background: rgba(127, 127, 127, 0.2); border-radius: 10px; }
 
 .admin-section { 
     display: none; 
     animation: fadeIn 0.3s ease; 
 }
 
-.admin-section.active { 
-    display: block; 
-}
+.admin-section.active { display: block; }
 
 .stats-grid { 
     display: grid; 
@@ -1354,7 +1512,7 @@ header h1 span {
 }
 
 .stat-card { 
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(127, 127, 127, 0.04); 
     border: 1px solid var(--glass-border); 
     border-radius: var(--radius-md); 
     padding: var(--spacing-lg); 
@@ -1362,8 +1520,8 @@ header h1 span {
 }
 
 .stat-card:hover { 
-    border-color: rgba(212, 175, 55, 0.2); 
-    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-primary); 
+    background: rgba(127, 127, 127, 0.06);
 }
 
 .stat-icon { 
@@ -1381,7 +1539,7 @@ header h1 span {
 .stat-value { 
     font-size: 1.8rem; 
     font-weight: 800; 
-    color: #fff; 
+    color: var(--text-main); 
     line-height: 1; 
     margin-bottom: var(--spacing-xs); 
     font-family: 'Playfair Display'; 
@@ -1396,7 +1554,7 @@ header h1 span {
 }
 
 .recent-list { 
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(127, 127, 127, 0.04); 
     border: 1px solid var(--glass-border); 
     border-radius: var(--radius-md); 
     padding: var(--spacing-lg); 
@@ -1419,9 +1577,7 @@ header h1 span {
     border-bottom: 1px solid var(--glass-border); 
 }
 
-.recent-item:last-child { 
-    border-bottom: none; 
-}
+.recent-item:last-child { border-bottom: none; }
 
 .recent-item img { 
     width: 40px; 
@@ -1430,14 +1586,11 @@ header h1 span {
     object-fit: cover; 
 }
 
-.recent-item-info { 
-    flex: 1; 
-    min-width: 0; 
-}
+.recent-item-info { flex: 1; min-width: 0; }
 
 .recent-item-info strong { 
     display: block; 
-    color: #fff; 
+    color: var(--text-main); 
     font-size: 0.82rem; 
     overflow: hidden; 
     text-overflow: ellipsis; 
@@ -1474,9 +1627,9 @@ header h1 span {
     width: 100%; 
     padding: var(--spacing-md) var(--spacing-lg);
     border-radius: var(--radius-md); 
-    background: rgba(255, 255, 255, 0.04); 
+    background: rgba(127, 127, 127, 0.06); 
     border: 1px solid var(--glass-border); 
-    color: #fff; 
+    color: var(--text-main); 
     font-size: 15px !important; 
     outline: none; 
     font-family: 'Inter'; 
@@ -1484,8 +1637,8 @@ header h1 span {
 }
 
 .admin-input:focus { 
-    border-color: var(--accent-gold); 
-    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-primary); 
+    background: rgba(127, 127, 127, 0.1);
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
@@ -1516,14 +1669,26 @@ select.admin-input {
     gap: var(--spacing-md);
 }
 
+.form-row-3 { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: var(--spacing-md);
+}
+
 @media (max-width: 600px) { 
-    .form-row-2 { 
-        grid-template-columns: 1fr; 
-    } 
+    .form-row-2, .form-row-3 { grid-template-columns: 1fr; } 
+}
+
+/* Destaque do seletor de loja no painel */
+.loja-selector-wrap {
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(220, 38, 38, 0.08));
+    border: 1px solid var(--accent-primary);
+    border-radius: var(--radius-md);
 }
 
 .preview-section { 
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(127, 127, 127, 0.04); 
     border: 1px dashed var(--glass-border); 
     border-radius: var(--radius-md); 
     padding: var(--spacing-lg); 
@@ -1555,12 +1720,14 @@ select.admin-input {
 
 .preview-img-box { 
     height: 160px; 
-    background: var(--bg-deep);
     display: flex; 
     align-items: center; 
     justify-content: center; 
     position: relative; 
 }
+
+body[data-theme="canetas"] .preview-img-box { background: var(--bg-deep); }
+body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
 
 .preview-img-box img { 
     width: 100%; 
@@ -1587,12 +1754,10 @@ select.admin-input {
     text-transform: uppercase; 
 }
 
-.preview-info { 
-    padding: var(--spacing-lg); 
-}
+.preview-info { padding: var(--spacing-lg); }
 
 .preview-nome { 
-    color: #fff; 
+    color: var(--text-main); 
     font-weight: 600; 
     font-size: 0.8rem; 
     margin-bottom: var(--spacing-md);
@@ -1604,7 +1769,7 @@ select.admin-input {
 }
 
 .preview-preco { 
-    color: var(--accent-gold-soft); 
+    color: var(--accent-primary); 
     font-weight: 800; 
     font-size: 1rem; 
 }
@@ -1622,7 +1787,7 @@ select.admin-input {
 }
 
 .manage-info { 
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(127, 127, 127, 0.04); 
     border: 1px solid var(--glass-border); 
     border-radius: var(--radius-sm);
     padding: var(--spacing-md) var(--spacing-lg);
@@ -1634,30 +1799,19 @@ select.admin-input {
     align-items: center; 
 }
 
-.manage-info strong { 
-    color: #fff; 
-}
+.manage-info strong { color: var(--text-main); }
 
 .produto-lista { 
     max-height: 400px; 
     overflow-y: auto; 
 }
 
-.produto-lista::-webkit-scrollbar { 
-    width: 6px; 
-}
-
-.produto-lista::-webkit-scrollbar-track { 
-    background: transparent; 
-}
-
-.produto-lista::-webkit-scrollbar-thumb { 
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 10px; 
-}
+.produto-lista::-webkit-scrollbar { width: 6px; }
+.produto-lista::-webkit-scrollbar-track { background: transparent; }
+.produto-lista::-webkit-scrollbar-thumb { background: rgba(127, 127, 127, 0.2); border-radius: 10px; }
 
 .produto-item { 
-    background: rgba(255, 255, 255, 0.03); 
+    background: rgba(127, 127, 127, 0.04); 
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
     border-radius: var(--radius-md);
@@ -1669,8 +1823,8 @@ select.admin-input {
 }
 
 .produto-item:hover { 
-    border-color: rgba(212, 175, 55, 0.2); 
-    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--accent-primary); 
+    background: rgba(127, 127, 127, 0.08);
 }
 
 .produto-item img { 
@@ -1681,13 +1835,10 @@ select.admin-input {
     flex-shrink: 0; 
 }
 
-.produto-item-info { 
-    flex: 1; 
-    min-width: 0; 
-}
+.produto-item-info { flex: 1; min-width: 0; }
 
 .produto-item-info strong { 
-    color: #fff; 
+    color: var(--text-main); 
     display: block; 
     overflow: hidden; 
     text-overflow: ellipsis; 
@@ -1702,6 +1853,7 @@ select.admin-input {
     display: flex; 
     align-items: center; 
     gap: var(--spacing-md);
+    flex-wrap: wrap;
 }
 
 .produto-item-cat-tag { 
@@ -1711,6 +1863,26 @@ select.admin-input {
     font-weight: 700; 
     text-transform: uppercase; 
     color: #fff; 
+}
+
+.produto-item-loja-tag {
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.loja-tag-canetas {
+    background: rgba(212, 175, 55, 0.15);
+    color: #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.loja-tag-cyto {
+    background: rgba(220, 38, 38, 0.15);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
 .produto-item-actions { 
@@ -1732,13 +1904,8 @@ select.admin-input {
     transition: all var(--transition-smooth);
 }
 
-.btn-mini:hover {
-    transform: scale(1.05);
-}
-
-.btn-mini:active { 
-    transform: scale(0.9); 
-}
+.btn-mini:hover { transform: scale(1.05); }
+.btn-mini:active { transform: scale(0.9); }
 
 .btn-edit-mini { 
     background: rgba(59, 130, 246, 0.12); 
@@ -1775,23 +1942,18 @@ select.admin-input {
 }
 
 .btn-action.primary { 
-    background: var(--cat-hibrida); 
+    background: #10b981; 
     color: #fff; 
 }
 
 .btn-action.secondary { 
-    background: rgba(255, 255, 255, 0.06); 
-    color: #fff; 
+    background: rgba(127, 127, 127, 0.08); 
+    color: var(--text-main); 
     border: 1px solid var(--glass-border); 
 }
 
-.btn-action:hover {
-    transform: translateY(-1px);
-}
-
-.btn-action:active { 
-    transform: scale(0.97); 
-}
+.btn-action:hover { transform: translateY(-1px); }
+.btn-action:active { transform: scale(0.97); }
 
 .btn-row { 
     display: flex; 
@@ -1801,7 +1963,7 @@ select.admin-input {
 
 .config-section-title { 
     font-size: 0.92rem; 
-    color: #fff; 
+    color: var(--text-main); 
     font-weight: 700; 
     margin: 0 0 var(--spacing-md);
     display: flex; 
@@ -1810,7 +1972,7 @@ select.admin-input {
 }
 
 /* ==========================================
-   11. TOAST E UTILS
+   12. TOAST E UTILS
    ========================================== */
 .toast { 
     position: fixed; 
@@ -1832,24 +1994,10 @@ select.admin-input {
     font-size: 0.82rem; 
 }
 
-.toast.show { 
-    transform: translateX(-50%) translateY(0); 
-}
-
-.toast.error { 
-    background: var(--error-color); 
-    color: #fff; 
-}
-
-.toast.success { 
-    background: var(--success-color); 
-    color: #fff; 
-}
-
-.toast.info { 
-    background: var(--info-color); 
-    color: #fff; 
-}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.error { background: var(--error-color); color: #fff; }
+.toast.success { background: var(--success-color); color: #fff; }
+.toast.info { background: var(--info-color); color: #fff; }
 
 .empty-message { 
     grid-column: 1 / -1; 
@@ -1874,9 +2022,7 @@ select.admin-input {
     pointer-events: none; 
 }
 
-.connection-indicator.show { 
-    opacity: 1; 
-}
+.connection-indicator.show { opacity: 1; }
 
 .connection-indicator.online { 
     background: rgba(16, 185, 129, 0.12); 
@@ -1895,11 +2041,9 @@ select.admin-input {
     to { transform: rotate(360deg); } 
 }
 
-.spinning { 
-    animation: spin 1s linear infinite; 
-}
+.spinning { animation: spin 1s linear infinite; }
 
-/* Footer refinado */
+/* Footer */
 .footer-trust {
     max-width: 1360px;
     margin: var(--spacing-4xl) auto var(--spacing-2xl);
@@ -1934,11 +2078,12 @@ select.admin-input {
     .container { grid-template-columns: repeat(2, 1fr); }
     .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
     .footer-trust-icons { gap: var(--spacing-xl); font-size: 1.1rem; }
+    .main-tab { font-size: 0.75rem; padding: var(--spacing-sm) var(--spacing-md); }
 }
 </style>
 
 </head>
-<body>
+<body data-theme="canetas">
 
 <div class="ambient-light">
     <div class="light-blob blob-1"></div>
@@ -1948,12 +2093,23 @@ select.admin-input {
 
 <div id="toast" class="toast"><span id="toast-msg">Mensagem</span></div>
 
-<!-- HEADER -->
+<!-- ABAS PRINCIPAIS -->
+<div class="main-tabs-bar">
+    <div class="main-tabs-inner">
+        <button class="main-tab active" data-loja="canetas" onclick="trocarLoja('canetas')">
+            <i class="fas fa-leaf"></i> Canetas
+        </button>
+        <button class="main-tab" data-loja="cyto" onclick="trocarLoja('cyto')">
+            <i class="fas fa-mortar-pestle"></i> Cyto
+        </button>
+    </div>
+</div>
 
+<!-- HEADER -->
 <header>
     <div class="header-top">
         <div class="btn-admin-login" onclick="abrirModal('modal-login')"><i class="fas fa-lock"></i></div>
-        <h1>Canetas da Paz<span>CATÁLOGO PREMIUM</span></h1>
+        <h1 id="header-titulo">Canetas da Paz<span id="header-subtitulo">CATÁLOGO PREMIUM</span></h1>
         <button class="btn-search-toggle" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
     </div>
     <div id="search-bar" class="search-container">
@@ -1964,9 +2120,8 @@ select.admin-input {
     </div>
 </header>
 
-<!-- HERO SECTION -->
-
-<section class="hero-section">
+<!-- HERO CANETAS -->
+<section class="hero-section" id="hero-canetas">
     <div class="hero-container">
         <div class="hero-video-wrap">
             <iframe loading="lazy" src="https://player.vimeo.com/video/1187468692?background=1&autoplay=1&loop=1&muted=1&playsinline=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
@@ -1987,8 +2142,27 @@ select.admin-input {
     </div>
 </section>
 
-<!-- STATS BAR -->
+<!-- HERO CYTO -->
+<section class="hero-section" id="hero-cyto" style="display:none;">
+    <div class="hero-container">
+        <div class="hero-static-bg"></div>
+        <div class="hero-overlay">
+            <div class="hero-eyebrow"><span class="pulse-dot"></span> Farmácia de Confiança</div>
+            <h2 class="hero-headline">Saúde e bem-estar<br><em>na sua porta</em></h2>
+            <p class="hero-subheadline">Produtos farmacêuticos selecionados, entrega rápida e atendimento especializado. Sua saúde é nossa prioridade.</p>
+            <div class="hero-cta-row">
+                <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-pills"></i> Ver Produtos
+                </button>
+                <a href="https://wa.me/5511995079212" target="_blank" class="hero-cta-secondary">
+                    <i class="fab fa-whatsapp"></i> Falar com Farmacêutico
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- STATS BAR (2 ITENS) -->
 <section class="stats-bar">
     <div class="stats-bar-inner">
         <div class="stat-pill">
@@ -1996,26 +2170,17 @@ select.admin-input {
             <div class="stat-pill-label">Clientes</div>
         </div>
         <div class="stat-pill">
-            <div class="stat-pill-value">100%</div>
-            <div class="stat-pill-label">Discrição</div>
-        </div>
-        <div class="stat-pill">
             <div class="stat-pill-value">24h</div>
             <div class="stat-pill-label">Atendimento</div>
-        </div>
-        <div class="stat-pill">
-            <div class="stat-pill-value">★ 4.9</div>
-            <div class="stat-pill-label">Avaliação</div>
         </div>
     </div>
 </section>
 
 <!-- PROVA SOCIAL -->
-
 <div class="section-divider">
     <span class="section-eyebrow">Prova Social</span>
     <h2 class="section-title">Quem comprou, <em>aprovou</em></h2>
-    <p class="section-subtitle">Veja o que nossos clientes têm dito sobre os produtos. Print é coisa séria — qualidade é nosso compromisso.</p>
+    <p class="section-subtitle" id="prova-subtitle">Veja o que nossos clientes têm dito sobre os produtos. Print é coisa séria — qualidade é nosso compromisso.</p>
 </div>
 
 <section class="references-grid">
@@ -2023,31 +2188,21 @@ select.admin-input {
         <span class="reference-card-badge"><i class="fas fa-star"></i> Top Cliente</span>
         <img loading="lazy" src="https://i.postimg.cc/d3X7pgKR/a369d816-ef53-4ce4-a9fc-27037813ee4e.jpg" alt="Cliente Satisfeito">
     </div>
-    <div class="reference-card">
-        <span class="reference-card-badge">Verificado</span>
-        <img loading="lazy" src="https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg" alt="Produto Premium">
-    </div>
-    <div class="reference-card">
-        <span class="reference-card-badge">Premium</span>
-        <img loading="lazy" src="https://i.postimg.cc/RhWSjQmb/IMG_2591.jpg" alt="Produto Premium">
-    </div>
 </section>
 
 <!-- CATÁLOGO -->
-
 <div class="catalog-header" id="catalogo-anchor">
     <span class="section-eyebrow">Catálogo Completo</span>
     <h2 class="section-title">Nossos <em>produtos</em></h2>
-    <p class="section-subtitle">Selecionados a dedo. Cada item passa por curadoria rigorosa antes de chegar até você.</p>
+    <p class="section-subtitle" id="catalogo-subtitle">Selecionados a dedo. Cada item passa por curadoria rigorosa antes de chegar até você.</p>
 </div>
 
 <div class="container" id="grade-produtos"></div>
 <div id="msg-vazio" class="empty-message">Nenhum produto encontrado na busca.</div>
 
 <!-- FOOTER TRUST -->
-
 <div class="footer-trust">
-    <p class="footer-trust-text">Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados</p>
+    <p class="footer-trust-text" id="footer-texto">Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados</p>
     <div class="footer-trust-icons">
         <i class="fas fa-shield-alt"></i>
         <i class="fas fa-truck"></i>
@@ -2060,7 +2215,7 @@ select.admin-input {
 
 <div class="social-float">
     <a href="https://wa.me/5511995079212" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://www.instagram.com/canetasdapaz" target="_blank" class="btn-social" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.instagram.com/canetasdapaz" target="_blank" class="btn-social" id="btn-instagram" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)"><i class="fab fa-instagram"></i></a>
 </div>
 
 <button class="btn-carrinho-float" onclick="abrirModal('modal-carrinho')" id="btn-carrinho">
@@ -2069,7 +2224,6 @@ select.admin-input {
 </button>
 
 <!-- MODAL DETALHES -->
-
 <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
     <div class="modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-detalhes')"><i class="fas fa-times"></i></button>
@@ -2088,7 +2242,6 @@ select.admin-input {
 </div>
 
 <!-- MODAL CARRINHO -->
-
 <div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
     <div class="modal-box">
         <div class="cart-header">
@@ -2108,13 +2261,12 @@ select.admin-input {
 </div>
 
 <!-- MODAL LOGIN -->
-
 <div class="modal-overlay" id="modal-login" onclick="fecharSeClicarFora(event, 'modal-login')">
     <div class="modal-box" style="height:auto; padding:var(--spacing-2xl); border-radius:var(--radius-xl); max-width:400px; align-self:center;">
         <button class="fechar-modal" onclick="fecharModal('modal-login')"><i class="fas fa-times"></i></button>
         <div style="text-align:center; margin-bottom:var(--spacing-xl);">
-            <div style="width:58px; height:58px; border-radius:var(--radius-md); background:linear-gradient(135deg, var(--accent-gold), var(--accent-gold-soft)); display:inline-flex; align-items:center; justify-content:center; color:#1a1208; font-size:1.4rem; margin-bottom:var(--spacing-lg);"><i class="fas fa-shield-alt"></i></div>
-            <h2 style="margin:0 0 var(--spacing-sm); color:#fff; font-family:'Playfair Display'; font-weight:800;">Acesso Restrito</h2>
+            <div style="width:58px; height:58px; border-radius:var(--radius-md); background:linear-gradient(135deg, var(--accent-primary), var(--accent-soft)); display:inline-flex; align-items:center; justify-content:center; color:var(--accent-text-on); font-size:1.4rem; margin-bottom:var(--spacing-lg);"><i class="fas fa-shield-alt"></i></div>
+            <h2 style="margin:0 0 var(--spacing-sm); color:var(--text-main); font-family:'Playfair Display'; font-weight:800;">Acesso Restrito</h2>
             <p style="margin:0; color:var(--text-muted); font-size:0.82rem;">Digite a senha para acessar o painel</p>
         </div>
         <input type="password" id="admin-senha" class="admin-input" placeholder="Senha" style="margin-bottom:var(--spacing-lg);" onkeyup="if(event.key==='Enter') fazerLogin()">
@@ -2123,7 +2275,6 @@ select.admin-input {
 </div>
 
 <!-- MODAL ADMIN -->
-
 <div class="modal-overlay" id="modal-admin" onclick="fecharSeClicarFora(event, 'modal-admin')">
     <div class="modal-box admin-modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-admin')"><i class="fas fa-times"></i></button>
@@ -2131,7 +2282,7 @@ select.admin-input {
             <div class="admin-header-title">
                 <div class="admin-title-group">
                     <h2>Painel Admin</h2>
-                    <p>Canetas da Paz</p>
+                    <p>Canetas da Paz + Cyto</p>
                 </div>
             </div>
             <div id="admin-status" class="status-badge offline">
@@ -2148,15 +2299,19 @@ select.admin-input {
             <div id="admin-dashboard" class="admin-section active">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--cat-hibrida), #059669);"><i class="fas fa-database"></i></div>
-                        <div class="stat-value" id="stat-supabase">0</div><div class="stat-label">No Banco</div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #d4af37, #e8c870);"><i class="fas fa-leaf"></i></div>
+                        <div class="stat-value" id="stat-canetas">0</div><div class="stat-label">Canetas (BD)</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--cat-indica), #7c3aed);"><i class="fas fa-th"></i></div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #dc2626, #ef4444);"><i class="fas fa-mortar-pestle"></i></div>
+                        <div class="stat-value" id="stat-cyto">0</div><div class="stat-label">Cyto (BD)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);"><i class="fas fa-th"></i></div>
                         <div class="stat-value" id="stat-fixos">0</div><div class="stat-label">Fixos</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-soft));"><i class="fas fa-layer-group"></i></div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fas fa-layer-group"></i></div>
                         <div class="stat-value" id="stat-total">0</div><div class="stat-label">Total</div>
                     </div>
                 </div>
@@ -2167,6 +2322,14 @@ select.admin-input {
             </div>
             <div id="admin-adicionar" class="admin-section">
                 <div class="admin-form">
+                    <div class="loja-selector-wrap">
+                        <label class="form-label" style="margin-bottom:var(--spacing-sm); display:block;"><i class="fas fa-store"></i> &nbsp; Loja Destino *</label>
+                        <select id="add-loja" class="admin-input" onchange="atualizarPreview()">
+                            <option value="canetas">🍁 Canetas da Paz</option>
+                            <option value="cyto">⚕️ Cyto</option>
+                        </select>
+                        <p style="margin:var(--spacing-sm) 0 0; font-size:0.7rem; color:var(--text-muted);">Escolha em qual loja este produto vai aparecer.</p>
+                    </div>
                     <div class="form-group"><label class="form-label">Nome do Produto</label><input type="text" id="add-nome" class="admin-input" oninput="atualizarPreview()"></div>
                     <div class="form-row-2">
                         <div class="form-group"><label class="form-label">Preço (R$)</label><input type="number" step="0.01" id="add-preco" class="admin-input" oninput="atualizarPreview()"></div>
@@ -2178,7 +2341,7 @@ select.admin-input {
                         <div class="preview-label"><i class="fas fa-eye"></i> Preview Ao Vivo</div>
                         <div class="preview-card-mini">
                             <div class="preview-img-box">
-                                <span class="preview-tag" id="prev-tag" style="background:var(--cat-pod)">CATEGORIA</span>
+                                <span class="preview-tag" id="prev-tag" style="background:#d946ef">CATEGORIA</span>
                                 <img id="prev-img" src="" style="display:none;" onerror="this.style.display='none'; document.getElementById('prev-placeholder').style.display='block'">
                                 <div id="prev-placeholder" class="preview-img-placeholder">Imagem Aqui</div>
                             </div>
@@ -2194,6 +2357,11 @@ select.admin-input {
             <div id="admin-gerenciar" class="admin-section">
                 <div class="manage-toolbar">
                     <input type="text" id="manage-search" class="admin-input manage-search" placeholder="Buscar produto..." oninput="renderListaGerenciar()">
+                    <select id="manage-loja-filter" class="admin-input" style="min-width:130px;" onchange="renderListaGerenciar()">
+                        <option value="todas">Todas as lojas</option>
+                        <option value="canetas">🍁 Canetas</option>
+                        <option value="cyto">⚕️ Cyto</option>
+                    </select>
                     <select id="manage-filter" class="admin-input" style="min-width:130px;" onchange="renderListaGerenciar()"></select>
                 </div>
                 <div class="manage-info">
@@ -2212,6 +2380,10 @@ select.admin-input {
                         <button class="btn-action primary" onclick="testarConexao()"><i class="fas fa-plug"></i> Testar</button>
                         <button class="btn-action secondary" onclick="salvarConfiguracao()"><i class="fas fa-save"></i> Salvar</button>
                     </div>
+                    <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); border-radius:var(--radius-md); padding:var(--spacing-lg); margin-top:var(--spacing-md);">
+                        <p style="margin:0 0 var(--spacing-sm); font-size:0.78rem; color:var(--text-main); font-weight:700;"><i class="fas fa-info-circle" style="color:#3b82f6;"></i> Importante</p>
+                        <p style="margin:0; font-size:0.75rem; color:var(--text-muted); line-height:1.6;">A tabela <strong>produtos</strong> precisa ter uma coluna <strong>loja</strong> do tipo <strong>text</strong> para separar os produtos entre Canetas e Cyto. Se não existir, rode no Supabase: <code style="background:rgba(0,0,0,0.1); padding:2px 6px; border-radius:4px; font-size:0.7rem;">ALTER TABLE produtos ADD COLUMN loja text DEFAULT 'canetas';</code></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2219,13 +2391,19 @@ select.admin-input {
 </div>
 
 <!-- MODAL EDITAR -->
-
 <div class="modal-overlay" id="modal-editar" onclick="fecharSeClicarFora(event, 'modal-editar')">
     <div class="modal-box" style="height:auto; padding:var(--spacing-xl); border-radius:var(--radius-xl); max-width:550px;">
         <button class="fechar-modal" onclick="fecharModal('modal-editar')"><i class="fas fa-times"></i></button>
-        <h2 style="text-align:center; margin-bottom:var(--spacing-lg); color:#fff; font-family:'Playfair Display'; font-weight:800;">Editar Produto</h2>
+        <h2 style="text-align:center; margin-bottom:var(--spacing-lg); color:var(--text-main); font-family:'Playfair Display'; font-weight:800;">Editar Produto</h2>
         <div class="admin-form">
             <input type="hidden" id="edit-id">
+            <div class="loja-selector-wrap">
+                <label class="form-label" style="margin-bottom:var(--spacing-sm); display:block;"><i class="fas fa-store"></i> &nbsp; Loja</label>
+                <select id="edit-loja" class="admin-input">
+                    <option value="canetas">🍁 Canetas da Paz</option>
+                    <option value="cyto">⚕️ Cyto</option>
+                </select>
+            </div>
             <div class="form-group"><label class="form-label">Nome</label><input type="text" id="edit-nome" class="admin-input"></div>
             <div class="form-row-2">
                 <div class="form-group"><label class="form-label">Preço</label><input type="number" step="0.01" id="edit-preco" class="admin-input"></div>
@@ -2239,7 +2417,6 @@ select.admin-input {
 </div>
 
 <!-- MODAL FULLSCREEN IMAGE -->
-
 <div class="modal-overlay" id="modal-img-full" onclick="fecharModal('modal-img-full')" style="background:rgba(0,0,0,0.95); align-items:center;">
     <div style="position:relative; max-width:95vw; max-height:90vh;">
         <button class="fechar-modal" onclick="fecharModal('modal-img-full')" style="top:-50px;"><i class="fas fa-times"></i></button>
@@ -2252,6 +2429,9 @@ select.admin-input {
 <script>
 'use strict';
 
+/* ==========================================
+   CONFIGURAÇÕES GLOBAIS
+   ========================================== */
 const TELEFONE = "5511995079212";
 const SENHA_HASH = "VEhFRU5E";
 const STORAGE_KEY = 'cdp_supabase_config';
@@ -2268,7 +2448,35 @@ function carregarConfig() {
 }
 let CONFIG = carregarConfig();
 
-const CATEGORIAS = [
+/* ==========================================
+   ESTRUTURA DE LOJAS
+   ========================================== */
+const LOJA_CANETAS = 'canetas';
+const LOJA_CYTO = 'cyto';
+
+const LOJAS_CONFIG = {
+    canetas: {
+        titulo: 'Canetas da Paz',
+        subtitulo: 'CATÁLOGO PREMIUM',
+        prova_subtitle: 'Veja o que nossos clientes têm dito sobre os produtos. Print é coisa séria — qualidade é nosso compromisso.',
+        catalogo_subtitle: 'Selecionados a dedo. Cada item passa por curadoria rigorosa antes de chegar até você.',
+        footer: 'Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados',
+        instagram: 'https://www.instagram.com/canetasdapaz'
+    },
+    cyto: {
+        titulo: 'Cyto',
+        subtitulo: 'FARMÁCIA DE CONFIANÇA',
+        prova_subtitle: 'Clientes satisfeitos avaliam nossa qualidade e entrega rápida. Sua saúde merece o melhor.',
+        catalogo_subtitle: 'Medicamentos e produtos farmacêuticos selecionados. Qualidade e confiança em cada item.',
+        footer: 'Produtos farmacêuticos de qualidade • Entrega rápida • Atendimento especializado<br>Cyto © 2025 — Todos os direitos reservados',
+        instagram: 'https://www.instagram.com/canetasdapaz'
+    }
+};
+
+/* ==========================================
+   CATEGORIAS POR LOJA
+   ========================================== */
+const CATEGORIAS_CANETAS = [
     { id: 'pod', nome: 'PODS THC', cor: '#d946ef' },
     { id: 'hibrida', nome: 'Híbrida', cor: '#10b981' },
     { id: 'indica', nome: 'Indica', cor: '#8b5cf6' },
@@ -2278,27 +2486,30 @@ const CATEGORIAS = [
     { id: 'comestiveis', nome: 'Comestíveis', cor: '#f43f5e' }
 ];
 
-function obterCorCat(catId) {
-    const c = CATEGORIAS.find(x => x.id === catId);
-    return c ? c : { id: catId, nome: catId, cor: '#fff' };
+const CATEGORIAS_CYTO = [
+    { id: 'analgesicos', nome: 'Analgésicos', cor: '#dc2626' },
+    { id: 'vitaminas', nome: 'Vitaminas', cor: '#f59e0b' },
+    { id: 'suplementos', nome: 'Suplementos', cor: '#10b981' },
+    { id: 'higiene', nome: 'Higiene', cor: '#0891b2' },
+    { id: 'dermatologia', nome: 'Dermatológicos', cor: '#db2777' },
+    { id: 'antibioticos', nome: 'Antibióticos', cor: '#7c3aed' },
+    { id: 'infantil', nome: 'Infantil', cor: '#06b6d4' }
+];
+
+function getCategorias(loja) {
+    return loja === LOJA_CYTO ? CATEGORIAS_CYTO : CATEGORIAS_CANETAS;
 }
 
-function renderizarFiltrosDOM() {
-    let btnHtml = '<button class="btn-filtro ativo" onclick="filtrar(\'todos\', this)">Todos</button>';
-    let selHtml = '';
-    let selFiltro = '<option value="todos">Todas categorias</option>';
-    CATEGORIAS.forEach(c => {
-        btnHtml += `<button class="btn-filtro" onclick="filtrar('${c.id}', this)">${c.nome}</button>`;
-        selHtml += `<option value="${c.id}">${c.nome}</option>`;
-        selFiltro += `<option value="${c.id}">${c.nome}</option>`;
-    });
-    document.getElementById('filtros-lista').innerHTML = btnHtml;
-    document.getElementById('add-cat').innerHTML = selHtml;
-    document.getElementById('edit-cat').innerHTML = selHtml;
-    document.getElementById('manage-filter').innerHTML = selFiltro;
+function obterCorCat(catId, loja) {
+    const lista = getCategorias(loja || lojaAtual);
+    const c = lista.find(x => x.id === catId);
+    return c ? c : { id: catId, nome: catId, cor: '#888' };
 }
 
-const PRODUTOS_FIXOS = [
+/* ==========================================
+   PRODUTOS FIXOS POR LOJA
+   ========================================== */
+const PRODUTOS_FIXOS_CANETAS = [
     { nome: "Hallu Labz 3.0 - Strawberry Cheesecake (Indica)", preco: 300.00, imagem: "https://i.postimg.cc/8c7pqBGZ/IMG_2593.jpg", descricao: "Vape descartável de 3g. Sabor de sobremesa com notas doces de morango e creme. Indica potente para relaxamento.", categoria: "pod" },
     { nome: "Hallu Labz - Skywalker OG (Indica)", preco: 300.00, imagem: "https://i.postimg.cc/XqrjTcWh/IMG_2592.jpg", descricao: "Vape descartável de 3g. Embalagem preta com três caixas. Clássico terroso e picante, relaxamento profundo.", categoria: "pod" },
     { nome: "Hallu Labz 3.0 - Sour Diesel (Hybrid)", preco: 300.00, imagem: "https://i.postimg.cc/rsDVvCTP/IMG_2594.jpg", descricao: "Vape descartável de 3g. Embalagem azul ciano. Aroma de combustível e limão, energizante.", categoria: "pod" },
@@ -2343,23 +2554,47 @@ const PRODUTOS_FIXOS = [
     { nome: "Óleo de CBD Delta-9 THC + CBD", preco: 349.99, imagem: "https://i.postimg.cc/DfjPzKD7/IMG-2575.jpg", descricao: "Mix definitivo alívio de estresse full spectrum.", categoria: "oleo" }
 ];
 
-PRODUTOS_FIXOS.forEach((p, i) => { p.id = 'fix_' + i; p.fixo = true; });
+PRODUTOS_FIXOS_CANETAS.forEach((p, i) => { p.id = 'fix_canetas_' + i; p.fixo = true; p.loja = 'canetas'; });
 
+// Cyto começa sem produtos fixos — você adiciona pelo painel admin
+const PRODUTOS_FIXOS_CYTO = [];
+PRODUTOS_FIXOS_CYTO.forEach((p, i) => { p.id = 'fix_cyto_' + i; p.fixo = true; p.loja = 'cyto'; });
+
+function getProdutosFixos(loja) {
+    return loja === LOJA_CYTO ? PRODUTOS_FIXOS_CYTO : PRODUTOS_FIXOS_CANETAS;
+}
+
+/* ==========================================
+   ESTADO GLOBAL
+   ========================================== */
 let supabaseClient = null;
-let produtosSupabase = [];
+let produtosSupabase = []; // TODOS os produtos do banco (com campo loja)
 let carrinho = [];
 let produtoAtual = {};
 let categoriaAtiva = 'todos';
+let lojaAtual = LOJA_CANETAS;
 let conexaoOK = false;
 
+/* ==========================================
+   UTILS
+   ========================================== */
 function escapeHTML(str) {
     if (!str) return '';
     return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+
 function formatarPreco(preco) { return 'R$ ' + parseFloat(preco).toFixed(2).replace('.', ','); }
 
-function abrirModal(id) { const m = document.getElementById(id); if(m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; } }
-function fecharModal(id) { const m = document.getElementById(id); if(m) { m.classList.remove('active'); document.body.style.overflow = ''; } }
+function abrirModal(id) { 
+    const m = document.getElementById(id); 
+    if(m) { m.classList.add('active'); document.body.style.overflow = 'hidden'; } 
+}
+
+function fecharModal(id) { 
+    const m = document.getElementById(id); 
+    if(m) { m.classList.remove('active'); document.body.style.overflow = ''; } 
+}
+
 function fecharSeClicarFora(e, id) { if (e.target.id === id) fecharModal(id); }
 
 function abrirImagemFullscreen(src) {
@@ -2382,6 +2617,97 @@ function toggleSearch() {
     if (b.style.display === 'block') document.getElementById('search-input').focus();
 }
 
+/* ==========================================
+   TROCA DE LOJA (CANETAS / CYTO)
+   ========================================== */
+function trocarLoja(loja) {
+    if (loja === lojaAtual) return;
+    lojaAtual = loja;
+
+    // Aplica tema
+    document.body.setAttribute('data-theme', loja);
+
+    // Atualiza abas
+    document.querySelectorAll('.main-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.loja === loja);
+    });
+
+    // Atualiza textos da página
+    const cfg = LOJAS_CONFIG[loja];
+    document.getElementById('header-titulo').innerHTML = cfg.titulo + '<span id="header-subtitulo">' + cfg.subtitulo + '</span>';
+    document.getElementById('prova-subtitle').innerText = cfg.prova_subtitle;
+    document.getElementById('catalogo-subtitle').innerText = cfg.catalogo_subtitle;
+    document.getElementById('footer-texto').innerHTML = cfg.footer;
+
+    // Troca hero
+    document.getElementById('hero-canetas').style.display = loja === 'canetas' ? 'block' : 'none';
+    document.getElementById('hero-cyto').style.display = loja === 'cyto' ? 'block' : 'none';
+
+    // Reseta filtros e limpa carrinho (carrinho é por loja)
+    categoriaAtiva = 'todos';
+    carrinho = [];
+    atualizarCarrinhoUI();
+
+    // Limpa busca
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-bar').style.display = 'none';
+
+    // Renderiza filtros e produtos da nova loja
+    renderizarFiltrosDOM();
+    renderTodosProdutos();
+
+    // Volta ao topo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ==========================================
+   FILTROS
+   ========================================== */
+function renderizarFiltrosDOM() {
+    const categorias = getCategorias(lojaAtual);
+    let btnHtml = '<button class="btn-filtro ativo" onclick="filtrar(\'todos\', this)">Todos</button>';
+    categorias.forEach(c => {
+        btnHtml += `<button class="btn-filtro" onclick="filtrar('${c.id}', this)">${c.nome}</button>`;
+    });
+    document.getElementById('filtros-lista').innerHTML = btnHtml;
+
+    // Filtros do painel admin (baseado na loja escolhida no formulário de adicionar)
+    atualizarSelectsAdmin();
+}
+
+function atualizarSelectsAdmin() {
+    const lojaAdd = document.getElementById('add-loja') ? document.getElementById('add-loja').value : 'canetas';
+    const lojaEdit = document.getElementById('edit-loja') ? document.getElementById('edit-loja').value : 'canetas';
+
+    let selAdd = '', selEdit = '';
+    getCategorias(lojaAdd).forEach(c => {
+        selAdd += `<option value="${c.id}">${c.nome}</option>`;
+    });
+    getCategorias(lojaEdit).forEach(c => {
+        selEdit += `<option value="${c.id}">${c.nome}</option>`;
+    });
+    if (document.getElementById('add-cat')) document.getElementById('add-cat').innerHTML = selAdd;
+    if (document.getElementById('edit-cat')) document.getElementById('edit-cat').innerHTML = selEdit;
+
+    // Filtro da aba gerenciar: depende da loja-filter
+    atualizarFiltroGerenciar();
+}
+
+function atualizarFiltroGerenciar() {
+    const lojaFiltro = document.getElementById('manage-loja-filter');
+    const catFiltro = document.getElementById('manage-filter');
+    if (!lojaFiltro || !catFiltro) return;
+    
+    let cats = [];
+    if (lojaFiltro.value === 'canetas') cats = CATEGORIAS_CANETAS;
+    else if (lojaFiltro.value === 'cyto') cats = CATEGORIAS_CYTO;
+    else cats = [...CATEGORIAS_CANETAS, ...CATEGORIAS_CYTO];
+
+    let h = '<option value="todos">Todas categorias</option>';
+    cats.forEach(c => h += `<option value="${c.id}">${c.nome}</option>`);
+    catFiltro.innerHTML = h;
+}
+
 function filtrar(cat, btn) {
     categoriaAtiva = cat;
     document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
@@ -2402,18 +2728,32 @@ function aplicarFiltros() {
     document.getElementById('msg-vazio').style.display = visiveis === 0 ? 'block' : 'none';
 }
 
-function getTodosProdutos() {
-    return PRODUTOS_FIXOS.concat(produtosSupabase.map(p => ({
-        id: p.id, nome: p.nome, preco: parseFloat(p.preco), imagem: p.imagem,
-        descricao: p.descricao || '', categoria: p.categoria, fixo: false
-    })));
+/* ==========================================
+   RENDER PRODUTOS (FILTRA POR LOJA)
+   ========================================== */
+function getTodosProdutosDaLojaAtual() {
+    const fixos = getProdutosFixos(lojaAtual);
+    const doBanco = produtosSupabase
+        .filter(p => (p.loja || 'canetas') === lojaAtual)
+        .map(p => ({
+            id: p.id, nome: p.nome, preco: parseFloat(p.preco), imagem: p.imagem,
+            descricao: p.descricao || '', categoria: p.categoria, fixo: false, loja: p.loja || 'canetas'
+        }));
+    return fixos.concat(doBanco);
 }
 
 function renderTodosProdutos() {
     const grade = document.getElementById('grade-produtos');
     grade.innerHTML = '';
-    getTodosProdutos().forEach((p, idx) => {
-        const c = obterCorCat(p.categoria);
+    const produtos = getTodosProdutosDaLojaAtual();
+
+    if (produtos.length === 0) {
+        grade.innerHTML = '<div class="empty-message" style="display:block; grid-column:1/-1;"><i class="fas fa-box-open" style="font-size:2rem; margin-bottom:var(--spacing-md); display:block; opacity:0.4;"></i><p style="margin:0;">Nenhum produto cadastrado nesta loja ainda.</p><p style="margin:var(--spacing-sm) 0 0; font-size:0.78rem;">Adicione produtos pelo painel admin.</p></div>';
+        return;
+    }
+
+    produtos.forEach((p, idx) => {
+        const c = obterCorCat(p.categoria, lojaAtual);
         const card = document.createElement('div');
         card.className = 'card';
         card.dataset.categoria = p.categoria;
@@ -2422,7 +2762,7 @@ function renderTodosProdutos() {
         card.innerHTML = `
             <span class="tag-tipo" style="background:${c.cor}">${escapeHTML(c.nome)}</span>
             ${p.fixo ? '' : '<span class="tag-novo">NOVO</span>'}
-            <div class="card-img-box"><img loading="lazy" src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/400x300/0f0f17/8b94a8?text=Sem+Imagem'"></div>
+            <div class="card-img-box"><img loading="lazy" src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Sem+Imagem'"></div>
             <div class="card-info">
                 <div class="card-nome">${escapeHTML(p.nome)}</div>
                 <div class="card-preco">${formatarPreco(p.preco)}<span class="card-btn-add"><i class="fas fa-plus"></i></span></div>
@@ -2436,7 +2776,7 @@ function renderTodosProdutos() {
 
 function abrirModalDetalhes(p) {
     produtoAtual = p;
-    const c = obterCorCat(p.categoria);
+    const c = obterCorCat(p.categoria, p.loja || lojaAtual);
     document.getElementById('d-nome').innerText = p.nome;
     document.getElementById('d-preco').innerText = formatarPreco(p.preco);
     document.getElementById('d-desc').innerText = p.descricao || 'Produto premium de alta qualidade.';
@@ -2448,6 +2788,9 @@ function abrirModalDetalhes(p) {
 
 function adicionarDoModal() { adicionarAoCarrinho(produtoAtual); fecharModal('modal-detalhes'); }
 
+/* ==========================================
+   CARRINHO
+   ========================================== */
 function adicionarAoCarrinho(p) {
     const i = carrinho.findIndex(c => c.nome === p.nome);
     if (i >= 0) carrinho[i].qtd++;
@@ -2466,7 +2809,7 @@ function atualizarCarrinhoUI() {
         let html = '';
         carrinho.forEach((c, i) => {
             t += c.preco * c.qtd; q += c.qtd;
-            html += `<div class="cart-item"><img src="${escapeHTML(c.imagem)}"><div style="flex:1; min-width:0;"><strong style="color:#fff; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.88rem;">${escapeHTML(c.nome)}</strong><span style="color:var(--text-muted); font-size:0.85rem;">${formatarPreco(c.preco)}</span></div><div class="cart-qty-ctrl"><div onclick="removerItem(${i})" class="cart-qty-btn">−</div><span style="min-width:22px; text-align:center; color:#fff; font-weight:600; font-size:0.85rem;">${c.qtd}</span><div onclick="aumentarItem(${i})" class="cart-qty-btn">+</div></div></div>`;
+            html += `<div class="cart-item"><img src="${escapeHTML(c.imagem)}"><div style="flex:1; min-width:0;"><strong style="color:var(--text-main); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.88rem;">${escapeHTML(c.nome)}</strong><span style="color:var(--text-muted); font-size:0.85rem;">${formatarPreco(c.preco)}</span></div><div class="cart-qty-ctrl"><div onclick="removerItem(${i})" class="cart-qty-btn">−</div><span style="min-width:22px; text-align:center; color:var(--text-main); font-weight:600; font-size:0.85rem;">${c.qtd}</span><div onclick="aumentarItem(${i})" class="cart-qty-btn">+</div></div></div>`;
         });
         l.innerHTML = html;
         document.getElementById('cart-footer').style.display = 'block';
@@ -2481,7 +2824,8 @@ function aumentarItem(i) { carrinho[i].qtd++; atualizarCarrinhoUI(); }
 
 function finalizarCompra() {
     if (!carrinho.length) return;
-    let m = '*PEDIDO CANETAS DA PAZ 🍁*\n\n', t = 0;
+    const nomeLoja = lojaAtual === 'cyto' ? 'CYTO' : 'CANETAS DA PAZ 🍁';
+    let m = `*PEDIDO ${nomeLoja}*\n\n`, t = 0;
     carrinho.forEach(c => { t += c.preco * c.qtd; m += `• ${c.qtd}x ${c.nome} - ${formatarPreco(c.preco * c.qtd)}\n`; });
     m += `\n*TOTAL: ${formatarPreco(t)}*`;
     window.open(`https://wa.me/${TELEFONE}?text=${encodeURIComponent(m)}`, '_blank');
@@ -2489,6 +2833,9 @@ function finalizarCompra() {
     mostrarToast('Pedido enviado!', 'success');
 }
 
+/* ==========================================
+   ADMIN
+   ========================================== */
 function fazerLogin() {
     if (btoa(document.getElementById('admin-senha').value) === SENHA_HASH) {
         fecharModal('modal-login'); document.getElementById('admin-senha').value = '';
@@ -2504,20 +2851,33 @@ function trocarAbaAdmin(aba) {
     if (aba === 'dashboard') atualizarDashboard();
     if (aba === 'gerenciar') renderListaGerenciar();
     if (aba === 'configuracoes') carregarFormConfiguracao();
+    if (aba === 'adicionar') atualizarSelectsAdmin();
 }
 
 function atualizarDashboard() {
-    document.getElementById('stat-supabase').innerText = produtosSupabase.length;
-    document.getElementById('stat-fixos').innerText = PRODUTOS_FIXOS.length;
-    document.getElementById('stat-total').innerText = PRODUTOS_FIXOS.length + produtosSupabase.length;
+    const canetas = produtosSupabase.filter(p => (p.loja || 'canetas') === 'canetas');
+    const cyto = produtosSupabase.filter(p => p.loja === 'cyto');
+    document.getElementById('stat-canetas').innerText = canetas.length;
+    document.getElementById('stat-cyto').innerText = cyto.length;
+    document.getElementById('stat-fixos').innerText = PRODUTOS_FIXOS_CANETAS.length + PRODUTOS_FIXOS_CYTO.length;
+    document.getElementById('stat-total').innerText = PRODUTOS_FIXOS_CANETAS.length + PRODUTOS_FIXOS_CYTO.length + produtosSupabase.length;
+
     let recentes = produtosSupabase.slice(0, 5), h = '';
-    if(!recentes.length) { h = '<p style="color:var(--text-muted); font-size:0.85rem;">Nenhum produto extra cadastrado.</p>'; }
-    else recentes.forEach(p => { h += `<div class="recent-item"><img src="${escapeHTML(p.imagem)}"><div class="recent-item-info"><strong>${escapeHTML(p.nome)}</strong><small>${formatarPreco(p.preco)}</small></div></div>`; });
+    if(!recentes.length) { 
+        h = '<p style="color:var(--text-muted); font-size:0.85rem;">Nenhum produto extra cadastrado.</p>'; 
+    } else {
+        recentes.forEach(p => {
+            const lojaTag = (p.loja || 'canetas') === 'cyto' ? '<span class="produto-item-loja-tag loja-tag-cyto">CYTO</span>' : '<span class="produto-item-loja-tag loja-tag-canetas">CANETAS</span>';
+            h += `<div class="recent-item"><img src="${escapeHTML(p.imagem)}"><div class="recent-item-info"><strong>${escapeHTML(p.nome)}</strong><small>${formatarPreco(p.preco)} ${lojaTag}</small></div></div>`;
+        });
+    }
     document.getElementById('recent-products').innerHTML = h;
 }
 
 function atualizarPreview() {
-    const c = obterCorCat(document.getElementById('add-cat').value);
+    const loja = document.getElementById('add-loja').value;
+    atualizarSelectsAdmin();
+    const c = obterCorCat(document.getElementById('add-cat').value, loja);
     document.getElementById('prev-nome').innerText = document.getElementById('add-nome').value.trim() || 'Nome do produto';
     document.getElementById('prev-preco').innerText = formatarPreco(parseFloat(document.getElementById('add-preco').value) || 0);
     document.getElementById('prev-tag').innerText = c.nome.toUpperCase();
@@ -2534,16 +2894,33 @@ function atualizarPreview() {
 }
 
 function renderListaGerenciar() {
+    atualizarFiltroGerenciar();
     const t = (document.getElementById('manage-search').value || '').toLowerCase().trim();
+    const lojaFiltro = document.getElementById('manage-loja-filter').value;
     const f = document.getElementById('manage-filter').value;
-    let filt = produtosSupabase.filter(p => (f === 'todos' || p.categoria === f) && (!t || p.nome.toLowerCase().includes(t)));
+    
+    let filt = produtosSupabase.filter(p => {
+        const lojaP = p.loja || 'canetas';
+        if (lojaFiltro !== 'todas' && lojaP !== lojaFiltro) return false;
+        if (f !== 'todos' && p.categoria !== f) return false;
+        if (t && !p.nome.toLowerCase().includes(t)) return false;
+        return true;
+    });
+    
     document.getElementById('manage-count').innerText = filt.length;
-    if(!filt.length) { document.getElementById('lista-produtos').innerHTML = '<div style="padding:var(--spacing-2xl);text-align:center;color:var(--text-muted);font-size:0.85rem;">Nenhum produto encontrado.</div>'; return; }
+    if(!filt.length) { 
+        document.getElementById('lista-produtos').innerHTML = '<div style="padding:var(--spacing-2xl);text-align:center;color:var(--text-muted);font-size:0.85rem;">Nenhum produto encontrado.</div>'; 
+        return; 
+    }
     let h = '';
     filt.forEach(p => {
-        const c = obterCorCat(p.categoria);
+        const lojaP = p.loja || 'canetas';
+        const c = obterCorCat(p.categoria, lojaP);
         const safeId = (p.id !== undefined && p.id !== null) ? p.id : '';
-        h += `<div class="produto-item"><img src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/60'"><div class="produto-item-info"><strong>${escapeHTML(p.nome)}</strong><small><span class="produto-item-cat-tag" style="background:${c.cor}; color:#fff;">${c.nome}</span><span>${formatarPreco(p.preco)}</span></small></div><div class="produto-item-actions"><button class="btn-mini btn-edit-mini" onclick="editarProduto('${safeId}')"><i class="fas fa-edit"></i></button><button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto('${safeId}')"><i class="fas fa-clone"></i></button><button class="btn-mini btn-delete-mini" onclick="confirmarExclusao('${safeId}')"><i class="fas fa-trash"></i></button></div></div>`;
+        const lojaTag = lojaP === 'cyto' 
+            ? '<span class="produto-item-loja-tag loja-tag-cyto"><i class="fas fa-mortar-pestle"></i> Cyto</span>' 
+            : '<span class="produto-item-loja-tag loja-tag-canetas"><i class="fas fa-leaf"></i> Canetas</span>';
+        h += `<div class="produto-item"><img src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/60'"><div class="produto-item-info"><strong>${escapeHTML(p.nome)}</strong><small><span class="produto-item-cat-tag" style="background:${c.cor}; color:#fff;">${c.nome}</span>${lojaTag}<span>${formatarPreco(p.preco)}</span></small></div><div class="produto-item-actions"><button class="btn-mini btn-edit-mini" onclick="editarProduto('${safeId}')"><i class="fas fa-edit"></i></button><button class="btn-mini btn-duplicate-mini" onclick="duplicarProduto('${safeId}')"><i class="fas fa-clone"></i></button><button class="btn-mini btn-delete-mini" onclick="confirmarExclusao('${safeId}')"><i class="fas fa-trash"></i></button></div></div>`;
     });
     document.getElementById('lista-produtos').innerHTML = h;
 }
@@ -2597,14 +2974,24 @@ async function carregarProdutosSupabase() {
     if (!supabaseClient) return renderTodosProdutos();
     try {
         const res = await supabaseClient.from(CONFIG.tabela).select('*');
-        if (res.error) { setStatusConexao(false); return renderTodosProdutos(); }
+        if (res.error) { 
+            setStatusConexao(false); 
+            console.error('Erro ao carregar:', res.error);
+            return renderTodosProdutos(); 
+        }
         produtosSupabase = res.data || [];
+        // Garante que produtos sem loja sejam tratados como canetas (compatibilidade com dados antigos)
+        produtosSupabase.forEach(p => { if (!p.loja) p.loja = 'canetas'; });
         setStatusConexao(true);
         renderTodosProdutos();
         if (document.getElementById('modal-admin').classList.contains('active')) {
             atualizarDashboard(); renderListaGerenciar();
         }
-    } catch (e) { setStatusConexao(false); renderTodosProdutos(); }
+    } catch (e) { 
+        console.error(e);
+        setStatusConexao(false); 
+        renderTodosProdutos(); 
+    }
 }
 
 async function salvarProdutoSupabase() {
@@ -2614,15 +3001,33 @@ async function salvarProdutoSupabase() {
     const cat = document.getElementById('add-cat').value;
     const img = document.getElementById('add-imgs').value.trim();
     const desc = document.getElementById('add-desc').value.trim();
+    const loja = document.getElementById('add-loja').value;
     if (!nome || !img || isNaN(preco)) return mostrarToast('Preencha os campos obrigatórios', 'error');
+    
     document.getElementById('btn-salvar').disabled = true;
     document.getElementById('btn-salvar').innerHTML = 'SALVANDO...';
     try {
         const idSeguro = Math.floor(Math.random() * 2000000000);
-        const payload = { id: idSeguro, nome, preco, imagem: img, descricao: desc, categoria: cat, created_at: new Date().toISOString() };
+        const payload = { 
+            id: idSeguro, 
+            nome, 
+            preco, 
+            imagem: img, 
+            descricao: desc, 
+            categoria: cat, 
+            loja: loja,
+            created_at: new Date().toISOString() 
+        };
         const res = await supabaseClient.from(CONFIG.tabela).insert([payload]);
-        if (res.error) throw res.error;
-        mostrarToast('Produto adicionado!', 'success');
+        if (res.error) {
+            // Se o erro for coluna "loja" não existir, tenta sem ela
+            if (res.error.message && res.error.message.toLowerCase().includes('loja')) {
+                mostrarToast('Adicione a coluna "loja" na sua tabela Supabase. Veja as instruções na aba Supabase.', 'error');
+                throw res.error;
+            }
+            throw res.error;
+        }
+        mostrarToast(`Produto adicionado em ${loja === 'cyto' ? 'Cyto' : 'Canetas'}!`, 'success');
         document.getElementById('add-nome').value = '';
         document.getElementById('add-preco').value = '';
         document.getElementById('add-imgs').value = '';
@@ -2630,8 +3035,9 @@ async function salvarProdutoSupabase() {
         atualizarPreview();
         await carregarProdutosSupabase();
         trocarAbaAdmin('dashboard');
-    } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
-    finally {
+    } catch (e) { 
+        mostrarToast('Erro: ' + e.message, 'error'); 
+    } finally {
         document.getElementById('btn-salvar').disabled = false;
         document.getElementById('btn-salvar').innerHTML = '<i class="fas fa-cloud-upload-alt"></i> &nbsp; SALVAR PRODUTO';
     }
@@ -2644,9 +3050,28 @@ function editarProduto(idRaw) {
     document.getElementById('edit-id').value = p.id;
     document.getElementById('edit-nome').value = p.nome;
     document.getElementById('edit-preco').value = p.preco;
+    document.getElementById('edit-loja').value = p.loja || 'canetas';
+    
+    // Atualiza categorias do select baseado na loja
+    let selEdit = '';
+    getCategorias(p.loja || 'canetas').forEach(c => {
+        selEdit += `<option value="${c.id}">${c.nome}</option>`;
+    });
+    document.getElementById('edit-cat').innerHTML = selEdit;
     document.getElementById('edit-cat').value = p.categoria;
+    
     document.getElementById('edit-imgs').value = p.imagem;
     document.getElementById('edit-desc').value = p.descricao || '';
+
+    // Listener para atualizar categorias se mudar a loja no modal de edição
+    document.getElementById('edit-loja').onchange = function() {
+        let h = '';
+        getCategorias(this.value).forEach(c => {
+            h += `<option value="${c.id}">${c.nome}</option>`;
+        });
+        document.getElementById('edit-cat').innerHTML = h;
+    };
+
     abrirModal('modal-editar');
 }
 
@@ -2657,11 +3082,14 @@ async function atualizarProdutoSupabase() {
     const cat = document.getElementById('edit-cat').value;
     const img = document.getElementById('edit-imgs').value.trim();
     const desc = document.getElementById('edit-desc').value.trim();
+    const loja = document.getElementById('edit-loja').value;
     if (!idRaw || idRaw === 'undefined') return mostrarToast('Erro: ID inválido', 'error');
     if (!nome || isNaN(preco) || !img) return mostrarToast('Preencha tudo', 'error');
     let formatId = /^\d+$/.test(idRaw) ? parseInt(idRaw, 10) : idRaw;
     try {
-        const res = await supabaseClient.from(CONFIG.tabela).update({ nome, preco, imagem: img, descricao: desc, categoria: cat }).eq('id', formatId);
+        const res = await supabaseClient.from(CONFIG.tabela).update({ 
+            nome, preco, imagem: img, descricao: desc, categoria: cat, loja 
+        }).eq('id', formatId);
         if (res.error) throw res.error;
         mostrarToast('Atualizado!', 'success');
         await carregarProdutosSupabase();
@@ -2675,7 +3103,16 @@ async function duplicarProduto(idRaw) {
     if (!p || !confirm(`Duplicar "${p.nome}"?`)) return;
     try {
         const idSeguro = Math.floor(Math.random() * 2000000000);
-        const payload = { id: idSeguro, nome: p.nome + ' (Cópia)', preco: p.preco, imagem: p.imagem, descricao: p.descricao, categoria: p.categoria, created_at: new Date().toISOString() };
+        const payload = { 
+            id: idSeguro, 
+            nome: p.nome + ' (Cópia)', 
+            preco: p.preco, 
+            imagem: p.imagem, 
+            descricao: p.descricao, 
+            categoria: p.categoria, 
+            loja: p.loja || 'canetas',
+            created_at: new Date().toISOString() 
+        };
         const res = await supabaseClient.from(CONFIG.tabela).insert([payload]);
         if (res.error) throw res.error;
         mostrarToast('Duplicado!', 'success');
@@ -2696,6 +3133,9 @@ async function confirmarExclusao(idRaw) {
     } catch (e) { mostrarToast('Erro: ' + e.message, 'error'); }
 }
 
+/* ==========================================
+   INICIALIZAÇÃO
+   ========================================== */
 let inicializado = false;
 function iniciarAplicacao() {
     if(inicializado) return;
