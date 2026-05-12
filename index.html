@@ -86,14 +86,6 @@ body[data-theme="cyto"] {
     --accent-soft: #ef4444;
     --accent-lighter: #f87171;
     --accent-text-on: #ffffff;
-
-    --cat-hibrida: #059669;
-    --cat-indica: #2563eb;
-    --cat-sativa: #d97706;
-    --cat-refil: #0891b2;
-    --cat-oleo: #ca8a04;
-    --cat-pod: #db2777;
-    --cat-comestiveis: #e11d48;
 }
 
 * { 
@@ -224,12 +216,10 @@ body[data-theme="cyto"] .main-tab.active {
     box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
 }
 
-.main-tab i {
-    font-size: 0.9rem;
-}
+.main-tab i { font-size: 0.9rem; }
 
 /* ==========================================
-   4. CABEÇALHO REFINADO
+   4. CABEÇALHO
    ========================================== */
 header {
     padding: var(--spacing-xl) 0 var(--spacing-md);
@@ -398,7 +388,7 @@ header h1 span {
 }
 
 /* ==========================================
-   5. HERO SECTION PREMIUM
+   5. HERO SECTION
    ========================================== */
 .hero-section {
     max-width: 1360px;
@@ -441,7 +431,6 @@ body[data-theme="cyto"] .hero-container {
     transform: scale(1.08);
 }
 
-/* Hero estático para Cyto (sem vídeo) */
 .hero-static-bg {
     position: absolute; 
     inset: 0;
@@ -458,7 +447,7 @@ body[data-theme="cyto"] .hero-container {
 }
 
 .hero-static-bg::after {
-    content: '\f7f2'; /* fa-mortar-pestle */
+    content: '\f7f2';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     position: absolute;
@@ -549,9 +538,7 @@ body[data-theme="canetas"] .hero-headline {
     -webkit-text-fill-color: transparent;
 }
 
-.hero-headline em {
-    font-style: italic;
-}
+.hero-headline em { font-style: italic; }
 
 body[data-theme="canetas"] .hero-headline em {
     background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-lighter) 100%);
@@ -609,9 +596,7 @@ body[data-theme="cyto"] .hero-cta-primary {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
-.hero-cta-primary:hover { 
-    transform: translateY(-2px); 
-}
+.hero-cta-primary:hover { transform: translateY(-2px); }
 
 body[data-theme="canetas"] .hero-cta-primary:hover {
     box-shadow: 0 16px 44px rgba(212, 175, 55, 0.45);
@@ -656,7 +641,7 @@ body[data-theme="cyto"] .hero-cta-primary:hover {
 }
 
 /* ==========================================
-   6. STATS BAR REFINADO (apenas 2 itens agora p/ canetas)
+   6. STATS BAR
    ========================================== */
 .stats-bar {
     max-width: 1360px;
@@ -666,7 +651,7 @@ body[data-theme="cyto"] .hero-cta-primary:hover {
 
 .stats-bar-inner {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* AGORA 2 itens */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1px;
     background: var(--glass-border);
     border-radius: var(--radius-lg);
@@ -682,13 +667,8 @@ body[data-theme="cyto"] .hero-cta-primary:hover {
     transition: all var(--transition-smooth);
 }
 
-body[data-theme="canetas"] .stat-pill:hover {
-    background: rgba(15, 15, 23, 0.95);
-}
-
-body[data-theme="cyto"] .stat-pill:hover {
-    background: rgba(220, 38, 38, 0.02);
-}
+body[data-theme="canetas"] .stat-pill:hover { background: rgba(15, 15, 23, 0.95); }
+body[data-theme="cyto"] .stat-pill:hover { background: rgba(220, 38, 38, 0.02); }
 
 .stat-pill-value {
     font-family: 'Playfair Display', serif;
@@ -705,9 +685,7 @@ body[data-theme="canetas"] .stat-pill-value {
     -webkit-text-fill-color: transparent;
 }
 
-body[data-theme="cyto"] .stat-pill-value {
-    color: var(--accent-primary);
-}
+body[data-theme="cyto"] .stat-pill-value { color: var(--accent-primary); }
 
 .stat-pill-label {
     font-size: 0.65rem;
@@ -748,9 +726,7 @@ body[data-theme="cyto"] .stat-pill-value {
     letter-spacing: -0.01em;
 }
 
-.section-title em {
-    font-style: italic;
-}
+.section-title em { font-style: italic; }
 
 body[data-theme="canetas"] .section-title em {
     background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-soft) 100%);
@@ -772,14 +748,78 @@ body[data-theme="cyto"] .section-title em {
     font-weight: 400;
 }
 
-/* Prova Social - agora só 1 card (centralizado) */
-.references-grid {
+/* Prova social CANETAS — 1 card centralizado */
+.references-grid-canetas {
     max-width: 700px;
     margin: 0 auto var(--spacing-3xl);
     padding: 0 var(--spacing-lg);
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
+}
+
+/* Prova social CYTO — grid de 4 referências + 2 vídeos, todos proporcionais */
+.references-grid-cyto {
+    max-width: 1360px;
+    margin: 0 auto var(--spacing-3xl);
+    padding: 0 var(--spacing-lg);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.references-grid-cyto .reference-card {
+    aspect-ratio: 3/4;
+}
+
+/* Grid de vídeos da Cyto */
+.cyto-videos-grid {
+    max-width: 1360px;
+    margin: var(--spacing-2xl) auto var(--spacing-3xl);
+    padding: 0 var(--spacing-lg);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.cyto-video-card {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fluid);
+}
+
+.cyto-video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(220, 38, 38, 0.15);
+}
+
+.cyto-video-card iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.cyto-video-badge {
+    position: absolute;
+    top: var(--spacing-lg);
+    left: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    color: var(--accent-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 18px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(220, 38, 38, 0.15);
+    z-index: 2;
+    pointer-events: none;
 }
 
 .reference-card {
@@ -834,8 +874,13 @@ body[data-theme="cyto"] .reference-card-badge {
     border: 1px solid rgba(220, 38, 38, 0.15);
 }
 
+@media (max-width: 900px) {
+    .references-grid-cyto { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (max-width: 600px) {
-    .reference-card { aspect-ratio: 4/3; }
+    .references-grid-canetas .reference-card { aspect-ratio: 4/3; }
+    .cyto-videos-grid { grid-template-columns: 1fr; }
 }
 
 /* ==========================================
@@ -991,18 +1036,10 @@ body[data-theme="cyto"] .card-img-box { background: #f3f4f6; }
     cursor: pointer;
 }
 
-body[data-theme="canetas"] .card-btn-add {
-    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
-}
+body[data-theme="canetas"] .card-btn-add { box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3); }
+body[data-theme="cyto"] .card-btn-add { box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3); }
 
-body[data-theme="cyto"] .card-btn-add {
-    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
-}
-
-.card-btn-add:hover {
-    transform: scale(1.1);
-}
-
+.card-btn-add:hover { transform: scale(1.1); }
 .card-btn-add:active { transform: scale(0.9); }
 
 /* ==========================================
@@ -1145,25 +1182,13 @@ body[data-theme="canetas"] .modal-preco { color: var(--accent-soft); }
     font-family: 'Inter'; 
 }
 
-body[data-theme="canetas"] .btn-confirmar {
-    box-shadow: 0 10px 28px rgba(212, 175, 55, 0.25);
-}
+body[data-theme="canetas"] .btn-confirmar { box-shadow: 0 10px 28px rgba(212, 175, 55, 0.25); }
+body[data-theme="cyto"] .btn-confirmar { box-shadow: 0 10px 28px rgba(220, 38, 38, 0.25); }
 
-body[data-theme="cyto"] .btn-confirmar {
-    box-shadow: 0 10px 28px rgba(220, 38, 38, 0.25);
-}
+.btn-confirmar:hover { transform: translateY(-2px); }
 
-.btn-confirmar:hover { 
-    transform: translateY(-2px); 
-}
-
-body[data-theme="canetas"] .btn-confirmar:hover {
-    box-shadow: 0 14px 36px rgba(212, 175, 55, 0.4);
-}
-
-body[data-theme="cyto"] .btn-confirmar:hover {
-    box-shadow: 0 14px 36px rgba(220, 38, 38, 0.4);
-}
+body[data-theme="canetas"] .btn-confirmar:hover { box-shadow: 0 14px 36px rgba(212, 175, 55, 0.4); }
+body[data-theme="cyto"] .btn-confirmar:hover { box-shadow: 0 14px 36px rgba(220, 38, 38, 0.4); }
 
 .btn-confirmar:active { transform: scale(0.98); }
 .btn-confirmar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
@@ -1200,9 +1225,7 @@ body[data-theme="cyto"] .btn-confirmar:hover {
     transition: background var(--transition-smooth);
 }
 
-.cart-item:hover {
-    background: rgba(127, 127, 127, 0.04);
-}
+.cart-item:hover { background: rgba(127, 127, 127, 0.04); }
 
 .cart-item img { 
     width: 60px; 
@@ -1236,9 +1259,7 @@ body[data-theme="cyto"] .btn-confirmar:hover {
     border: none;
 }
 
-.cart-qty-btn:hover {
-    background: rgba(127, 127, 127, 0.15);
-}
+.cart-qty-btn:hover { background: rgba(127, 127, 127, 0.15); }
 
 .cart-qty-btn:active { 
     background: var(--accent-primary); 
@@ -1293,7 +1314,7 @@ body[data-theme="canetas"] .cart-total span:last-child { color: var(--accent-sof
     transition: all var(--transition-smooth);
 }
 
-.btn-finalizar-whats:hover{
+.btn-finalizar-whats:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 36px rgba(37, 211, 102, 0.4);
 }
@@ -1349,13 +1370,8 @@ body[data-theme="canetas"] .cart-total span:last-child { color: var(--accent-sof
     transition: all var(--transition-smooth);
 }
 
-body[data-theme="canetas"] .btn-carrinho-float {
-    box-shadow: 0 16px 40px rgba(212, 175, 55, 0.4);
-}
-
-body[data-theme="cyto"] .btn-carrinho-float {
-    box-shadow: 0 16px 40px rgba(220, 38, 38, 0.4);
-}
+body[data-theme="canetas"] .btn-carrinho-float { box-shadow: 0 16px 40px rgba(212, 175, 55, 0.4); }
+body[data-theme="cyto"] .btn-carrinho-float { box-shadow: 0 16px 40px rgba(220, 38, 38, 0.4); }
 
 .btn-carrinho-float:hover { transform: scale(1.08); }
 .btn-carrinho-float:active { transform: scale(0.94); }
@@ -1669,17 +1685,10 @@ select.admin-input {
     gap: var(--spacing-md);
 }
 
-.form-row-3 { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr; 
-    gap: var(--spacing-md);
-}
-
 @media (max-width: 600px) { 
-    .form-row-2, .form-row-3 { grid-template-columns: 1fr; } 
+    .form-row-2 { grid-template-columns: 1fr; } 
 }
 
-/* Destaque do seletor de loja no painel */
 .loja-selector-wrap {
     padding: var(--spacing-lg);
     background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(220, 38, 38, 0.08));
@@ -1729,11 +1738,7 @@ select.admin-input {
 body[data-theme="canetas"] .preview-img-box { background: var(--bg-deep); }
 body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
 
-.preview-img-box img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-}
+.preview-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
 .preview-img-placeholder { 
     color: var(--text-muted); 
@@ -1781,10 +1786,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     flex-wrap: wrap; 
 }
 
-.manage-search { 
-    flex: 1; 
-    min-width: 175px; 
-}
+.manage-search { flex: 1; min-width: 175px; }
 
 .manage-info { 
     background: rgba(127, 127, 127, 0.04); 
@@ -1801,11 +1803,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
 
 .manage-info strong { color: var(--text-main); }
 
-.produto-lista { 
-    max-height: 400px; 
-    overflow-y: auto; 
-}
-
+.produto-lista { max-height: 400px; overflow-y: auto; }
 .produto-lista::-webkit-scrollbar { width: 6px; }
 .produto-lista::-webkit-scrollbar-track { background: transparent; }
 .produto-lista::-webkit-scrollbar-thumb { background: rgba(127, 127, 127, 0.2); border-radius: 10px; }
@@ -1885,11 +1883,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
-.produto-item-actions { 
-    display: flex; 
-    gap: var(--spacing-xs);
-    flex-shrink: 0; 
-}
+.produto-item-actions { display: flex; gap: var(--spacing-xs); flex-shrink: 0; }
 
 .btn-mini { 
     width: 34px; 
@@ -1941,10 +1935,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     font-family: 'Inter'; 
 }
 
-.btn-action.primary { 
-    background: #10b981; 
-    color: #fff; 
-}
+.btn-action.primary { background: #10b981; color: #fff; }
 
 .btn-action.secondary { 
     background: rgba(127, 127, 127, 0.08); 
@@ -1955,11 +1946,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
 .btn-action:hover { transform: translateY(-1px); }
 .btn-action:active { transform: scale(0.97); }
 
-.btn-row { 
-    display: flex; 
-    gap: var(--spacing-md);
-    flex-wrap: wrap; 
-}
+.btn-row { display: flex; gap: var(--spacing-md); flex-wrap: wrap; }
 
 .config-section-title { 
     font-size: 0.92rem; 
@@ -2036,11 +2023,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     border: 1px solid rgba(239, 68, 68, 0.25); 
 }
 
-@keyframes spin { 
-    from { transform: rotate(0deg); } 
-    to { transform: rotate(360deg); } 
-}
-
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .spinning { animation: spin 1s linear infinite; }
 
 /* Footer */
@@ -2155,14 +2138,14 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
                     <i class="fas fa-pills"></i> Ver Produtos
                 </button>
                 <a href="https://wa.me/5511995079212" target="_blank" class="hero-cta-secondary">
-                    <i class="fab fa-whatsapp"></i> Falar com Farmacêutico
+                    <i class="fab fa-whatsapp"></i> Consultar Vendedor
                 </a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- STATS BAR (2 ITENS) -->
+<!-- STATS BAR -->
 <section class="stats-bar">
     <div class="stats-bar-inner">
         <div class="stat-pill">
@@ -2183,10 +2166,43 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     <p class="section-subtitle" id="prova-subtitle">Veja o que nossos clientes têm dito sobre os produtos. Print é coisa séria — qualidade é nosso compromisso.</p>
 </div>
 
-<section class="references-grid">
+<!-- PROVA SOCIAL CANETAS -->
+<section class="references-grid-canetas" id="prova-canetas">
     <div class="reference-card" onclick="abrirImagemFullscreen('https://i.postimg.cc/d3X7pgKR/a369d816-ef53-4ce4-a9fc-27037813ee4e.jpg')">
         <span class="reference-card-badge"><i class="fas fa-star"></i> Top Cliente</span>
         <img loading="lazy" src="https://i.postimg.cc/d3X7pgKR/a369d816-ef53-4ce4-a9fc-27037813ee4e.jpg" alt="Cliente Satisfeito">
+    </div>
+</section>
+
+<!-- PROVA SOCIAL CYTO - 4 IMAGENS PROPORCIONAIS -->
+<section class="references-grid-cyto" id="prova-cyto" style="display:none;">
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/1FNXVXg/Whats-App-Image-2026-05-11-at-23-03-13.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/1FNXVXg/Whats-App-Image-2026-05-11-at-23-03-13.jpg" alt="Cliente Cyto">
+    </div>
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/nqQpYT7y/Whats-App-Image-2026-05-11-at-22-57-56.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/nqQpYT7y/Whats-App-Image-2026-05-11-at-22-57-56.jpg" alt="Cliente Cyto">
+    </div>
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/1f9Qh9yK/Whats-App-Image-2026-05-11-at-23-01-07.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/1f9Qh9yK/Whats-App-Image-2026-05-11-at-23-01-07.jpg" alt="Cliente Cyto">
+    </div>
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/ShnyYwS/Whats-App-Image-2026-05-11-at-23-02-13.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/ShnyYwS/Whats-App-Image-2026-05-11-at-23-02-13.jpg" alt="Cliente Cyto">
+    </div>
+</section>
+
+<!-- VÍDEOS CYTO - 2 vídeos lado a lado proporcionais -->
+<section class="cyto-videos-grid" id="videos-cyto" style="display:none;">
+    <div class="cyto-video-card">
+        <span class="cyto-video-badge"><i class="fas fa-play-circle"></i> Depoimento</span>
+        <iframe loading="lazy" src="https://player.vimeo.com/video/1191388314?autoplay=1&loop=1&muted=1&playsinline=1&background=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="cyto-video-card">
+        <span class="cyto-video-badge"><i class="fas fa-play-circle"></i> Resultado Real</span>
+        <iframe loading="lazy" src="https://player.vimeo.com/video/1191388314?autoplay=1&loop=1&muted=1&playsinline=1&background=0#t=2" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
 </section>
 
@@ -2200,7 +2216,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
 <div class="container" id="grade-produtos"></div>
 <div id="msg-vazio" class="empty-message">Nenhum produto encontrado na busca.</div>
 
-<!-- FOOTER TRUST -->
+<!-- FOOTER -->
 <div class="footer-trust">
     <p class="footer-trust-text" id="footer-texto">Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados</p>
     <div class="footer-trust-icons">
@@ -2466,15 +2482,16 @@ const LOJAS_CONFIG = {
     cyto: {
         titulo: 'Cyto',
         subtitulo: 'FARMÁCIA DE CONFIANÇA',
-        prova_subtitle: 'Clientes satisfeitos avaliam nossa qualidade e entrega rápida. Sua saúde merece o melhor.',
-        catalogo_subtitle: 'Medicamentos e produtos farmacêuticos selecionados. Qualidade e confiança em cada item.',
-        footer: 'Produtos farmacêuticos de qualidade • Entrega rápida • Atendimento especializado<br>Cyto © 2025 — Todos os direitos reservados',
+        prova_subtitle: 'Resultados reais de quem confiou em nós. Veja depoimentos e prints dos nossos clientes satisfeitos.',
+        catalogo_subtitle: 'Suplementos selecionados para emagrecimento e bem-estar. Qualidade e confiança em cada item.',
+        footer: 'Produtos selecionados • Entrega rápida • Atendimento especializado<br>Cyto © 2025 — Todos os direitos reservados',
         instagram: 'https://www.instagram.com/canetasdapaz'
     }
 };
 
 /* ==========================================
    CATEGORIAS POR LOJA
+   - Cyto: apenas Emagrecimento e Abortec
    ========================================== */
 const CATEGORIAS_CANETAS = [
     { id: 'pod', nome: 'PODS THC', cor: '#d946ef' },
@@ -2487,13 +2504,8 @@ const CATEGORIAS_CANETAS = [
 ];
 
 const CATEGORIAS_CYTO = [
-    { id: 'analgesicos', nome: 'Analgésicos', cor: '#dc2626' },
-    { id: 'vitaminas', nome: 'Vitaminas', cor: '#f59e0b' },
-    { id: 'suplementos', nome: 'Suplementos', cor: '#10b981' },
-    { id: 'higiene', nome: 'Higiene', cor: '#0891b2' },
-    { id: 'dermatologia', nome: 'Dermatológicos', cor: '#db2777' },
-    { id: 'antibioticos', nome: 'Antibióticos', cor: '#7c3aed' },
-    { id: 'infantil', nome: 'Infantil', cor: '#06b6d4' }
+    { id: 'emagrecimento', nome: 'Emagrecimento', cor: '#dc2626' },
+    { id: 'abortec', nome: 'Abortec', cor: '#991b1b' }
 ];
 
 function getCategorias(loja) {
@@ -2556,7 +2568,6 @@ const PRODUTOS_FIXOS_CANETAS = [
 
 PRODUTOS_FIXOS_CANETAS.forEach((p, i) => { p.id = 'fix_canetas_' + i; p.fixo = true; p.loja = 'canetas'; });
 
-// Cyto começa sem produtos fixos — você adiciona pelo painel admin
 const PRODUTOS_FIXOS_CYTO = [];
 PRODUTOS_FIXOS_CYTO.forEach((p, i) => { p.id = 'fix_cyto_' + i; p.fixo = true; p.loja = 'cyto'; });
 
@@ -2568,7 +2579,7 @@ function getProdutosFixos(loja) {
    ESTADO GLOBAL
    ========================================== */
 let supabaseClient = null;
-let produtosSupabase = []; // TODOS os produtos do banco (com campo loja)
+let produtosSupabase = [];
 let carrinho = [];
 let produtoAtual = {};
 let categoriaAtiva = 'todos';
@@ -2624,39 +2635,39 @@ function trocarLoja(loja) {
     if (loja === lojaAtual) return;
     lojaAtual = loja;
 
-    // Aplica tema
     document.body.setAttribute('data-theme', loja);
 
-    // Atualiza abas
     document.querySelectorAll('.main-tab').forEach(t => {
         t.classList.toggle('active', t.dataset.loja === loja);
     });
 
-    // Atualiza textos da página
     const cfg = LOJAS_CONFIG[loja];
     document.getElementById('header-titulo').innerHTML = cfg.titulo + '<span id="header-subtitulo">' + cfg.subtitulo + '</span>';
     document.getElementById('prova-subtitle').innerText = cfg.prova_subtitle;
     document.getElementById('catalogo-subtitle').innerText = cfg.catalogo_subtitle;
     document.getElementById('footer-texto').innerHTML = cfg.footer;
 
-    // Troca hero
+    // Heroes
     document.getElementById('hero-canetas').style.display = loja === 'canetas' ? 'block' : 'none';
     document.getElementById('hero-cyto').style.display = loja === 'cyto' ? 'block' : 'none';
 
-    // Reseta filtros e limpa carrinho (carrinho é por loja)
+    // Prova social
+    document.getElementById('prova-canetas').style.display = loja === 'canetas' ? 'grid' : 'none';
+    document.getElementById('prova-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
+
+    // Vídeos (somente Cyto)
+    document.getElementById('videos-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
+
     categoriaAtiva = 'todos';
     carrinho = [];
     atualizarCarrinhoUI();
 
-    // Limpa busca
     document.getElementById('search-input').value = '';
     document.getElementById('search-bar').style.display = 'none';
 
-    // Renderiza filtros e produtos da nova loja
     renderizarFiltrosDOM();
     renderTodosProdutos();
 
-    // Volta ao topo
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2671,7 +2682,6 @@ function renderizarFiltrosDOM() {
     });
     document.getElementById('filtros-lista').innerHTML = btnHtml;
 
-    // Filtros do painel admin (baseado na loja escolhida no formulário de adicionar)
     atualizarSelectsAdmin();
 }
 
@@ -2689,7 +2699,6 @@ function atualizarSelectsAdmin() {
     if (document.getElementById('add-cat')) document.getElementById('add-cat').innerHTML = selAdd;
     if (document.getElementById('edit-cat')) document.getElementById('edit-cat').innerHTML = selEdit;
 
-    // Filtro da aba gerenciar: depende da loja-filter
     atualizarFiltroGerenciar();
 }
 
@@ -2729,7 +2738,7 @@ function aplicarFiltros() {
 }
 
 /* ==========================================
-   RENDER PRODUTOS (FILTRA POR LOJA)
+   RENDER PRODUTOS
    ========================================== */
 function getTodosProdutosDaLojaAtual() {
     const fixos = getProdutosFixos(lojaAtual);
@@ -2980,7 +2989,6 @@ async function carregarProdutosSupabase() {
             return renderTodosProdutos(); 
         }
         produtosSupabase = res.data || [];
-        // Garante que produtos sem loja sejam tratados como canetas (compatibilidade com dados antigos)
         produtosSupabase.forEach(p => { if (!p.loja) p.loja = 'canetas'; });
         setStatusConexao(true);
         renderTodosProdutos();
@@ -3020,7 +3028,6 @@ async function salvarProdutoSupabase() {
         };
         const res = await supabaseClient.from(CONFIG.tabela).insert([payload]);
         if (res.error) {
-            // Se o erro for coluna "loja" não existir, tenta sem ela
             if (res.error.message && res.error.message.toLowerCase().includes('loja')) {
                 mostrarToast('Adicione a coluna "loja" na sua tabela Supabase. Veja as instruções na aba Supabase.', 'error');
                 throw res.error;
@@ -3052,7 +3059,6 @@ function editarProduto(idRaw) {
     document.getElementById('edit-preco').value = p.preco;
     document.getElementById('edit-loja').value = p.loja || 'canetas';
     
-    // Atualiza categorias do select baseado na loja
     let selEdit = '';
     getCategorias(p.loja || 'canetas').forEach(c => {
         selEdit += `<option value="${c.id}">${c.nome}</option>`;
@@ -3063,7 +3069,6 @@ function editarProduto(idRaw) {
     document.getElementById('edit-imgs').value = p.imagem;
     document.getElementById('edit-desc').value = p.descricao || '';
 
-    // Listener para atualizar categorias se mudar a loja no modal de edição
     document.getElementById('edit-loja').onchange = function() {
         let h = '';
         getCategorias(this.value).forEach(c => {
