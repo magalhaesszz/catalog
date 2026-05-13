@@ -1125,6 +1125,7 @@ body[data-theme="cyto"] .reference-card-badge {
     height: 200px; 
     width: 100%; 
     overflow: hidden;
+    display: none; /* Substituído pelo carrossel */
 }
 
 body[data-theme="canetas"] .card-img-box { background: var(--bg-deep); }
@@ -1190,6 +1191,170 @@ body[data-theme="cyto"] .card-btn-add { box-shadow: 0 6px 16px rgba(220, 38, 38,
 
 .card-btn-add:hover { transform: scale(1.1); }
 .card-btn-add:active { transform: scale(0.9); }
+
+/* === CARROSSEL DE IMAGENS (CARD) === */
+.card-img-carousel {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .card-img-carousel { height: 260px; }
+}
+
+.card-img-carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform var(--transition-smooth);
+}
+
+.card-img-carousel-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: opacity var(--transition-smooth);
+    opacity: 0.9;
+}
+
+.card:hover .card-img-carousel-track img { opacity: 1; }
+
+.card-img-dots {
+    position: absolute;
+    bottom: var(--spacing-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    z-index: 3;
+}
+
+.card-img-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+}
+
+.card-img-dot.active {
+    background: #fff;
+    width: 16px;
+    border-radius: 4px;
+}
+
+body[data-theme="cyto"] .card-img-dot {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+body[data-theme="cyto"] .card-img-dot.active {
+    background: var(--accent-primary);
+}
+
+.card-img-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.65rem;
+    z-index: 4;
+    border: none;
+    transition: all var(--transition-smooth);
+    opacity: 0;
+}
+
+.card:hover .card-img-nav { opacity: 1; }
+
+.card-img-nav:hover { background: rgba(0, 0, 0, 0.75); transform: translateY(-50%) scale(1.1); }
+
+.card-img-nav.prev { left: var(--spacing-sm); }
+.card-img-nav.next { right: var(--spacing-sm); }
+
+/* === CARROSSEL NO MODAL DE DETALHES === */
+.modal-img-carousel {
+    width: 100%;
+    height: 380px;
+    position: relative;
+    background: var(--bg-card);
+    overflow: hidden;
+}
+
+.modal-img-carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform var(--transition-smooth);
+}
+
+.modal-img-carousel-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.modal-img-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    z-index: 6;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all var(--transition-smooth);
+}
+
+.modal-img-nav:hover { background: rgba(0, 0, 0, 0.75); transform: translateY(-50%) scale(1.08); }
+.modal-img-nav.prev { left: var(--spacing-lg); }
+.modal-img-nav.next { right: var(--spacing-lg); }
+
+.modal-img-dots {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 6;
+}
+
+.modal-img-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+}
+
+.modal-img-dot.active {
+    background: #fff;
+    width: 24px;
+    border-radius: 5px;
+}
 
 /* ==========================================
    9. MODAIS
@@ -2419,13 +2584,18 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     <div class="contador-carrinho" id="cart-count" style="display:none">0</div>
 </button>
 
-<!-- MODAL DETALHES -->
+<!-- MODAL DETALHES COM CARROSSEL -->
 
 <div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
     <div class="modal-box">
         <button class="fechar-modal" onclick="fecharModal('modal-detalhes')"><i class="fas fa-times"></i></button>
-        <div class="modal-img-container">
-            <img src="" id="d-img" class="modal-img-top">
+        <div class="modal-img-carousel" id="modal-carousel">
+            <div class="modal-img-carousel-track" id="modal-carousel-track">
+                <!-- Imagens injetadas via JS -->
+            </div>
+            <button class="modal-img-nav prev" id="modal-nav-prev" onclick="modalCarouselNav(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="modal-img-nav next" id="modal-nav-next" onclick="modalCarouselNav(1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="modal-img-dots" id="modal-dots"></div>
             <div class="modal-gradient"></div>
         </div>
         <div class="modal-content">
@@ -2535,7 +2705,18 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
                         <div class="form-group"><label class="form-label">Preço (R$)</label><input type="number" step="0.01" id="add-preco" class="admin-input" oninput="atualizarPreview()"></div>
                         <div class="form-group"><label class="form-label">Categoria</label><select id="add-cat" class="admin-input" onchange="atualizarPreview()"></select></div>
                     </div>
-                    <div class="form-group"><label class="form-label">URL da Imagem</label><input type="text" id="add-imgs" class="admin-input" oninput="atualizarPreview()"></div>
+                    <div class="form-group">
+                        <label class="form-label">Imagem 1 (Principal) *</label>
+                        <input type="text" id="add-img1" class="admin-input" placeholder="Cole a URL da imagem principal" oninput="atualizarPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Imagem 2 (Opcional)</label>
+                        <input type="text" id="add-img2" class="admin-input" placeholder="Cole a URL da segunda imagem" oninput="atualizarPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Imagem 3 (Opcional)</label>
+                        <input type="text" id="add-img3" class="admin-input" placeholder="Cole a URL da terceira imagem" oninput="atualizarPreview()">
+                    </div>
                     <div class="form-group"><label class="form-label">Descrição</label><textarea id="add-desc" class="admin-input" rows="3"></textarea></div>
                     <div class="preview-section">
                         <div class="preview-label"><i class="fas fa-eye"></i> Preview Ao Vivo</div>
@@ -2582,7 +2763,7 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
                     </div>
                     <div style="background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); border-radius:var(--radius-md); padding:var(--spacing-lg); margin-top:var(--spacing-md);">
                         <p style="margin:0 0 var(--spacing-sm); font-size:0.78rem; color:var(--text-main); font-weight:700;"><i class="fas fa-info-circle" style="color:#3b82f6;"></i> Importante</p>
-                        <p style="margin:0; font-size:0.75rem; color:var(--text-muted); line-height:1.6;">A tabela <strong>produtos</strong> precisa ter uma coluna <strong>loja</strong> do tipo <strong>text</strong> para separar os produtos entre Canetas e Cyto. Se não existir, rode no Supabase: <code style="background:rgba(0,0,0,0.1); padding:2px 6px; border-radius:4px; font-size:0.7rem;">ALTER TABLE produtos ADD COLUMN loja text DEFAULT 'canetas';</code></p>
+                        <p style="margin:0; font-size:0.75rem; color:var(--text-muted); line-height:1.6;">A tabela <strong>produtos</strong> precisa ter as colunas <strong>loja</strong>, <strong>imagem2</strong> e <strong>imagem3</strong> do tipo <strong>text</strong>. Se não existirem, rode no Supabase SQL Editor:<br><code style="background:rgba(0,0,0,0.1); padding:2px 6px; border-radius:4px; font-size:0.68rem; display:inline-block; margin-top:4px;">ALTER TABLE produtos ADD COLUMN IF NOT EXISTS loja text DEFAULT 'canetas', ADD COLUMN IF NOT EXISTS imagem2 text, ADD COLUMN IF NOT EXISTS imagem3 text;</code></p>
                     </div>
                 </div>
             </div>
@@ -2610,7 +2791,18 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
                 <div class="form-group"><label class="form-label">Preço</label><input type="number" step="0.01" id="edit-preco" class="admin-input"></div>
                 <div class="form-group"><label class="form-label">Categoria</label><select id="edit-cat" class="admin-input"></select></div>
             </div>
-            <div class="form-group"><label class="form-label">URL da Imagem</label><input type="text" id="edit-imgs" class="admin-input"></div>
+            <div class="form-group">
+                <label class="form-label">Imagem 1 (Principal) *</label>
+                <input type="text" id="edit-img1" class="admin-input" placeholder="URL da imagem principal">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Imagem 2 (Opcional)</label>
+                <input type="text" id="edit-img2" class="admin-input" placeholder="URL da segunda imagem">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Imagem 3 (Opcional)</label>
+                <input type="text" id="edit-img3" class="admin-input" placeholder="URL da terceira imagem">
+            </div>
             <div class="form-group"><label class="form-label">Descrição</label><textarea id="edit-desc" class="admin-input" rows="3"></textarea></div>
             <button class="btn-confirmar" onclick="atualizarProdutoSupabase()"><i class="fas fa-check"></i> &nbsp; SALVAR ALTERAÇÕES</button>
         </div>
@@ -2872,8 +3064,14 @@ function renderizarFiltrosDOM() {
 }
 
 function atualizarSelectsAdmin() {
+    const addCatEl = document.getElementById('add-cat');
+    const editCatEl = document.getElementById('edit-cat');
     const lojaAdd = document.getElementById('add-loja') ? document.getElementById('add-loja').value : 'canetas';
     const lojaEdit = document.getElementById('edit-loja') ? document.getElementById('edit-loja').value : 'canetas';
+
+    // Guarda valor atual antes de reconstruir
+    const prevAddCat = addCatEl ? addCatEl.value : '';
+    const prevEditCat = editCatEl ? editCatEl.value : '';
 
     let selAdd = '', selEdit = '';
     getCategorias(lojaAdd).forEach(c => {
@@ -2882,8 +3080,19 @@ function atualizarSelectsAdmin() {
     getCategorias(lojaEdit).forEach(c => {
         selEdit += `<option value="${c.id}">${c.nome}</option>`;
     });
-    if (document.getElementById('add-cat')) document.getElementById('add-cat').innerHTML = selAdd;
-    if (document.getElementById('edit-cat')) document.getElementById('edit-cat').innerHTML = selEdit;
+    if (addCatEl) {
+        addCatEl.innerHTML = selAdd;
+        // Restaura valor se ainda existe na nova lista
+        if (prevAddCat && [...addCatEl.options].some(o => o.value === prevAddCat)) {
+            addCatEl.value = prevAddCat;
+        }
+    }
+    if (editCatEl) {
+        editCatEl.innerHTML = selEdit;
+        if (prevEditCat && [...editCatEl.options].some(o => o.value === prevEditCat)) {
+            editCatEl.value = prevEditCat;
+        }
+    }
 
     atualizarFiltroGerenciar();
 }
@@ -2926,12 +3135,26 @@ function aplicarFiltros() {
 /* ==========================================
    RENDER PRODUTOS
    ========================================== */
+/* Helper: retorna array de imagens do produto (suporta campo imagem e imagem2/imagem3) */
+function getImagens(p) {
+    const imgs = [];
+    if (p.imagem) imgs.push(p.imagem);
+    if (p.imagem2) imgs.push(p.imagem2);
+    if (p.imagem3) imgs.push(p.imagem3);
+    // Se veio como array em p.imagens (para fixos)
+    if (p.imagens && Array.isArray(p.imagens)) {
+        p.imagens.forEach(i => { if (i && !imgs.includes(i)) imgs.push(i); });
+    }
+    return imgs.length > 0 ? imgs : ['https://via.placeholder.com/400x300/cccccc/666666?text=Sem+Imagem'];
+}
+
 function getTodosProdutosDaLojaAtual() {
     const fixos = getProdutosFixos(lojaAtual);
     const doBanco = produtosSupabase
         .filter(p => (p.loja || 'canetas') === lojaAtual)
         .map(p => ({
-            id: p.id, nome: p.nome, preco: parseFloat(p.preco), imagem: p.imagem,
+            id: p.id, nome: p.nome, preco: parseFloat(p.preco), 
+            imagem: p.imagem, imagem2: p.imagem2 || '', imagem3: p.imagem3 || '',
             descricao: p.descricao || '', categoria: p.categoria, fixo: false, loja: p.loja || 'canetas'
         }));
     return fixos.concat(doBanco);
@@ -2949,15 +3172,37 @@ function renderTodosProdutos() {
 
     produtos.forEach((p, idx) => {
         const c = obterCorCat(p.categoria, lojaAtual);
+        const imgs = getImagens(p);
         const card = document.createElement('div');
         card.className = 'card';
         card.dataset.categoria = p.categoria;
         card.dataset.id = p.id;
         card.style.animationDelay = (idx * 0.03) + 's';
+
+        let carouselHtml = '';
+        if (imgs.length > 1) {
+            const trackImgs = imgs.map(src => `<img loading="lazy" src="${escapeHTML(src)}" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Sem+Imagem'">`).join('');
+            const dots = imgs.map((_, i) => `<span class="card-img-dot${i === 0 ? ' active' : ''}" data-idx="${i}"></span>`).join('');
+            carouselHtml = `
+                <div class="card-img-carousel" data-current="0" data-total="${imgs.length}">
+                    <div class="card-img-carousel-track">${trackImgs}</div>
+                    <button class="card-img-nav prev" onclick="event.stopPropagation(); cardCarouselNav(this, -1)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="card-img-nav next" onclick="event.stopPropagation(); cardCarouselNav(this, 1)"><i class="fas fa-chevron-right"></i></button>
+                    <div class="card-img-dots">${dots}</div>
+                </div>`;
+        } else {
+            carouselHtml = `
+                <div class="card-img-carousel">
+                    <div class="card-img-carousel-track">
+                        <img loading="lazy" src="${escapeHTML(imgs[0])}" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Sem+Imagem'">
+                    </div>
+                </div>`;
+        }
+
         card.innerHTML = `
             <span class="tag-tipo" style="background:${c.cor}">${escapeHTML(c.nome)}</span>
             ${p.fixo ? '' : '<span class="tag-novo">NOVO</span>'}
-            <div class="card-img-box"><img loading="lazy" src="${escapeHTML(p.imagem)}" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Sem+Imagem'"></div>
+            ${carouselHtml}
             <div class="card-info">
                 <div class="card-nome">${escapeHTML(p.nome)}</div>
                 <div class="card-preco">${formatarPreco(p.preco)}<span class="card-btn-add"><i class="fas fa-plus"></i></span></div>
@@ -2969,17 +3214,84 @@ function renderTodosProdutos() {
     aplicarFiltros();
 }
 
+/* CARD CAROUSEL NAV */
+function cardCarouselNav(btn, dir) {
+    const carousel = btn.closest('.card-img-carousel');
+    if (!carousel) return;
+    const total = parseInt(carousel.dataset.total) || 1;
+    let current = parseInt(carousel.dataset.current) || 0;
+    current = (current + dir + total) % total;
+    carousel.dataset.current = current;
+    const track = carousel.querySelector('.card-img-carousel-track');
+    track.style.transform = `translateX(-${current * 100}%)`;
+    carousel.querySelectorAll('.card-img-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+}
+
+let modalCarouselCurrent = 0;
+let modalCarouselTotal = 0;
+
 function abrirModalDetalhes(p) {
     produtoAtual = p;
     const c = obterCorCat(p.categoria, p.loja || lojaAtual);
     document.getElementById('d-nome').innerText = p.nome;
     document.getElementById('d-preco').innerText = formatarPreco(p.preco);
     document.getElementById('d-desc').innerText = p.descricao || 'Produto premium de alta qualidade.';
-    document.getElementById('d-img').src = p.imagem;
     document.getElementById('d-tag').innerText = c.nome.toUpperCase();
     document.getElementById('d-tag').style.background = c.cor;
+
+    // Carrossel de imagens no modal
+    const imgs = getImagens(p);
+    modalCarouselCurrent = 0;
+    modalCarouselTotal = imgs.length;
+
+    const track = document.getElementById('modal-carousel-track');
+    track.innerHTML = imgs.map(src => `<img src="${escapeHTML(src)}" onerror="this.src='https://via.placeholder.com/400x400/cccccc/666666?text=Sem+Imagem'">`).join('');
+    track.style.transform = 'translateX(0)';
+
+    const dots = document.getElementById('modal-dots');
+    if (imgs.length > 1) {
+        dots.innerHTML = imgs.map((_, i) => `<span class="modal-img-dot${i === 0 ? ' active' : ''}" onclick="modalCarouselGoTo(${i})"></span>`).join('');
+        dots.style.display = 'flex';
+        document.getElementById('modal-nav-prev').style.display = 'flex';
+        document.getElementById('modal-nav-next').style.display = 'flex';
+    } else {
+        dots.innerHTML = '';
+        dots.style.display = 'none';
+        document.getElementById('modal-nav-prev').style.display = 'none';
+        document.getElementById('modal-nav-next').style.display = 'none';
+    }
+
     abrirModal('modal-detalhes');
 }
+
+function modalCarouselNav(dir) {
+    if (modalCarouselTotal <= 1) return;
+    modalCarouselCurrent = (modalCarouselCurrent + dir + modalCarouselTotal) % modalCarouselTotal;
+    modalCarouselUpdate();
+}
+
+function modalCarouselGoTo(idx) {
+    modalCarouselCurrent = idx;
+    modalCarouselUpdate();
+}
+
+function modalCarouselUpdate() {
+    const track = document.getElementById('modal-carousel-track');
+    track.style.transform = `translateX(-${modalCarouselCurrent * 100}%)`;
+    document.querySelectorAll('#modal-dots .modal-img-dot').forEach((d, i) => d.classList.toggle('active', i === modalCarouselCurrent));
+}
+
+// Swipe no modal
+(function() {
+    let startX = 0;
+    const el = document.getElementById('modal-carousel');
+    if (!el) return;
+    el.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    el.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) modalCarouselNav(diff > 0 ? 1 : -1);
+    }, { passive: true });
+})();
 
 function adicionarDoModal() { adicionarAoCarrinho(produtoAtual); fecharModal('modal-detalhes'); }
 
@@ -2988,8 +3300,9 @@ function adicionarDoModal() { adicionarAoCarrinho(produtoAtual); fecharModal('mo
    ========================================== */
 function adicionarAoCarrinho(p) {
     const i = carrinho.findIndex(c => c.nome === p.nome);
+    const imgs = getImagens(p);
     if (i >= 0) carrinho[i].qtd++;
-    else carrinho.push({ nome: p.nome, preco: parseFloat(p.preco), imagem: p.imagem, qtd: 1 });
+    else carrinho.push({ nome: p.nome, preco: parseFloat(p.preco), imagem: imgs[0], qtd: 1 });
     atualizarCarrinhoUI();
     mostrarToast('Adicionado ao carrinho!', 'success');
 }
@@ -3077,7 +3390,7 @@ function atualizarPreview() {
     document.getElementById('prev-preco').innerText = formatarPreco(parseFloat(document.getElementById('add-preco').value) || 0);
     document.getElementById('prev-tag').innerText = c.nome.toUpperCase();
     document.getElementById('prev-tag').style.background = c.cor;
-    const img = document.getElementById('add-imgs').value.trim();
+    const img = document.getElementById('add-img1').value.trim();
     if (img) {
         document.getElementById('prev-img').src = img;
         document.getElementById('prev-img').style.display = 'block';
@@ -3193,10 +3506,12 @@ async function salvarProdutoSupabase() {
     const nome = document.getElementById('add-nome').value.trim();
     const preco = parseFloat(document.getElementById('add-preco').value);
     const cat = document.getElementById('add-cat').value;
-    const img = document.getElementById('add-imgs').value.trim();
+    const img1 = document.getElementById('add-img1').value.trim();
+    const img2 = document.getElementById('add-img2').value.trim();
+    const img3 = document.getElementById('add-img3').value.trim();
     const desc = document.getElementById('add-desc').value.trim();
     const loja = document.getElementById('add-loja').value;
-    if (!nome || !img || isNaN(preco)) return mostrarToast('Preencha os campos obrigatórios', 'error');
+    if (!nome || !img1 || isNaN(preco)) return mostrarToast('Preencha os campos obrigatórios (nome, preço, imagem 1)', 'error');
     
     document.getElementById('btn-salvar').disabled = true;
     document.getElementById('btn-salvar').innerHTML = 'SALVANDO...';
@@ -3206,7 +3521,9 @@ async function salvarProdutoSupabase() {
             id: idSeguro, 
             nome, 
             preco, 
-            imagem: img, 
+            imagem: img1,
+            imagem2: img2 || null,
+            imagem3: img3 || null,
             descricao: desc, 
             categoria: cat, 
             loja: loja,
@@ -3214,8 +3531,8 @@ async function salvarProdutoSupabase() {
         };
         const res = await supabaseClient.from(CONFIG.tabela).insert([payload]);
         if (res.error) {
-            if (res.error.message && res.error.message.toLowerCase().includes('loja')) {
-                mostrarToast('Adicione a coluna "loja" na sua tabela Supabase. Veja as instruções na aba Supabase.', 'error');
+            if (res.error.message && (res.error.message.toLowerCase().includes('loja') || res.error.message.toLowerCase().includes('imagem2') || res.error.message.toLowerCase().includes('imagem3'))) {
+                mostrarToast('Adicione as colunas necessárias na tabela. Veja instruções na aba Supabase.', 'error');
                 throw res.error;
             }
             throw res.error;
@@ -3223,7 +3540,9 @@ async function salvarProdutoSupabase() {
         mostrarToast(`Produto adicionado em ${loja === 'cyto' ? 'Cyto' : 'Canetas'}!`, 'success');
         document.getElementById('add-nome').value = '';
         document.getElementById('add-preco').value = '';
-        document.getElementById('add-imgs').value = '';
+        document.getElementById('add-img1').value = '';
+        document.getElementById('add-img2').value = '';
+        document.getElementById('add-img3').value = '';
         document.getElementById('add-desc').value = '';
         atualizarPreview();
         await carregarProdutosSupabase();
@@ -3252,7 +3571,9 @@ function editarProduto(idRaw) {
     document.getElementById('edit-cat').innerHTML = selEdit;
     document.getElementById('edit-cat').value = p.categoria;
     
-    document.getElementById('edit-imgs').value = p.imagem;
+    document.getElementById('edit-img1').value = p.imagem || '';
+    document.getElementById('edit-img2').value = p.imagem2 || '';
+    document.getElementById('edit-img3').value = p.imagem3 || '';
     document.getElementById('edit-desc').value = p.descricao || '';
 
     document.getElementById('edit-loja').onchange = function() {
@@ -3271,15 +3592,17 @@ async function atualizarProdutoSupabase() {
     const nome = document.getElementById('edit-nome').value.trim();
     const preco = parseFloat(document.getElementById('edit-preco').value);
     const cat = document.getElementById('edit-cat').value;
-    const img = document.getElementById('edit-imgs').value.trim();
+    const img1 = document.getElementById('edit-img1').value.trim();
+    const img2 = document.getElementById('edit-img2').value.trim();
+    const img3 = document.getElementById('edit-img3').value.trim();
     const desc = document.getElementById('edit-desc').value.trim();
     const loja = document.getElementById('edit-loja').value;
     if (!idRaw || idRaw === 'undefined') return mostrarToast('Erro: ID inválido', 'error');
-    if (!nome || isNaN(preco) || !img) return mostrarToast('Preencha tudo', 'error');
+    if (!nome || isNaN(preco) || !img1) return mostrarToast('Preencha nome, preço e imagem principal', 'error');
     let formatId = /^\d+$/.test(idRaw) ? parseInt(idRaw, 10) : idRaw;
     try {
         const res = await supabaseClient.from(CONFIG.tabela).update({ 
-            nome, preco, imagem: img, descricao: desc, categoria: cat, loja 
+            nome, preco, imagem: img1, imagem2: img2 || null, imagem3: img3 || null, descricao: desc, categoria: cat, loja 
         }).eq('id', formatId);
         if (res.error) throw res.error;
         mostrarToast('Atualizado!', 'success');
@@ -3298,7 +3621,9 @@ async function duplicarProduto(idRaw) {
             id: idSeguro, 
             nome: p.nome + ' (Cópia)', 
             preco: p.preco, 
-            imagem: p.imagem, 
+            imagem: p.imagem,
+            imagem2: p.imagem2 || null,
+            imagem3: p.imagem3 || null,
             descricao: p.descricao, 
             categoria: p.categoria, 
             loja: p.loja || 'canetas',
