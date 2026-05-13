@@ -388,6 +388,61 @@ header h1 span {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* === FILTROS DE PREÇO === */
+.price-sort-bar {
+    max-width: 1360px;
+    margin: 0 auto var(--spacing-lg);
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.price-sort-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-right: var(--spacing-xs);
+    white-space: nowrap;
+}
+
+.btn-price-sort {
+    background: rgba(127, 127, 127, 0.04);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: 24px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all var(--transition-smooth);
+    letter-spacing: 0.8px;
+    font-family: 'Inter';
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.btn-price-sort:hover {
+    background: rgba(127, 127, 127, 0.1);
+    color: var(--text-main);
+}
+
+.btn-price-sort.ativo {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-soft));
+    color: var(--accent-text-on);
+    border-color: var(--accent-primary);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.btn-price-sort i {
+    font-size: 0.6rem;
+}
+
 /* ==========================================
    5. HERO SECTION
    ========================================== */
@@ -866,110 +921,7 @@ body[data-theme="cyto"] .section-title em {
     opacity: 0.6;
 }
 
-/* Play overlay grande no centro */
-.cyto-video-play-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.25);
-    transition: opacity var(--transition-smooth);
-    pointer-events: none;
-}
-
-.cyto-video-play-overlay.hidden {
-    opacity: 0;
-}
-
-.cyto-video-play-overlay i {
-    font-size: 2.2rem;
-    color: rgba(255, 255, 255, 0.9);
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
-}
-
-/* Fullscreen video modal */
-.video-fullscreen-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #000;
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-}
-
-.video-fullscreen-overlay.active {
-    display: flex;
-}
-
-.video-fullscreen-overlay video {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: 100%;
-    object-fit: contain;
-}
-
-.fullscreen-controls {
-    position: absolute;
-    bottom: var(--spacing-2xl);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: var(--spacing-md);
-    z-index: 3;
-}
-
-.fullscreen-close-btn {
-    position: absolute;
-    top: var(--spacing-xl);
-    right: var(--spacing-xl);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    z-index: 4;
-    transition: all var(--transition-smooth);
-}
-
-.fullscreen-close-btn:hover {
-    background: rgba(220, 38, 38, 0.85);
-}
-
-.fs-vid-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all var(--transition-smooth);
-}
-
-.fs-vid-btn:hover {
-    background: rgba(220, 38, 38, 0.85);
-    transform: scale(1.1);
-}
-
-.fs-vid-btn:active {
-    transform: scale(0.92);
-}
+/* Fullscreen usa API nativa do browser */
 
 .reference-card {
     border-radius: var(--radius-lg);
@@ -2517,38 +2469,26 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     </div>
 </section>
 
-<!-- VÍDEOS CYTO - Player customizado com tela cheia e volume -->
+<!-- VÍDEOS CYTO - Sem link pro Vimeo, só volume e tela cheia -->
 
 <section class="cyto-videos-grid" id="videos-cyto" style="display:none;">
     <div class="cyto-video-card" id="vid-card-1">
         <span class="cyto-video-badge"><i class="fas fa-play-circle"></i> Depoimento</span>
-        <div class="cyto-video-play-overlay" id="play-overlay-1"><i class="fas fa-play"></i></div>
-        <video id="cyto-vid-1" loop playsinline muted preload="metadata" poster="">
-            <!-- Vimeo não suporta tag video diretamente, usaremos iframe em fullscreen -->
-        </video>
+        <iframe id="vimeo-frame-1" src="https://player.vimeo.com/video/1191388314?background=1&autoplay=1&loop=1&muted=1&playsinline=1" loading="lazy" allow="autoplay" style="width:100%; height:100%; border:none; position:absolute; inset:0; pointer-events:none;"></iframe>
         <div class="cyto-video-controls">
             <button class="cyto-vid-btn muted" onclick="event.stopPropagation(); toggleVolumeCyto(1)" id="vol-btn-1" title="Ativar som"><i class="fas fa-volume-mute"></i></button>
-            <button class="cyto-vid-btn" onclick="event.stopPropagation(); abrirVideoFullscreen(1)" title="Tela cheia"><i class="fas fa-expand"></i></button>
+            <button class="cyto-vid-btn" onclick="event.stopPropagation(); toggleFullscreenCyto(1)" title="Tela cheia"><i class="fas fa-expand"></i></button>
         </div>
     </div>
     <div class="cyto-video-card" id="vid-card-2">
         <span class="cyto-video-badge"><i class="fas fa-play-circle"></i> Resultado Real</span>
-        <div class="cyto-video-play-overlay" id="play-overlay-2"><i class="fas fa-play"></i></div>
-        <video id="cyto-vid-2" loop playsinline muted preload="metadata" poster="">
-        </video>
+        <iframe id="vimeo-frame-2" src="https://player.vimeo.com/video/1191388444?background=1&autoplay=1&loop=1&muted=1&playsinline=1" loading="lazy" allow="autoplay" style="width:100%; height:100%; border:none; position:absolute; inset:0; pointer-events:none;"></iframe>
         <div class="cyto-video-controls">
             <button class="cyto-vid-btn muted" onclick="event.stopPropagation(); toggleVolumeCyto(2)" id="vol-btn-2" title="Ativar som"><i class="fas fa-volume-mute"></i></button>
-            <button class="cyto-vid-btn" onclick="event.stopPropagation(); abrirVideoFullscreen(2)" title="Tela cheia"><i class="fas fa-expand"></i></button>
+            <button class="cyto-vid-btn" onclick="event.stopPropagation(); toggleFullscreenCyto(2)" title="Tela cheia"><i class="fas fa-expand"></i></button>
         </div>
     </div>
 </section>
-
-<!-- FULLSCREEN VIDEO OVERLAY -->
-
-<div class="video-fullscreen-overlay" id="video-fullscreen" onclick="fecharVideoFullscreen()">
-    <button class="fullscreen-close-btn" onclick="fecharVideoFullscreen()"><i class="fas fa-times"></i></button>
-    <iframe id="fs-vimeo-player" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>
-</div>
 
 <!-- CATÁLOGO -->
 
@@ -2556,6 +2496,19 @@ body[data-theme="cyto"] .preview-img-box { background: #f3f4f6; }
     <span class="section-eyebrow">Catálogo Completo</span>
     <h2 class="section-title">Nossos <em>produtos</em></h2>
     <p class="section-subtitle" id="catalogo-subtitle">Selecionados a dedo. Cada item passa por curadoria rigorosa antes de chegar até você.</p>
+</div>
+
+<div class="price-sort-bar" id="price-sort-bar">
+    <span class="price-sort-label"><i class="fas fa-sort-amount-down-alt"></i> Ordenar:</span>
+    <button class="btn-price-sort" onclick="ordenarPreco('none', this)" id="btn-sort-default">
+        <i class="fas fa-th"></i> Padrão
+    </button>
+    <button class="btn-price-sort" onclick="ordenarPreco('asc', this)" id="btn-sort-asc">
+        <i class="fas fa-arrow-up"></i> Menor Preço
+    </button>
+    <button class="btn-price-sort" onclick="ordenarPreco('desc', this)" id="btn-sort-desc">
+        <i class="fas fa-arrow-down"></i> Maior Preço
+    </button>
 </div>
 
 <div class="container" id="grade-produtos"></div>
@@ -3038,8 +2991,12 @@ function trocarLoja(loja) {
     document.getElementById('videos-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
 
     categoriaAtiva = 'todos';
+    ordenacaoAtual = 'none';
     carrinho = [];
     atualizarCarrinhoUI();
+
+    // Reseta botões de preço
+    document.querySelectorAll('.btn-price-sort').forEach(b => b.classList.remove('ativo'));
 
     document.getElementById('search-input').value = '';
     document.getElementById('search-bar').style.display = 'none';
@@ -3164,11 +3121,18 @@ function getTodosProdutosDaLojaAtual() {
 function renderTodosProdutos() {
     const grade = document.getElementById('grade-produtos');
     grade.innerHTML = '';
-    const produtos = getTodosProdutosDaLojaAtual();
+    let produtos = getTodosProdutosDaLojaAtual();
 
     if (produtos.length === 0) {
         grade.innerHTML = '<div class="empty-message" style="display:block; grid-column:1/-1;"><i class="fas fa-box-open" style="font-size:2rem; margin-bottom:var(--spacing-md); display:block; opacity:0.4;"></i><p style="margin:0;">Nenhum produto cadastrado nesta loja ainda.</p><p style="margin:var(--spacing-sm) 0 0; font-size:0.78rem;">Adicione produtos pelo painel admin.</p></div>';
         return;
+    }
+
+    // Aplica ordenação por preço
+    if (ordenacaoAtual === 'asc') {
+        produtos = produtos.slice().sort((a, b) => a.preco - b.preco);
+    } else if (ordenacaoAtual === 'desc') {
+        produtos = produtos.slice().sort((a, b) => b.preco - a.preco);
     }
 
     produtos.forEach((p, idx) => {
@@ -3651,101 +3615,61 @@ async function confirmarExclusao(idRaw) {
 }
 
 /* ==========================================
-   PLAYER DE VÍDEO CYTO (CUSTOMIZADO)
-   Usa iframes Vimeo como thumbnails com autoplay mudo
-   e abre fullscreen com controles
+   PLAYER DE VÍDEO CYTO (LIMPO - SEM LINK VIMEO)
+   Apenas volume e tela cheia nativa
    ========================================== */
 const CYTO_VIDEOS = {
-    1: { id: '1191388314', titulo: 'Depoimento' },
-    2: { id: '1191388444', titulo: 'Resultado Real' }
+    1: { id: '1191388314' },
+    2: { id: '1191388444' }
 };
 
-// Substitui os <video> por iframes Vimeo em miniatura (background mode)
-function inicializarVideosCyto() {
-    Object.keys(CYTO_VIDEOS).forEach(n => {
-        const card = document.getElementById('vid-card-' + n);
-        const videoEl = document.getElementById('cyto-vid-' + n);
-        if (!card || !videoEl) return;
-        
-        // Substitui o <video> por um iframe em modo background (sem controles)
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://player.vimeo.com/video/${CYTO_VIDEOS[n].id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1`;
-        iframe.style.cssText = 'width:100%; height:100%; border:none; position:absolute; inset:0; pointer-events:none;';
-        iframe.setAttribute('loading', 'lazy');
-        iframe.setAttribute('allow', 'autoplay; fullscreen');
-        iframe.id = 'vimeo-thumb-' + n;
-        
-        videoEl.replaceWith(iframe);
-        
-        // Esconde o overlay de play após carregar
-        setTimeout(() => {
-            const overlay = document.getElementById('play-overlay-' + n);
-            if (overlay) overlay.classList.add('hidden');
-        }, 2000);
-        
-        // Click no card abre fullscreen
-        card.addEventListener('click', () => abrirVideoFullscreen(n));
-    });
-}
-
-let fsVolumeMuted = false;
-
-function abrirVideoFullscreen(n) {
-    const v = CYTO_VIDEOS[n];
-    if (!v) return;
-    
-    const overlay = document.getElementById('video-fullscreen');
-    const player = document.getElementById('fs-vimeo-player');
-    
-    // Abre com som (muted=0) e controles básicos do Vimeo
-    fsVolumeMuted = false;
-    player.src = `https://player.vimeo.com/video/${v.id}?autoplay=1&loop=1&muted=0&playsinline=1&title=0&byline=0&portrait=0`;
-    
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function fecharVideoFullscreen() {
-    const overlay = document.getElementById('video-fullscreen');
-    const player = document.getElementById('fs-vimeo-player');
-    
-    player.src = ''; // Para o vídeo
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// Volume nos thumbs (mute/unmute dos iframes - limitado pela API, então controla via recriação)
 function toggleVolumeCyto(n) {
     const btn = document.getElementById('vol-btn-' + n);
-    const iframe = document.getElementById('vimeo-thumb-' + n);
+    const iframe = document.getElementById('vimeo-frame-' + n);
     if (!btn || !iframe) return;
     
     const isMuted = btn.classList.contains('muted');
     const v = CYTO_VIDEOS[n];
     
     if (isMuted) {
-        // Ativa som - recria iframe sem background mode para ter som
+        // Ativa som — troca pra modo sem background (permite áudio) mas sem controles visíveis
         iframe.src = `https://player.vimeo.com/video/${v.id}?autoplay=1&loop=1&muted=0&playsinline=1&background=0&controls=0&title=0&byline=0&portrait=0`;
-        iframe.style.pointerEvents = 'none';
         btn.classList.remove('muted');
         btn.innerHTML = '<i class="fas fa-volume-up"></i>';
         btn.title = 'Desativar som';
     } else {
-        // Desativa som - volta para background mode
+        // Desativa som — volta pra background mode
         iframe.src = `https://player.vimeo.com/video/${v.id}?background=1&autoplay=1&loop=1&muted=1&playsinline=1`;
-        iframe.style.pointerEvents = 'none';
         btn.classList.add('muted');
         btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
         btn.title = 'Ativar som';
     }
+    // Mantém pointer-events none pra ninguém clicar no iframe
+    iframe.style.pointerEvents = 'none';
 }
 
-// Fecha fullscreen com ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && document.getElementById('video-fullscreen').classList.contains('active')) {
-        fecharVideoFullscreen();
-    }
-});
+function toggleFullscreenCyto(n) {
+    const card = document.getElementById('vid-card-' + n);
+    if (!card) return;
+    
+    // Usa API nativa de fullscreen do browser (sem abrir link do Vimeo)
+    if (card.requestFullscreen) card.requestFullscreen();
+    else if (card.webkitRequestFullscreen) card.webkitRequestFullscreen();
+    else if (card.msRequestFullscreen) card.msRequestFullscreen();
+}
+
+/* ==========================================
+   FILTRO DE PREÇO (ORDENAÇÃO)
+   ========================================== */
+let ordenacaoAtual = 'none';
+
+function ordenarPreco(tipo, btn) {
+    ordenacaoAtual = tipo;
+    // Atualiza botões ativos
+    document.querySelectorAll('.btn-price-sort').forEach(b => b.classList.remove('ativo'));
+    if (btn) btn.classList.add('ativo');
+    renderTodosProdutos();
+}
 
 /* ==========================================
    INICIALIZAÇÃO
@@ -3757,7 +3681,6 @@ function iniciarAplicacao() {
     renderizarFiltrosDOM();
     renderTodosProdutos();
     setTimeout(inicializarSupabase, 250);
-    setTimeout(inicializarVideosCyto, 500);
 }
 
 document.addEventListener('DOMContentLoaded', iniciarAplicacao);
