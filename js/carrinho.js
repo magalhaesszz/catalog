@@ -4,8 +4,6 @@
    CARRINHO DE COMPRAS
    ==========================================
    Arquivo: js/carrinho.js
-   Responsável por: adicionar/remover itens, atualizar UI,
-   finalizar via WhatsApp ou Pix
    ========================================== */
 
 function adicionarAoCarrinho(p) {
@@ -66,14 +64,6 @@ function finalizarCompra() {
 
 function pagarComPix() {
     if (!carrinho.length) return;
-    let total = 0;
-    carrinho.forEach(c => total += c.preco * c.qtd);
-    const total_cents = Math.round(total * 100);
-    const dados = {
-        itens: carrinho.map(c => ({ nome: c.nome, preco: c.preco, qtd: c.qtd })),
-        total_cents,
-        loja: lojaAtual
-    };
-    const url = 'pagamentos.html?dados=' + encodeURIComponent(JSON.stringify(dados));
-    window.open(url, '_blank');
+    fecharModal('modal-carrinho');
+    abrirModalPagamento();
 }

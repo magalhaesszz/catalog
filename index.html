@@ -438,6 +438,208 @@
     </div>
 </div>
 
+<!-- Modal: Pagamento Pix -->
+<div class="modal-overlay" id="modal-pagamento" onclick="fecharSeClicarFora(event,'modal-pagamento')">
+  <div class="modal-box" style="max-width:520px; height:auto; max-height:92vh; border-radius:28px; padding:0; overflow:hidden;">
+    <button class="fechar-modal" onclick="fecharModal('modal-pagamento'); if(pgPolling)clearInterval(pgPolling); if(pgCountdown)clearInterval(pgCountdown);"><i class="fas fa-times"></i></button>
+
+    <!-- Cabeçalho -->
+    <div style="padding:20px 24px 0; border-bottom:1px solid var(--premium-border); background:linear-gradient(135deg,rgba(212,175,55,0.06),rgba(255,255,255,0.01));">
+      <h2 style="font-family:'Cinzel',serif; font-size:1.1rem; font-weight:900; color:var(--text-main); margin:0 0 16px;">Finalizar Pedido</h2>
+      <div style="display:flex; gap:8px; margin-bottom:16px;">
+        <div class="pg-step active" data-step="1" style="flex:1; text-align:center; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:8px; border-radius:10px; background:rgba(212,175,55,0.12); color:var(--gold); border:1px solid rgba(212,175,55,0.25); transition:all 0.3s;">1. Dados</div>
+        <div class="pg-step" data-step="2" style="flex:1; text-align:center; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:8px; border-radius:10px; background:rgba(255,255,255,0.03); color:var(--text-muted); border:1px solid rgba(255,255,255,0.06); transition:all 0.3s;">2. Frete</div>
+        <div class="pg-step" data-step="3" style="flex:1; text-align:center; font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:8px; border-radius:10px; background:rgba(255,255,255,0.03); color:var(--text-muted); border:1px solid rgba(255,255,255,0.06); transition:all 0.3s;">3. Pix</div>
+      </div>
+    </div>
+
+    <div style="padding:20px 24px; overflow-y:auto; max-height:calc(92vh - 100px);">
+
+      <!-- Erro global -->
+      <div id="pg-erro" style="display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); color:#ef4444; padding:10px 14px; border-radius:10px; font-size:0.82rem; margin-bottom:16px;"></div>
+
+      <!-- ETAPA 1: FORMULÁRIO -->
+      <div id="pg-formulario">
+        <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:16px;">Preencha seus dados para continuar.</p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Nome Completo *</label>
+            <input id="pg-nome" type="text" class="admin-input" placeholder="Seu nome completo">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">CPF *</label>
+              <input id="pg-cpf" type="text" class="admin-input" placeholder="000.000.000-00" maxlength="14" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4')">
+            </div>
+            <div>
+              <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Idade *</label>
+              <input id="pg-idade" type="number" class="admin-input" placeholder="Sua idade" min="18" max="99">
+            </div>
+          </div>
+          <div>
+            <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">WhatsApp / Telefone *</label>
+            <input id="pg-tel" type="tel" class="admin-input" placeholder="(00) 00000-0000" maxlength="15" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3')">
+          </div>
+          <div style="background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.18); border-radius:12px; padding:14px; display:flex; gap:10px; align-items:flex-start;">
+            <input id="pg-termo" type="checkbox" style="width:18px; height:18px; margin-top:1px; accent-color:var(--gold); flex-shrink:0; cursor:pointer;">
+            <label for="pg-termo" style="font-size:0.78rem; color:var(--text-muted); line-height:1.5; cursor:pointer;">Estou ciente de que estou realizando uma compra e concordo com os termos. Confirmo que tenho 18 anos ou mais.</label>
+          </div>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:10px 14px; font-size:0.72rem; color:var(--text-muted); text-align:center;">
+            <i class="fab fa-whatsapp" style="color:#25d366; margin-right:4px;"></i> Pagamento via <strong style="color:var(--text-main);">cartão</strong>? Consulte no WhatsApp antes de continuar.
+          </div>
+          <button class="btn-confirmar" onclick="pgAvancarFormulario()" style="margin-top:4px;">Continuar <i class="fas fa-arrow-right" style="margin-left:6px;"></i></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 2: FRETE -->
+      <div id="pg-frete" style="display:none;">
+        <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:16px;">Informe seu endereço para calcular o frete.</p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">CEP *</label>
+            <div style="display:flex; gap:8px;">
+              <input id="pg-cep" type="text" class="admin-input" placeholder="00000-000" maxlength="9" style="flex:1;" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{5})(\d{3})/,'$1-$2')" onkeyup="if(this.value.replace(/\D/g,'').length===8) pgBuscarCEP()">
+              <button id="btn-buscar-cep" class="btn-action primary" onclick="pgBuscarCEP()" style="padding:10px 16px; border-radius:12px;"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+          <div id="pg-endereco-resultado" style="display:none; display:flex; flex-direction:column; gap:10px;">
+            <div style="display:grid; grid-template-columns:1fr 80px; gap:10px;">
+              <div>
+                <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Rua</label>
+                <input id="pg-rua" type="text" class="admin-input" readonly style="opacity:0.7;">
+              </div>
+              <div>
+                <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Número *</label>
+                <input id="pg-numero" type="text" class="admin-input" placeholder="Nº">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Complemento</label>
+              <input id="pg-complemento" type="text" class="admin-input" placeholder="Apto, Bloco... (opcional)">
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div>
+                <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Bairro</label>
+                <input id="pg-bairro" type="text" class="admin-input" readonly style="opacity:0.7;">
+              </div>
+              <div>
+                <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:5px;">Cidade</label>
+                <input id="pg-cidade" type="text" class="admin-input" readonly style="opacity:0.7;">
+              </div>
+            </div>
+            <input id="pg-estado" type="hidden">
+          </div>
+
+          <!-- Opções de frete -->
+          <div id="pg-frete-opcoes" style="display:none;">
+            <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:8px;">Modalidade de Entrega</label>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; cursor:pointer;">
+                <input type="radio" name="frete-tipo" id="frete-pac" value="pac" style="accent-color:var(--gold); width:16px; height:16px;">
+                <div style="flex:1;">
+                  <div style="font-weight:700; font-size:0.85rem; color:var(--text-main);">PAC</div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Entrega em 5–10 dias úteis</div>
+                </div>
+                <span id="pg-frete-pac" style="font-weight:800; color:var(--gold);">—</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px; cursor:pointer;">
+                <input type="radio" name="frete-tipo" id="frete-sedex" value="sedex" style="accent-color:var(--gold); width:16px; height:16px;">
+                <div style="flex:1;">
+                  <div style="font-weight:700; font-size:0.85rem; color:var(--text-main);">SEDEX</div>
+                  <div style="font-size:0.72rem; color:var(--text-muted);">Entrega em 1–3 dias úteis</div>
+                </div>
+                <span id="pg-frete-sedex" style="font-weight:800; color:var(--gold);">—</span>
+              </label>
+            </div>
+
+            <!-- Resumo de valores -->
+            <div style="background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.18); border-radius:12px; padding:14px; margin-top:12px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;"><span>Subtotal produtos</span><span id="pg-subtotal">—</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;"><span>Frete</span><span id="pg-frete-val">—</span></div>
+              <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem; color:var(--text-main); border-top:1px solid rgba(212,175,55,0.2); padding-top:10px;"><span>Total</span><span id="pg-total-final" style="color:var(--gold);">—</span></div>
+            </div>
+          </div>
+
+          <button class="btn-confirmar" onclick="pgAvancarFrete()" style="margin-top:4px;">Gerar Pix <i class="fas fa-qrcode" style="margin-left:6px;"></i></button>
+        </div>
+      </div>
+
+      <!-- ETAPA 3: PIX -->
+      <div id="pg-pix" style="display:none;">
+        <!-- Loading -->
+        <div id="pg-pix-loading" style="text-align:center; padding:32px 0;">
+          <div style="width:48px; height:48px; border:3px solid rgba(212,175,55,0.15); border-top-color:var(--gold); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px;"></div>
+          <p style="color:var(--text-muted); font-size:0.88rem;">Gerando seu Pix...</p>
+        </div>
+        <!-- Conteúdo -->
+        <div id="pg-pix-conteudo" style="display:none;">
+          <!-- Timer -->
+          <div style="display:flex; justify-content:center; margin-bottom:16px;">
+            <div id="pg-timer-badge" style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:20px; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.25); color:var(--gold); font-size:0.78rem; font-weight:700;">
+              <i class="fas fa-clock"></i> Expira em <span id="pg-timer" style="font-weight:800; letter-spacing:1px;">10:00</span>
+            </div>
+          </div>
+          <!-- Resumo -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--premium-border); border-radius:14px; padding:14px; margin-bottom:16px;">
+            <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-bottom:10px;"><i class="fas fa-shopping-bag" style="margin-right:5px;"></i> Resumo</div>
+            <div id="pg-resumo-itens"></div>
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.1rem; border-top:1px solid rgba(212,175,55,0.2); padding-top:10px; margin-top:10px;">
+              <span style="color:var(--text-muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; align-self:center;">Total</span>
+              <span id="pg-total-pix" style="color:var(--gold); font-family:'Cinzel',serif;">—</span>
+            </div>
+          </div>
+          <!-- QR -->
+          <div style="text-align:center; margin-bottom:16px;">
+            <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-bottom:10px;"><i class="fas fa-qrcode" style="margin-right:5px;"></i> Escaneie o QR Code</div>
+            <div style="background:#fff; border-radius:14px; padding:10px; display:inline-block; box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+              <img id="pg-qr-img" src="" style="width:180px; height:180px; display:block; border-radius:8px;">
+            </div>
+          </div>
+          <!-- Copia e cola -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-bottom:8px;"><i class="fas fa-copy" style="margin-right:5px;"></i> Ou copie o código</div>
+            <div style="display:flex; gap:8px;">
+              <input id="pg-pix-code" class="admin-input" readonly style="font-family:monospace; font-size:0.7rem; flex:1;">
+              <button class="pg-btn-copiar btn-action primary" onclick="pgCopiarCodigo()" style="padding:10px 14px; border-radius:12px; white-space:nowrap;"><i class="fas fa-copy"></i> Copiar</button>
+            </div>
+          </div>
+          <!-- Aviso cartão -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:10px 14px; font-size:0.72rem; color:var(--text-muted); text-align:center; margin-bottom:12px;">
+            <i class="fas fa-credit-card" style="margin-right:5px;"></i> Pagamento via <strong style="color:var(--text-main);">cartão</strong>? <a href="https://wa.me/5551994441493" target="_blank" style="color:var(--gold); text-decoration:none;">Consulte no WhatsApp</a>
+          </div>
+          <!-- Polling status -->
+          <div style="display:flex; align-items:center; justify-content:center; gap:8px; color:var(--text-muted); font-size:0.75rem;">
+            <div style="width:7px; height:7px; border-radius:50%; background:var(--gold); animation:pulseDot 1.5s infinite;"></div>
+            Aguardando pagamento...
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA: SUCESSO -->
+      <div id="pg-sucesso" style="display:none; text-align:center; padding:16px 0;">
+        <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg,#10b981,#34d399); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:#fff; margin:0 auto 16px; box-shadow:0 0 36px rgba(16,185,129,0.35); animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><i class="fas fa-check"></i></div>
+        <h3 style="font-family:'Cinzel',serif; font-size:1.3rem; font-weight:900; color:var(--text-main); margin-bottom:8px;">Pagamento Aprovado!</h3>
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:24px; line-height:1.6;">Seu pagamento foi confirmado.<br>Clique abaixo para continuar seu pedido.</p>
+        <a id="pg-btn-wpp" href="#" target="_blank" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:14px; background:#25d366; color:#fff; border:none; border-radius:999px; font-weight:800; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; cursor:pointer; font-family:'Outfit'; text-decoration:none; box-shadow:0 10px 28px rgba(37,211,102,0.3); margin-bottom:12px;">
+          <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i> Continuar no WhatsApp
+        </a>
+        <a href="#" onclick="fecharModal('modal-pagamento')" style="display:block; text-align:center; color:var(--text-muted); font-size:0.78rem; text-decoration:none; padding:8px;">← Voltar à loja</a>
+      </div>
+
+      <!-- ETAPA: EXPIRADO -->
+      <div id="pg-expirado" style="display:none; text-align:center; padding:16px 0;">
+        <div style="width:64px; height:64px; border-radius:50%; background:rgba(239,68,68,0.12); border:2px solid rgba(239,68,68,0.3); display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#ef4444; margin:0 auto 16px;"><i class="fas fa-clock"></i></div>
+        <h3 style="font-family:'Cinzel',serif; font-size:1.2rem; font-weight:900; color:var(--text-main); margin-bottom:8px;">Pix Expirado</h3>
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">O tempo de pagamento encerrou.</p>
+        <button onclick="pgReiniciar()" style="width:100%; padding:14px; background:linear-gradient(135deg,var(--gold),var(--gold-soft,#f0d77a)); color:#171106; border:none; border-radius:999px; font-weight:800; font-size:0.85rem; cursor:pointer; font-family:'Outfit'; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <i class="fas fa-redo"></i> Gerar Novo Pix
+        </button>
+      </div>
+
+    </div><!-- fim scroll -->
+  </div>
+</div>
+
 <!-- Bibliotecas externas -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.46.1/dist/umd/supabase.js"></script>
 
@@ -453,6 +655,7 @@
 <script src="js/admin.js"></script>
 <script src="js/supabase-ops.js"></script>
 <script src="js/videos.js"></script>
+<script src="js/pagamento.js"></script>
 <script src="js/init.js"></script>
 
 </body>
