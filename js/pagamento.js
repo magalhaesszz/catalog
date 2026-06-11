@@ -143,10 +143,23 @@ function pgCalcularFrete(cepDestino) {
 function pgAtualizarTotalFrete() {
     let subtotal = 0;
     carrinho.forEach(c => subtotal += c.preco * c.qtd);
-    const total = subtotal + pgFrete;
-    document.getElementById('pg-subtotal').innerText   = formatarPreco(subtotal);
-    document.getElementById('pg-frete-val').innerText  = formatarPreco(pgFrete);
+    const desconto = cupomAtivo ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
+    const total = subtotal - desconto + pgFrete;
+
+    document.getElementById('pg-subtotal').innerText    = formatarPreco(subtotal);
+    document.getElementById('pg-frete-val').innerText   = formatarPreco(pgFrete);
     document.getElementById('pg-total-final').innerText = formatarPreco(total);
+
+    const linhaDesconto = document.getElementById('pg-linha-desconto');
+    if (linhaDesconto) {
+        if (desconto > 0) {
+            linhaDesconto.style.display = 'flex';
+            document.getElementById('pg-desconto-val').innerText =
+                `− ${formatarPreco(desconto)} (${cupomAtivo.desconto_pct}%)`;
+        } else {
+            linhaDesconto.style.display = 'none';
+        }
+    }
 }
 
 function pgAvancarFrete() {
@@ -184,7 +197,8 @@ async function pgGerarPix() {
 
     let subtotal = 0;
     carrinho.forEach(c => subtotal += c.preco * c.qtd);
-    const total = subtotal + pgFrete;
+    const desconto = cupomAtivo ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
+    const total = subtotal - desconto + pgFrete;
     const amount_cents = Math.round(total * 100);
 
     try {
@@ -202,6 +216,7 @@ async function pgGerarPix() {
         if (!resp.ok) throw new Error(data.error || 'Erro ao gerar Pix');
 
         pgDepositId = data.id;
+        await registrarUsoCupom();
 
         // Renderiza resumo
         let resumoHtml = '';

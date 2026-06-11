@@ -1708,6 +1708,59 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 .connection-indicator.online { background: rgba(16, 185, 129, 0.12); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.25); }
 .connection-indicator.offline { background: rgba(239, 68, 68, 0.12); color: var(--error-color); border: 1px solid rgba(239, 68, 68, 0.25); }
 
+/* === STEPS PAGAMENTO === */
+.pg-step.active {
+    background: rgba(212,175,55,0.12) !important;
+    color: var(--premium-accent) !important;
+    border-color: rgba(212,175,55,0.3) !important;
+}
+.pg-step.done {
+    background: rgba(16,185,129,0.1) !important;
+    color: #10b981 !important;
+    border-color: rgba(16,185,129,0.25) !important;
+}
+.pg-resumo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-main);
+}
+.pg-resumo-item:last-child { border-bottom: none; }
+.pg-qtd { color: var(--text-muted); font-size: 0.75rem; margin-right: 5px; }
+#pg-timer-badge.urgente {
+    background: rgba(239,68,68,0.12) !important;
+    border-color: rgba(239,68,68,0.3) !important;
+    color: var(--error-color) !important;
+    animation: pisca 1s infinite;
+}
+@keyframes pisca { 0%,100%{opacity:1} 50%{opacity:0.5} }
+@keyframes popIn { from{scale:0;opacity:0} to{scale:1;opacity:1} }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* === CUPONS === */
+.cupom-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--premium-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    transition: all var(--transition-smooth);
+}
+.cupom-item:hover { border-color: var(--accent-primary); }
+.cupom-item-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.cupom-codigo { font-family: monospace; font-size:1rem; font-weight:800; color:var(--text-main); letter-spacing:2px; }
+.cupom-badge-desc { background:linear-gradient(135deg,var(--premium-accent),var(--premium-accent-soft)); color:#171106; padding:3px 10px; border-radius:12px; font-size:0.65rem; font-weight:800; }
+.cupom-status { padding:3px 10px; border-radius:12px; font-size:0.65rem; font-weight:700; text-transform:uppercase; }
+.cupom-status.ativo { background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.25); }
+.cupom-status.inativo { background:rgba(239,68,68,0.12); color:var(--error-color); border:1px solid rgba(239,68,68,0.25); }
+.cupom-usos-info { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); margin-bottom:5px; }
+.cupom-usos-bar { height:5px; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; }
+.cupom-usos-fill { height:100%; background:linear-gradient(90deg,var(--premium-accent),var(--premium-accent-soft)); border-radius:10px; transition:width 0.5s; }
+.cupom-item-actions { display:flex; gap:6px; justify-content:flex-end; margin-top:10px; }
+
 /* Footer */
 .footer-trust {
     max-width: 1360px;

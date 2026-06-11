@@ -291,6 +291,7 @@
             <div class="admin-tab" data-tab="adicionar" onclick="trocarAbaAdmin('adicionar')"><i class="fas fa-plus-circle"></i> Adicionar</div>
             <div class="admin-tab" data-tab="gerenciar" onclick="trocarAbaAdmin('gerenciar')"><i class="fas fa-boxes"></i> Gerenciar</div>
             <div class="admin-tab" data-tab="configuracoes" onclick="trocarAbaAdmin('configuracoes')"><i class="fas fa-key"></i> Supabase</div>
+            <div class="admin-tab" data-tab="cupons" onclick="trocarAbaAdmin('cupons'); renderListaCupons();"><i class="fas fa-ticket-alt"></i> Cupons</div>
         </div>
         <div class="admin-content">
             <div id="admin-dashboard" class="admin-section active">
@@ -378,8 +379,7 @@
                 </div>
                 <div id="lista-produtos" class="produto-lista"></div>
             </div>
-            <div id="admin-configuracoes" class="admin-section">
-                <div class="admin-form">
+            <div id="admin-configuracoes" class="admin-section">                <div class="admin-form">
                     <div class="form-group"><label class="form-label">URL do Projeto</label><input type="text" id="cfg-url" class="admin-input mono"></div>
                     <div class="form-group"><label class="form-label">Chave Pública (anon)</label><input type="text" id="cfg-key" class="admin-input mono"></div>
                     <div class="form-group"><label class="form-label">Tabela</label><input type="text" id="cfg-tabela" class="admin-input mono" value="produtos"></div>
@@ -389,6 +389,33 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ABA CUPONS -->
+            <div id="admin-cupons" class="admin-section">
+                <div class="admin-form">
+                    <h3 style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:var(--spacing-lg);"><i class="fas fa-plus-circle" style="margin-right:6px;"></i>Criar Novo Cupom</h3>
+                    <div style="display:grid; grid-template-columns:1fr 80px 80px; gap:10px;">
+                        <div class="form-group">
+                            <label class="form-label">Código</label>
+                            <input type="text" id="novo-cupom-codigo" class="admin-input" placeholder="EX: PROMO10" oninput="this.value=this.value.toUpperCase()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">% Desc.</label>
+                            <input type="number" id="novo-cupom-pct" class="admin-input" placeholder="10" min="1" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Limite</label>
+                            <input type="number" id="novo-cupom-limite" class="admin-input" placeholder="50" min="1">
+                        </div>
+                    </div>
+                    <button id="btn-criar-cupom" class="btn-confirmar" onclick="criarCupom()" style="margin-top:var(--spacing-sm);">
+                        <i class="fas fa-plus"></i> Criar Cupom
+                    </button>
+                    <h3 style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-top:var(--spacing-xl); margin-bottom:var(--spacing-lg);"><i class="fas fa-list" style="margin-right:6px;"></i>Cupons Cadastrados</h3>
+                    <div id="admin-cupons-lista"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -555,8 +582,22 @@
             <!-- Resumo de valores -->
             <div style="background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.18); border-radius:12px; padding:14px; margin-top:12px;">
               <div style="display:flex; justify-content:space-between; font-size:0.82rem; color:var(--text-muted); margin-bottom:6px;"><span>Subtotal produtos</span><span id="pg-subtotal">—</span></div>
+              <div id="pg-linha-desconto" style="display:none; justify-content:space-between; font-size:0.82rem; color:#10b981; margin-bottom:6px;"><span><i class="fas fa-tag" style="margin-right:4px;"></i>Desconto</span><span id="pg-desconto-val">—</span></div>
               <div style="display:flex; justify-content:space-between; font-size:0.82rem; color:var(--text-muted); margin-bottom:10px;"><span>Frete</span><span id="pg-frete-val">—</span></div>
               <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1rem; color:var(--text-main); border-top:1px solid rgba(212,175,55,0.2); padding-top:10px;"><span>Total</span><span id="pg-total-final" style="color:var(--gold);">—</span></div>
+            </div>
+
+            <!-- Cupom de desconto -->
+            <div style="margin-top:14px;">
+              <label style="font-size:0.65rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:700; display:block; margin-bottom:8px;"><i class="fas fa-ticket-alt" style="margin-right:4px;"></i> Cupom de Desconto</label>
+              <div style="display:flex; gap:8px;">
+                <input id="pg-cupom-input" type="text" class="admin-input" placeholder="Digite o código" style="flex:1; text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+                <button id="btn-aplicar-cupom" class="btn-action secondary" onclick="aplicarCupom()" style="padding:10px 14px; border-radius:12px; white-space:nowrap;">Aplicar</button>
+              </div>
+              <div id="pg-cupom-aplicado" style="display:none; align-items:center; justify-content:space-between; margin-top:8px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.25); border-radius:10px; padding:8px 12px;">
+                <span style="color:#10b981; font-size:0.78rem; font-weight:700;"><i class="fas fa-check-circle" style="margin-right:5px;"></i><span id="pg-cupom-aplicado-txt"></span></span>
+                <button onclick="removerCupom()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.78rem;">✕ Remover</button>
+              </div>
             </div>
           </div>
 
@@ -655,6 +696,7 @@
 <script src="js/admin.js"></script>
 <script src="js/supabase-ops.js"></script>
 <script src="js/videos.js"></script>
+<script src="js/cupons.js"></script>
 <script src="js/pagamento.js"></script>
 <script src="js/init.js"></script>
 
