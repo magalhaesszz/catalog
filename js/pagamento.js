@@ -143,11 +143,16 @@ function pgCalcularFrete(cepDestino) {
 function pgAtualizarTotalFrete() {
     let subtotal = 0;
     carrinho.forEach(c => subtotal += c.preco * c.qtd);
-    const desconto = cupomAtivo ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
-    const total = subtotal - desconto + pgFrete;
+
+    const freteGratis  = cupomAtivo && cupomAtivo.frete_gratis;
+    const desconto     = cupomAtivo && !freteGratis ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
+    const freteReal    = freteGratis ? 0 : pgFrete;
+    const total        = subtotal - desconto + freteReal;
 
     document.getElementById('pg-subtotal').innerText    = formatarPreco(subtotal);
-    document.getElementById('pg-frete-val').innerText   = formatarPreco(pgFrete);
+    document.getElementById('pg-frete-val').innerText   = freteGratis
+        ? '<span style="color:#10b981; font-weight:800;">GRÁTIS 🚚</span>'
+        : formatarPreco(pgFrete);
     document.getElementById('pg-total-final').innerText = formatarPreco(total);
 
     const linhaDesconto = document.getElementById('pg-linha-desconto');
@@ -197,8 +202,10 @@ async function pgGerarPix() {
 
     let subtotal = 0;
     carrinho.forEach(c => subtotal += c.preco * c.qtd);
-    const desconto = cupomAtivo ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
-    const total = subtotal - desconto + pgFrete;
+    const freteGratis  = cupomAtivo && cupomAtivo.frete_gratis;
+    const desconto     = cupomAtivo && !freteGratis ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
+    const freteReal    = freteGratis ? 0 : pgFrete;
+    const total        = subtotal - desconto + freteReal;
     const amount_cents = Math.round(total * 100);
 
     try {

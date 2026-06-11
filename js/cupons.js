@@ -4,11 +4,10 @@
    SISTEMA DE CUPONS
    ==========================================
    Arquivo: js/cupons.js
-   Responsável por: validar cupom no checkout,
-   gerenciar cupons no painel admin
+   Tipos: desconto em % OU frete grátis
    ========================================== */
 
-let cupomAtivo = null; // { codigo, desconto_pct, id }
+let cupomAtivo = null;
 
 // =====================
 // VALIDAR CUPOM (checkout)
@@ -36,8 +35,13 @@ async function aplicarCupom() {
         cupomAtivo = data;
         document.getElementById('pg-erro').style.display = 'none';
         document.getElementById('pg-cupom-aplicado').style.display = 'flex';
-        document.getElementById('pg-cupom-aplicado-txt').innerText =
-            `"${data.codigo}" — ${data.desconto_pct}% de desconto`;
+
+        if (data.frete_gratis) {
+            document.getElementById('pg-cupom-aplicado-txt').innerText = `"${data.codigo}" — Frete Grátis! 🚚`;
+        } else {
+            document.getElementById('pg-cupom-aplicado-txt').innerText = `"${data.codigo}" — ${data.desconto_pct}% de desconto`;
+        }
+
         document.getElementById('pg-cupom-input').disabled = true;
         btn.style.display = 'none';
         pgAtualizarTotalFrete();
@@ -61,7 +65,7 @@ function removerCupom() {
 }
 
 // =====================
-// INCREMENTAR USO DO CUPOM (chamado ao confirmar pagamento)
+// REGISTRAR USO
 // =====================
 async function registrarUsoCupom() {
     if (!cupomAtivo || !supabaseClient) return;
@@ -97,12 +101,16 @@ async function renderListaCupons() {
         lista.innerHTML = data.map(c => {
             const usosRestantes = c.limite_usos - c.usos_realizados;
             const pct = Math.round((c.usos_realizados / c.limite_usos) * 100);
+            const tipoBadge = c.frete_gratis
+                ? `<span class="cupom-badge-frete"><i class="fas fa-truck"></i> Frete Grátis</span>`
+                : `<span class="cupom-badge-desc">${c.desconto_pct}% OFF</span>`;
+
             return `
             <div class="cupom-item" id="cupom-${c.id}">
                 <div class="cupom-item-top">
                     <div class="cupom-codigo">${escapeHTML(c.codigo)}</div>
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span class="cupom-badge-desc">${c.desconto_pct}% OFF</span>
+                        ${tipoBadge}
                         <span class="cupom-status ${c.ativo ? 'ativo' : 'inativo'}">${c.ativo ? 'Ativo' : 'Inativo'}</span>
                     </div>
                 </div>
@@ -139,12 +147,13 @@ async function renderListaCupons() {
 // ADMIN — CRIAR CUPOM
 // =====================
 async function criarCupom() {
-    const codigo  = document.getElementById('novo-cupom-codigo').value.trim().toUpperCase();
-    const pct     = parseInt(document.getElementById('novo-cupom-pct').value);
-    const limite  = parseInt(document.getElementById('novo-cupom-limite').value);
+    const codigo      = document.getElementById('novo-cupom-codigo').value.trim().toUpperCase();
+    const freteGratis = document.getElementById('novo-cupom-frete').checked;
+    const pct         = freteGratis ? 0 : parseInt(document.getElementById('novo-cupom-pct').value);
+    const limite      = parseInt(document.getElementById('novo-cupom-limite').value);
 
     if (!codigo)               return mostrarToast('Informe o código do cupom.', 'error');
-    if (!pct || pct < 1 || pct > 100) return mostrarToast('Desconto deve ser entre 1% e 100%.', 'error');
+    if (!freteGratis && (!pct || pct < 1 || pct > 100)) return mostrarToast('Desconto deve ser entre 1% e 100%.', 'error');
     if (!limite || limite < 1) return mostrarToast('Limite deve ser pelo menos 1.', 'error');
 
     const isAdmin = await verificarAdmin();
@@ -157,7 +166,7 @@ async function criarCupom() {
     try {
         const { error } = await supabaseClient
             .from('cupons')
-            .insert([{ codigo, desconto_pct: pct, limite_usos: limite }]);
+            .insert([{ codigo, desconto_pct: pct, limite_usos: limite, frete_gratis: freteGratis }]);
 
         if (error) {
             if (error.code === '23505') throw new Error('Esse código já existe.');
@@ -168,6 +177,8 @@ async function criarCupom() {
         document.getElementById('novo-cupom-codigo').value = '';
         document.getElementById('novo-cupom-pct').value = '';
         document.getElementById('novo-cupom-limite').value = '';
+        document.getElementById('novo-cupom-frete').checked = false;
+        toggleTipoCupom();
         renderListaCupons();
 
     } catch(e) {
@@ -176,6 +187,13 @@ async function criarCupom() {
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-plus"></i> Criar Cupom';
     }
+}
+
+// Mostra/esconde campo de % conforme tipo selecionado
+function toggleTipoCupom() {
+    const freteGratis = document.getElementById('novo-cupom-frete').checked;
+    const campoDesc   = document.getElementById('campo-desconto-pct');
+    if (campoDesc) campoDesc.style.display = freteGratis ? 'none' : 'block';
 }
 
 // =====================

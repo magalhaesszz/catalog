@@ -1752,6 +1752,7 @@ select.admin-input { cursor: pointer; appearance: none; background-image: url("d
 .cupom-item:hover { border-color: var(--accent-primary); }
 .cupom-item-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
 .cupom-codigo { font-family: monospace; font-size:1rem; font-weight:800; color:var(--text-main); letter-spacing:2px; }
+.cupom-badge-frete { background:linear-gradient(135deg,#10b981,#34d399); color:#fff; padding:3px 10px; border-radius:12px; font-size:0.65rem; font-weight:800; }
 .cupom-badge-desc { background:linear-gradient(135deg,var(--premium-accent),var(--premium-accent-soft)); color:#171106; padding:3px 10px; border-radius:12px; font-size:0.65rem; font-weight:800; }
 .cupom-status { padding:3px 10px; border-radius:12px; font-size:0.65rem; font-weight:700; text-transform:uppercase; }
 .cupom-status.ativo { background:rgba(16,185,129,0.12); color:#10b981; border:1px solid rgba(16,185,129,0.25); }

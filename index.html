@@ -394,12 +394,22 @@
             <div id="admin-cupons" class="admin-section">
                 <div class="admin-form">
                     <h3 style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:var(--spacing-lg);"><i class="fas fa-plus-circle" style="margin-right:6px;"></i>Criar Novo Cupom</h3>
+
+                    <!-- Toggle tipo de cupom -->
+                    <div style="background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.18); border-radius:12px; padding:14px; margin-bottom:14px; display:flex; align-items:center; gap:12px;">
+                        <input id="novo-cupom-frete" type="checkbox" onchange="toggleTipoCupom()" style="width:18px; height:18px; accent-color:var(--gold); cursor:pointer; flex-shrink:0;">
+                        <label for="novo-cupom-frete" style="cursor:pointer;">
+                            <div style="font-size:0.82rem; font-weight:700; color:var(--text-main);"><i class="fas fa-truck" style="margin-right:5px; color:var(--gold);"></i> Cupom de Frete Grátis</div>
+                            <div style="font-size:0.72rem; color:var(--text-muted); margin-top:2px;">Marque para zerar o frete. Deixe desmarcado para desconto em %.</div>
+                        </label>
+                    </div>
+
                     <div style="display:grid; grid-template-columns:1fr 80px 80px; gap:10px;">
                         <div class="form-group">
                             <label class="form-label">Código</label>
-                            <input type="text" id="novo-cupom-codigo" class="admin-input" placeholder="EX: PROMO10" oninput="this.value=this.value.toUpperCase()">
+                            <input type="text" id="novo-cupom-codigo" class="admin-input" placeholder="EX: FRETEGRATIS" oninput="this.value=this.value.toUpperCase()">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="campo-desconto-pct">
                             <label class="form-label">% Desc.</label>
                             <input type="number" id="novo-cupom-pct" class="admin-input" placeholder="10" min="1" max="100">
                         </div>
