@@ -241,8 +241,11 @@
         </div>
         <div class="cart-footer" id="cart-footer" style="display:none;">
             <div class="cart-total"><span>Total:</span> <span id="valor-total">R$ 0,00</span></div>
-            <button class="btn-finalizar-whats" onclick="finalizarCompra()">
-                <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> FINALIZAR NO WHATSAPP
+            <button class="btn-finalizar-pix" onclick="pagarComPix()">
+                <i class="fas fa-qrcode" style="font-size:1.1rem;"></i> PAGAR COM PIX
+            </button>
+            <button class="btn-finalizar-whats" onclick="finalizarCompra()" style="margin-top:10px;">
+                <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> CONTINUAR NO WHATSAPP
             </button>
         </div>
     </div>
