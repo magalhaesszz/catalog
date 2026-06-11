@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Canetas da Paz 🍁 & Cyto — Catálogos</title>
+
+<!-- Open Graph / WhatsApp Preview -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Canetas da Paz 🍁 & Cyto — Catálogos" />
+<meta property="og:description" content="Catálogo premium. Atendimento 24h, entrega discreta para todo o Brasil." />
+<meta property="og:image" content="https://i.ibb.co/ynjtDjCW/cdb8a003-69e0-475c-9360-2a09edf136a3.jpg" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="949" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://i.ibb.co/ynjtDjCW/cdb8a003-69e0-475c-9360-2a09edf136a3.jpg" />
+
+<!-- Fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Ícones Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<!-- CSS local -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="canetas">
+
+<div class="ambient-light">
+    <div class="light-blob blob-1"></div>
+    <div class="light-blob blob-2"></div>
+    <div class="light-blob blob-3"></div>
+</div>
+
+<div id="toast" class="toast"><span id="toast-msg">Mensagem</span></div>
+
+<div class="main-tabs-bar">
+    <div class="main-tabs-inner">
+        <button class="main-tab active" data-loja="canetas" onclick="trocarLoja('canetas')">
+            <i class="fas fa-leaf"></i> Canetas
+        </button>
+        <button class="main-tab" data-loja="cyto" onclick="trocarLoja('cyto')">
+            <i class="fas fa-mortar-pestle"></i> Cyto
+        </button>
+    </div>
+</div>
+
+<header>
+    <div class="header-top">
+        <div class="btn-admin-login" onclick="abrirModal('modal-login')" aria-label="Painel de Administração"><i class="fas fa-lock"></i></div>
+        <h1 id="header-titulo">Canetas da Paz<span id="header-subtitulo">CATÁLOGO PREMIUM</span></h1>
+        <button class="btn-search-toggle" onclick="toggleSearch()" aria-label="Buscar Produtos"><i class="fas fa-search"></i></button>
+    </div>
+    <div id="search-bar" class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="O que você procura?" oninput="aplicarFiltros()">
+    </div>
+    <div class="filtros-container">
+        <div class="filtros" id="filtros-lista"></div>
+    </div>
+</header>
+
+<section class="hero-section" id="hero-canetas">
+    <div class="hero-container">
+        <div class="hero-video-wrap">
+            <iframe loading="lazy" src="https://player.vimeo.com/video/1187468692?background=1&autoplay=1&loop=1&muted=1&playsinline=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+        <div class="hero-overlay">
+            <div class="hero-eyebrow"><span class="pulse-dot"></span> Atendimento Premium 24h</div>
+            <h2 class="hero-headline">Milhares de clientes<br><em>satisfeitos</em> e contando</h2>
+            <p class="hero-subheadline">A loja referência em produtos premium. Discrição absoluta, qualidade comprovada e entrega rápida pra todo Brasil.</p>
+            <div class="hero-cta-row">
+                <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-bolt"></i> Ver Catálogo
+                </button>
+                <a href="https://wa.me/5551994441493" target="_blank" class="hero-cta-secondary">
+                    <i class="fab fa-whatsapp"></i> Falar Agora
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero-section" id="hero-cyto" style="display:none;">
+    <div class="hero-container">
+        <div class="hero-static-bg"></div>
+        <div class="hero-overlay">
+            <div class="hero-eyebrow"><span class="pulse-dot"></span> Farmácia de Confiança</div>
+            <h2 class="hero-headline">Saúde e bem-estar<br><em>na sua porta</em></h2>
+            <p class="hero-subheadline">Produtos farmacêuticos selecionados, entrega rápida e atendimento especializado. Sua saúde é nossa prioridade.</p>
+            <div class="hero-cta-row">
+                <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-pills"></i> Ver Produtos
+                </button>
+                <a href="https://wa.me/5551994441493" target="_blank" class="hero-cta-secondary">
+                    <i class="fab fa-whatsapp"></i> Consultar Vendedor
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-bar">
+    <div class="stats-bar-inner">
+        <div class="stat-pill">
+            <div class="stat-pill-value">5K+</div>
+            <div class="stat-pill-label">Clientes</div>
+        </div>
+        <div class="stat-pill">
+            <div class="stat-pill-value">24h</div>
+            <div class="stat-pill-label">Atendimento</div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider">
+    <span class="section-eyebrow">Prova Social</span>
+    <h2 class="section-title">Quem comprou, <em>aprovou</em></h2>
+    <p class="section-subtitle" id="prova-subtitle">Veja o que nossos clientes têm dito sobre os produtos.</p>
+</div>
+
+<section class="references-grid-canetas" id="prova-canetas">
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.postimg.cc/d3X7pgKR/a369d816-ef53-4ce4-a9fc-27037813ee4e.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-star"></i> Top Cliente</span>
+        <img loading="lazy" src="https://i.postimg.cc/d3X7pgKR/a369d816-ef53-4ce4-a9fc-27037813ee4e.jpg" alt="Cliente Satisfeito">
+    </div>
+</section>
+
+<section class="references-grid-cyto" id="prova-cyto" style="display:none;">
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/1FNXVXg/Whats-App-Image-2026-05-11-at-23-03-13.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/1FNXVXg/Whats-App-Image-2026-05-11-at-23-03-13.jpg" alt="Cliente Cyto">
+    </div>
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/nqQpYT7y/Whats-App-Image-2026-05-11-at-22-57-56.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/nqQpYT7y/Whats-App-Image-2026-05-11-at-22-57-56.jpg" alt="Cliente Cyto">
+    </div>
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/1f9Qh9yK/Whats-App-Image-2026-05-11-at-23-01-07.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/1f9Qh9yK/Whats-App-Image-2026-05-11-at-23-01-07.jpg" alt="Cliente Cyto">
+    </div>
+    <div class="reference-card" onclick="abrirImagemFullscreen('https://i.ibb.co/ShnyYwS/Whats-App-Image-2026-05-11-at-23-02-13.jpg')">
+        <span class="reference-card-badge"><i class="fas fa-check-circle"></i> Verificado</span>
+        <img loading="lazy" src="https://i.ibb.co/ShnyYwS/Whats-App-Image-2026-05-11-at-23-02-13.jpg" alt="Cliente Cyto">
+    </div>
+</section>
+
+<section class="cyto-videos-grid" id="videos-cyto" style="display:none;">
+    <div class="cyto-video-card" id="vid-card-1">
+        <span class="cyto-video-badge"><i class="fas fa-play-circle"></i> Depoimento</span>
+        <iframe id="vimeo-frame-1" src="https://player.vimeo.com/video/1191388314?background=1&autoplay=1&loop=1&muted=1&playsinline=1" loading="lazy" allow="autoplay" style="width:100%; height:100%; border:none; position:absolute; inset:0; pointer-events:none;"></iframe>
+        <div class="cyto-video-controls">
+            <button class="cyto-vid-btn muted" onclick="event.stopPropagation(); toggleVolumeCyto(1)" id="vol-btn-1" title="Ativar som"><i class="fas fa-volume-mute"></i></button>
+            <button class="cyto-vid-btn" onclick="event.stopPropagation(); toggleFullscreenCyto(1)" title="Tela cheia"><i class="fas fa-expand"></i></button>
+        </div>
+    </div>
+    <div class="cyto-video-card" id="vid-card-2">
+        <span class="cyto-video-badge"><i class="fas fa-play-circle"></i> Resultado Real</span>
+        <iframe id="vimeo-frame-2" src="https://player.vimeo.com/video/1191388444?background=1&autoplay=1&loop=1&muted=1&playsinline=1" loading="lazy" allow="autoplay" style="width:100%; height:100%; border:none; position:absolute; inset:0; pointer-events:none;"></iframe>
+        <div class="cyto-video-controls">
+            <button class="cyto-vid-btn muted" onclick="event.stopPropagation(); toggleVolumeCyto(2)" id="vol-btn-2" title="Ativar som"><i class="fas fa-volume-mute"></i></button>
+            <button class="cyto-vid-btn" onclick="event.stopPropagation(); toggleFullscreenCyto(2)" title="Tela cheia"><i class="fas fa-expand"></i></button>
+        </div>
+    </div>
+</section>
+
+<div class="catalog-header" id="catalogo-anchor">
+    <span class="section-eyebrow">Catálogo Completo</span>
+    <h2 class="section-title">Nossos <em>produtos</em></h2>
+    <p class="section-subtitle" id="catalogo-subtitle">Selecionados a dedo. Cada item passa por curadoria rigorosa antes de chegar até você.</p>
+</div>
+
+<div class="price-sort-bar" id="price-sort-bar">
+    <span class="price-sort-label"><i class="fas fa-sort-amount-down-alt"></i> Ordenar:</span>
+    <button class="btn-price-sort" onclick="ordenarPreco('none', this)" id="btn-sort-default">
+        <i class="fas fa-th"></i> Padrão
+    </button>
+    <button class="btn-price-sort" onclick="ordenarPreco('asc', this)" id="btn-sort-asc">
+        <i class="fas fa-arrow-up"></i> Menor Preço
+    </button>
+    <button class="btn-price-sort" onclick="ordenarPreco('desc', this)" id="btn-sort-desc">
+        <i class="fas fa-arrow-down"></i> Maior Preço
+    </button>
+</div>
+
+<div class="container" id="grade-produtos"></div>
+<div id="msg-vazio" class="empty-message"><i class="fas fa-search" style="font-size:2rem; opacity:0.3; margin-bottom:10px; display:block;"></i> Nenhum produto encontrado.</div>
+
+<div class="footer-trust">
+    <p class="footer-trust-text" id="footer-texto">Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados</p>
+    <div class="footer-trust-icons">
+        <i class="fas fa-shield-alt"></i>
+        <i class="fas fa-truck"></i>
+        <i class="fas fa-lock"></i>
+        <i class="fas fa-user-check"></i>
+    </div>
+</div>
+
+<div class="connection-indicator" id="conn-indicator"><i class="fas fa-circle"></i> <span id="conn-text">conectando</span></div>
+
+<div class="social-float">
+    <a href="https://wa.me/5551994441493" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://www.instagram.com/canetasdapaz" target="_blank" class="btn-social" id="btn-instagram" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)"><i class="fab fa-instagram"></i></a>
+</div>
+
+<button class="btn-carrinho-float" onclick="abrirModal('modal-carrinho')" id="btn-carrinho" aria-label="Abrir Carrinho">
+    <i class="fas fa-shopping-bag"></i>
+    <div class="contador-carrinho" id="cart-count" style="display:none">0</div>
+</button>
+
+<!-- Modal: Detalhes do Produto -->
+<div class="modal-overlay" id="modal-detalhes" onclick="fecharSeClicarFora(event, 'modal-detalhes')">
+    <div class="modal-box">
+        <button class="fechar-modal" onclick="fecharModal('modal-detalhes')"><i class="fas fa-times"></i></button>
+        <div class="modal-img-carousel" id="modal-carousel">
+            <div class="modal-img-carousel-track" id="modal-carousel-track"></div>
+            <button class="modal-img-nav prev" id="modal-nav-prev" onclick="modalCarouselNav(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="modal-img-nav next" id="modal-nav-next" onclick="modalCarouselNav(1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="modal-img-dots" id="modal-dots"></div>
+            <div class="modal-gradient"></div>
+        </div>
+        <div class="modal-content">
+            <span id="d-tag" class="tag-tipo" style="position:static; margin-bottom:var(--spacing-lg); display:inline-block;">TIPO</span>
+            <h2 class="modal-titulo" id="d-nome">Nome</h2>
+            <span class="modal-preco" id="d-preco">R$ 0,00</span>
+            <p class="modal-desc" id="d-desc">Descrição.</p>
+            <button class="btn-confirmar" onclick="adicionarDoModal()"><i class="fas fa-shopping-bag"></i> &nbsp; ADICIONAR AO CARRINHO</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Carrinho -->
+<div class="modal-overlay" id="modal-carrinho" onclick="fecharSeClicarFora(event, 'modal-carrinho')">
+    <div class="modal-box">
+        <div class="cart-header">
+            <h2>Seu Carrinho</h2>
+            <button class="fechar-modal" style="position:static;" onclick="fecharModal('modal-carrinho')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items-container" id="lista-itens">
+            <p style="text-align:center; padding:var(--spacing-2xl); color:var(--text-muted);"><i class="fas fa-shopping-cart" style="font-size:2rem; margin-bottom:10px; display:block; opacity:0.3;"></i>Seu carrinho está vazio.</p>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div class="cart-total"><span>Total:</span> <span id="valor-total">R$ 0,00</span></div>
+            <button class="btn-finalizar-whats" onclick="finalizarCompra()">
+                <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> FINALIZAR NO WHATSAPP
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Login Admin -->
+<div class="modal-overlay" id="modal-login" onclick="fecharSeClicarFora(event, 'modal-login')">
+    <div class="modal-box" style="height:auto; padding:var(--spacing-2xl); border-radius:var(--radius-xl); max-width:400px; align-self:center;">
+        <button class="fechar-modal" onclick="fecharModal('modal-login')"><i class="fas fa-times"></i></button>
+        <div style="text-align:center; margin-bottom:var(--spacing-xl);">
+            <div style="width:58px; height:58px; border-radius:var(--radius-md); background:linear-gradient(135deg, var(--accent-primary), var(--accent-soft)); display:inline-flex; align-items:center; justify-content:center; color:var(--accent-text-on); font-size:1.4rem; margin-bottom:var(--spacing-lg);"><i class="fas fa-shield-alt"></i></div>
+            <h2 style="margin:0 0 var(--spacing-sm); color:var(--text-main); font-family:'Cinzel'; font-weight:800;">Acesso Restrito</h2>
+            <p style="margin:0; color:var(--text-muted); font-size:0.82rem;">Autenticação segura via Supabase</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:var(--spacing-md); margin-bottom:var(--spacing-lg);">
+            <input type="email" id="admin-email" class="admin-input" placeholder="E-mail do administrador" autocomplete="email" onkeyup="if(event.key==='Enter') document.getElementById('admin-senha').focus()">
+            <input type="password" id="admin-senha" class="admin-input" placeholder="Senha" autocomplete="current-password" onkeyup="if(event.key==='Enter') fazerLogin()">
+        </div>
+        <button class="btn-confirmar" id="btn-login" onclick="fazerLogin()">ENTRAR NO PAINEL</button>
+    </div>
+</div>
+
+<!-- Modal: Painel Admin -->
+<div class="modal-overlay" id="modal-admin" onclick="fecharSeClicarFora(event, 'modal-admin')">
+    <div class="modal-box admin-modal-box">
+        <button class="fechar-modal" onclick="fecharModal('modal-admin')"><i class="fas fa-times"></i></button>
+        <div class="admin-header">
+            <div class="admin-header-title">
+                <div class="admin-title-group">
+                    <h2>Painel Admin</h2>
+                    <p>Canetas da Paz + Cyto</p>
+                </div>
+            </div>
+            <div class="admin-header-right">
+                <div id="admin-status" class="status-badge offline">
+                    <span class="status-dot"></span><span id="admin-status-txt">Conectando</span>
+                </div>
+                <button class="btn-logout" onclick="fazerLogout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </div>
+        <div class="admin-tabs">
+            <div class="admin-tab active" data-tab="dashboard" onclick="trocarAbaAdmin('dashboard')"><i class="fas fa-chart-pie"></i> Dashboard</div>
+            <div class="admin-tab" data-tab="adicionar" onclick="trocarAbaAdmin('adicionar')"><i class="fas fa-plus-circle"></i> Adicionar</div>
+            <div class="admin-tab" data-tab="gerenciar" onclick="trocarAbaAdmin('gerenciar')"><i class="fas fa-boxes"></i> Gerenciar</div>
+            <div class="admin-tab" data-tab="configuracoes" onclick="trocarAbaAdmin('configuracoes')"><i class="fas fa-key"></i> Supabase</div>
+        </div>
+        <div class="admin-content">
+            <div id="admin-dashboard" class="admin-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #d4af37, #e8c870);"><i class="fas fa-leaf"></i></div>
+                        <div class="stat-value" id="stat-canetas">0</div><div class="stat-label">Canetas (BD)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #dc2626, #ef4444);"><i class="fas fa-mortar-pestle"></i></div>
+                        <div class="stat-value" id="stat-cyto">0</div><div class="stat-label">Cyto (BD)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);"><i class="fas fa-th"></i></div>
+                        <div class="stat-value" id="stat-fixos">0</div><div class="stat-label">Fixos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><i class="fas fa-layer-group"></i></div>
+                        <div class="stat-value" id="stat-total">0</div><div class="stat-label">Total</div>
+                    </div>
+                </div>
+                <div class="recent-list">
+                    <h3><i class="fas fa-clock"></i> Adicionados Recentemente</h3>
+                    <div id="recent-products"><p style="color:var(--text-muted);">Carregando...</p></div>
+                </div>
+            </div>
+            <div id="admin-adicionar" class="admin-section">
+                <div class="admin-form">
+                    <div class="loja-selector-wrap">
+                        <label class="form-label" style="margin-bottom:var(--spacing-sm); display:block;"><i class="fas fa-store"></i> &nbsp; Loja Destino *</label>
+                        <select id="add-loja" class="admin-input" onchange="atualizarPreview()">
+                            <option value="canetas">🍁 Canetas da Paz</option>
+                            <option value="cyto">⚕️ Cyto</option>
+                        </select>
+                        <p style="margin:var(--spacing-sm) 0 0; font-size:0.7rem; color:var(--text-muted);">Escolha em qual loja este produto vai aparecer.</p>
+                    </div>
+                    <div class="form-group"><label class="form-label">Nome do Produto</label><input type="text" id="add-nome" class="admin-input" oninput="atualizarPreview()"></div>
+                    <div class="form-row-2">
+                        <div class="form-group"><label class="form-label">Preço (R$)</label><input type="number" step="0.01" id="add-preco" class="admin-input" oninput="atualizarPreview()"></div>
+                        <div class="form-group"><label class="form-label">Categoria</label><select id="add-cat" class="admin-input" onchange="atualizarPreview()"></select></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Imagem 1 (Principal) *</label>
+                        <input type="text" id="add-img1" class="admin-input" placeholder="Cole a URL da imagem principal" oninput="atualizarPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Imagem 2 (Opcional)</label>
+                        <input type="text" id="add-img2" class="admin-input" placeholder="Cole a URL da segunda imagem" oninput="atualizarPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Imagem 3 (Opcional)</label>
+                        <input type="text" id="add-img3" class="admin-input" placeholder="Cole a URL da terceira imagem" oninput="atualizarPreview()">
+                    </div>
+                    <div class="form-group"><label class="form-label">Descrição</label><textarea id="add-desc" class="admin-input" rows="3"></textarea></div>
+                    <div class="preview-section">
+                        <div class="preview-label"><i class="fas fa-eye"></i> Preview Ao Vivo</div>
+                        <div class="preview-card-mini">
+                            <div class="preview-img-box">
+                                <span class="preview-tag" id="prev-tag" style="background:#d946ef">CATEGORIA</span>
+                                <img id="prev-img" src="" style="display:none;" onerror="this.style.display='none'; document.getElementById('prev-placeholder').style.display='block'">
+                                <div id="prev-placeholder" class="preview-img-placeholder">Imagem Aqui</div>
+                            </div>
+                            <div class="preview-info">
+                                <div class="preview-nome" id="prev-nome">Nome do produto</div>
+                                <div class="preview-preco" id="prev-preco">R$ 0,00</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-confirmar" id="btn-salvar" onclick="salvarProdutoSupabase()" style="margin-top:var(--spacing-md);"><i class="fas fa-cloud-upload-alt"></i> &nbsp; SALVAR PRODUTO</button>
+                </div>
+            </div>
+            <div id="admin-gerenciar" class="admin-section">
+                <div class="manage-toolbar">
+                    <input type="text" id="manage-search" class="admin-input manage-search" placeholder="Buscar produto..." oninput="renderListaGerenciar()">
+                    <select id="manage-loja-filter" class="admin-input" style="min-width:130px;" onchange="renderListaGerenciar()">
+                        <option value="todas">Todas as lojas</option>
+                        <option value="canetas">🍁 Canetas</option>
+                        <option value="cyto">⚕️ Cyto</option>
+                    </select>
+                    <select id="manage-filter" class="admin-input" style="min-width:130px;" onchange="renderListaGerenciar()"></select>
+                </div>
+                <div class="manage-info">
+                    <span><strong id="manage-count">0</strong> produtos</span>
+                    <button class="btn-action secondary" onclick="recarregarTudo()"><i class="fas fa-sync"></i> Atualizar</button>
+                </div>
+                <div id="lista-produtos" class="produto-lista"></div>
+            </div>
+            <div id="admin-configuracoes" class="admin-section">
+                <div class="admin-form">
+                    <div class="form-group"><label class="form-label">URL do Projeto</label><input type="text" id="cfg-url" class="admin-input mono"></div>
+                    <div class="form-group"><label class="form-label">Chave Pública (anon)</label><input type="text" id="cfg-key" class="admin-input mono"></div>
+                    <div class="form-group"><label class="form-label">Tabela</label><input type="text" id="cfg-tabela" class="admin-input mono" value="produtos"></div>
+                    <div class="btn-row" style="margin-top:var(--spacing-md);">
+                        <button class="btn-action primary" onclick="testarConexao()"><i class="fas fa-plug"></i> Testar</button>
+                        <button class="btn-action secondary" onclick="salvarConfiguracao()"><i class="fas fa-save"></i> Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Editar Produto -->
+<div class="modal-overlay" id="modal-editar" onclick="fecharSeClicarFora(event, 'modal-editar')">
+    <div class="modal-box" style="height:auto; padding:var(--spacing-xl); border-radius:var(--radius-xl); max-width:550px;">
+        <button class="fechar-modal" onclick="fecharModal('modal-editar')"><i class="fas fa-times"></i></button>
+        <h2 style="text-align:center; margin-bottom:var(--spacing-lg); color:var(--text-main); font-family:'Cinzel'; font-weight:800;">Editar Produto</h2>
+        <div class="admin-form">
+            <input type="hidden" id="edit-id">
+            <div class="loja-selector-wrap">
+                <label class="form-label" style="margin-bottom:var(--spacing-sm); display:block;"><i class="fas fa-store"></i> &nbsp; Loja</label>
+                <select id="edit-loja" class="admin-input">
+                    <option value="canetas">🍁 Canetas da Paz</option>
+                    <option value="cyto">⚕️ Cyto</option>
+                </select>
+            </div>
+            <div class="form-group"><label class="form-label">Nome</label><input type="text" id="edit-nome" class="admin-input"></div>
+            <div class="form-row-2">
+                <div class="form-group"><label class="form-label">Preço</label><input type="number" step="0.01" id="edit-preco" class="admin-input"></div>
+                <div class="form-group"><label class="form-label">Categoria</label><select id="edit-cat" class="admin-input"></select></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Imagem 1 (Principal) *</label>
+                <input type="text" id="edit-img1" class="admin-input" placeholder="URL da imagem principal">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Imagem 2 (Opcional)</label>
+                <input type="text" id="edit-img2" class="admin-input" placeholder="URL da segunda imagem">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Imagem 3 (Opcional)</label>
+                <input type="text" id="edit-img3" class="admin-input" placeholder="URL da terceira imagem">
+            </div>
+            <div class="form-group"><label class="form-label">Descrição</label><textarea id="edit-desc" class="admin-input" rows="3"></textarea></div>
+            <button class="btn-confirmar" onclick="atualizarProdutoSupabase()"><i class="fas fa-check"></i> &nbsp; SALVAR ALTERAÇÕES</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Imagem em Tela Cheia -->
+<div class="modal-overlay" id="modal-img-full" onclick="fecharModal('modal-img-full')" style="background:rgba(0,0,0,0.95); align-items:center;">
+    <div style="position:relative; max-width:95vw; max-height:90vh;">
+        <button class="fechar-modal" onclick="fecharModal('modal-img-full')" style="top:-50px;"><i class="fas fa-times"></i></button>
+        <img id="full-img" src="" style="max-width:100%; max-height:90vh; border-radius:var(--radius-lg); object-fit:contain;">
+    </div>
+</div>
+
+<!-- Bibliotecas externas -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.46.1/dist/umd/supabase.js"></script>
+
+<!-- Scripts locais (na ordem de carregamento) -->
+<script src="js/config.js"></script>
+<script src="js/lojas.js"></script>
+<script src="js/produtos-fixos.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/filtros.js"></script>
+<script src="js/produtos.js"></script>
+<script src="js/carrinho.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/supabase-ops.js"></script>
+<script src="js/videos.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+</html>
