@@ -150,7 +150,7 @@ function pgAtualizarTotalFrete() {
     const total        = subtotal - desconto + freteReal;
 
     document.getElementById('pg-subtotal').innerText    = formatarPreco(subtotal);
-    document.getElementById('pg-frete-val').innerText   = freteGratis
+    document.getElementById('pg-frete-val').innerHTML   = freteGratis
         ? '<span style="color:#10b981; font-weight:800;">GRÁTIS 🚚</span>'
         : formatarPreco(pgFrete);
     document.getElementById('pg-total-final').innerText = formatarPreco(total);
