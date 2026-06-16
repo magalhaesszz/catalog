@@ -79,6 +79,9 @@
         <h1 id="header-titulo">Canetas da Paz<span id="header-subtitulo">Site Completo</span></h1>
         <button class="btn-search-toggle" onclick="toggleSearch()" aria-label="Buscar Produtos"><i class="fas fa-search"></i></button>
     </div>
+    <button id="btn-tema" onclick="toggleTema()" title="Alternar tema" style="position:absolute; right:60px; background:rgba(34,160,90,0.06); border:1px solid rgba(34,160,90,0.18); color:var(--text); width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.28s;">
+    <i class="fas fa-sun"></i>
+</button>
     <div id="search-bar" class="search-container">
         <input type="text" id="search-input" class="search-input" placeholder="O que você procura?" oninput="aplicarFiltros()">
     </div>
@@ -308,6 +311,7 @@
             <div class="admin-tab" data-tab="configuracoes" onclick="trocarAbaAdmin('configuracoes')"><i class="fas fa-key"></i> Supabase</div>
             <div class="admin-tab" data-tab="cupons" onclick="trocarAbaAdmin('cupons'); renderListaCupons();"><i class="fas fa-ticket-alt"></i> Cupons</div>
         </div>
+        <div class="admin-tab" data-tab="relatorio" onclick="trocarAbaAdmin('relatorio');"><i class="fas fa-chart-bar"></i> Relatório</div>
         <div class="admin-content">
             <div id="admin-dashboard" class="admin-section active">
                 <div class="stats-grid">
@@ -701,7 +705,9 @@
           <i class="fas fa-redo"></i> Gerar Novo Pix
         </button>
       </div>
-
+<div id="admin-relatorio" class="admin-section">
+    <div id="relatorio-conteudo"></div>
+</div>
     </div><!-- fim scroll -->
   </div>
 </div>
@@ -725,6 +731,7 @@
 <script src="js/videos.js"></script>
 <script src="js/cupons.js"></script>
 <script src="js/pagamento.js"></script>
+<script src="js/extras.js"></script>
 <script src="js/init.js"></script>
 
 </body>
