@@ -190,53 +190,6 @@ function iniciarSocialProof() {
 }
 
 // =====================
-// MODO ESCURO / CLARO
-// =====================
-const TEMA_KEY = 'cdp_tema';
-
-function iniciarTema() {
-    const salvo = localStorage.getItem(TEMA_KEY) || 'dark';
-    aplicarTema(salvo, false);
-}
-
-function aplicarTema(modo, salvar = true) {
-    document.documentElement.setAttribute('data-color-mode', modo);
-    if (modo === 'light') {
-        document.documentElement.style.setProperty('--bg',          '#f4faf6');
-        document.documentElement.style.setProperty('--bg-card',     '#ffffff');
-        document.documentElement.style.setProperty('--bg-card-alt', '#f0f7f3');
-        document.documentElement.style.setProperty('--bg-glass',    'rgba(255,255,255,0.92)');
-        document.documentElement.style.setProperty('--text',        '#0a1a0f');
-        document.documentElement.style.setProperty('--text-sec',    '#1a3325');
-        document.documentElement.style.setProperty('--text-muted',  '#4a7a5f');
-        document.documentElement.style.setProperty('--text-faint',  '#8ab89a');
-        document.documentElement.style.setProperty('--border',      'rgba(34,160,90,0.22)');
-        document.documentElement.style.setProperty('--border-md',   'rgba(34,160,90,0.38)');
-    } else {
-        document.documentElement.style.setProperty('--bg',          '#080f0b');
-        document.documentElement.style.setProperty('--bg-card',     '#0d1711');
-        document.documentElement.style.setProperty('--bg-card-alt', '#111e16');
-        document.documentElement.style.setProperty('--bg-glass',    'rgba(13,23,17,0.85)');
-        document.documentElement.style.setProperty('--text',        '#f0faf4');
-        document.documentElement.style.setProperty('--text-sec',    '#c8dfd0');
-        document.documentElement.style.setProperty('--text-muted',  '#7aaa8f');
-        document.documentElement.style.setProperty('--text-faint',  '#3d6650');
-        document.documentElement.style.setProperty('--border',      'rgba(34,160,90,0.18)');
-        document.documentElement.style.setProperty('--border-md',   'rgba(34,160,90,0.32)');
-    }
-    const btn = document.getElementById('btn-tema');
-    if (btn) btn.innerHTML = modo === 'light'
-        ? '<i class="fas fa-moon"></i>'
-        : '<i class="fas fa-sun"></i>';
-    if (salvar) localStorage.setItem(TEMA_KEY, modo);
-}
-
-function toggleTema() {
-    const atual = localStorage.getItem(TEMA_KEY) || 'dark';
-    aplicarTema(atual === 'dark' ? 'light' : 'dark');
-}
-
-// =====================
 // RELATÓRIO DE VENDAS (simulado com localStorage)
 // =====================
 const VENDAS_KEY = 'cdp_vendas';
