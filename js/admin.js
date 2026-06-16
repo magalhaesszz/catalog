@@ -14,6 +14,7 @@ function trocarAbaAdmin(tab) {
     const el = document.getElementById('admin-' + tab);
     if (el) el.classList.add('active');
     if (tab === 'configuracoes') carregarFormConfiguracao();
+    if (tab === 'relatorio') renderRelatorioVendas();
     if (tab === 'gerenciar') renderListaGerenciar();
     if (tab === 'dashboard') atualizarDashboard();
 }
