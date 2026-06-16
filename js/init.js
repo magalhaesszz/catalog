@@ -2,10 +2,7 @@
 
 /* ==========================================
    INICIALIZAÇÃO
-   ==========================================
    Arquivo: js/init.js
-   Responsável por: rodar tudo quando a página carrega
-   (último arquivo a ser carregado)
    ========================================== */
 
 let inicializado = false;
@@ -13,8 +10,10 @@ let inicializado = false;
 function iniciarAplicacao() {
     if (inicializado) return;
     inicializado = true;
+    carregarFavoritos();
     renderizarFiltrosDOM();
     renderTodosProdutos();
+    iniciarBackToTop();
     setTimeout(inicializarSupabase, 250);
 }
 
