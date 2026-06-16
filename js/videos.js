@@ -74,7 +74,6 @@ function trocarLoja(loja) {
     // Mostrar/esconder seções específicas
     document.getElementById('hero-canetas').style.display = loja === 'canetas' ? 'block' : 'none';
     document.getElementById('hero-cyto').style.display = loja === 'cyto' ? 'block' : 'none';
-    document.getElementById('prova-canetas').style.display = loja === 'canetas' ? 'grid' : 'none';
     document.getElementById('prova-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
     document.getElementById('videos-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
 
