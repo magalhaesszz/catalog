@@ -4,11 +4,8 @@
    VÍDEOS, ORDENAÇÃO E TROCA DE LOJA
    ==========================================
    Arquivo: js/videos.js
-   Responsável por: controles dos vídeos Cyto (Vimeo),
-   ordenação por preço, alternar entre Canetas e Cyto
    ========================================== */
 
-// Mapa dos vídeos Vimeo da Cyto
 const CYTO_VIDEOS = {
     1: { id: '1191388314' },
     2: { id: '1191388444' }
@@ -48,7 +45,6 @@ function toggleFullscreenCyto(num) {
     }
 }
 
-// Ordenação por preço
 let ordenacaoAtual = 'none';
 
 function ordenarPreco(tipo, btn) {
@@ -58,7 +54,6 @@ function ordenarPreco(tipo, btn) {
     renderTodosProdutos();
 }
 
-// Alternar entre lojas
 function trocarLoja(loja) {
     lojaAtual = loja;
     document.body.setAttribute('data-theme', loja);
@@ -66,16 +61,26 @@ function trocarLoja(loja) {
     const cfg = LOJAS_CONFIG[loja];
     document.getElementById('header-titulo').childNodes[0].nodeValue = cfg.titulo;
     document.getElementById('header-subtitulo').innerText = cfg.subtitulo;
-    document.getElementById('prova-subtitle').innerText = cfg.prova_subtitle;
+
+    const provaSubtitle = document.getElementById('prova-subtitle');
+    if (provaSubtitle) provaSubtitle.innerText = cfg.prova_subtitle;
+
     document.getElementById('catalogo-subtitle').innerText = cfg.catalogo_subtitle;
     document.getElementById('footer-texto').innerHTML = cfg.footer;
     document.getElementById('btn-instagram').href = cfg.instagram;
 
-    // Mostrar/esconder seções específicas
-    document.getElementById('hero-canetas').style.display = loja === 'canetas' ? 'block' : 'none';
-    document.getElementById('hero-cyto').style.display = loja === 'cyto' ? 'block' : 'none';
-    document.getElementById('prova-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
-    document.getElementById('videos-cyto').style.display = loja === 'cyto' ? 'grid' : 'none';
+    // Mostrar/esconder seções — com verificação de existência
+    const heroCanetas = document.getElementById('hero-canetas');
+    const heroCyto    = document.getElementById('hero-cyto');
+    const provaCanetas = document.getElementById('prova-canetas');
+    const provaCyto    = document.getElementById('prova-cyto');
+    const videosCyto   = document.getElementById('videos-cyto');
+
+    if (heroCanetas)  heroCanetas.style.display  = loja === 'canetas' ? 'block' : 'none';
+    if (heroCyto)     heroCyto.style.display     = loja === 'cyto'    ? 'block' : 'none';
+    if (provaCanetas) provaCanetas.style.display  = loja === 'canetas' ? 'grid'  : 'none';
+    if (provaCyto)    provaCyto.style.display     = loja === 'cyto'    ? 'grid'  : 'none';
+    if (videosCyto)   videosCyto.style.display    = loja === 'cyto'    ? 'grid'  : 'none';
 
     categoriaAtiva = 'todos';
     ordenacaoAtual = 'none';
