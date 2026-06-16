@@ -326,6 +326,7 @@ function pgMostrarSucesso(total_cents) {
                   `*Endereço:* ${end.rua}, ${end.numero}${end.complemento ? ', '+end.complemento : ''} — ${end.bairro}, ${end.cidade}/${end.estado} — CEP ${end.cep}\n\n` +
                   `Aguardo confirmação!`;
     document.getElementById('pg-btn-wpp').href = `https://wa.me/${TELEFONE_PIX}?text=${encodeURIComponent(texto)}`;
+    if (typeof registrarVenda === 'function') registrarVenda(carrinho, total);
     carrinho = [];
     atualizarCarrinhoUI();
     irParaEtapa('sucesso');
