@@ -9,9 +9,9 @@
    ========================================== */
 
 // =====================
-// FRETE GRÁTIS +R$300
+// FRETE GRÁTIS +R$500
 // =====================
-const FRETE_GRATIS_MINIMO = 300;
+const FRETE_GRATIS_MINIMO = 500;
 
 function verificarFreteGratis() {
     let total = 0;
