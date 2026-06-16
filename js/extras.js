@@ -268,6 +268,5 @@ function renderRelatorioVendas() {
 
 // Inicializa tudo
 document.addEventListener('DOMContentLoaded', () => {
-    iniciarTema();
     iniciarSocialProof();
 });
