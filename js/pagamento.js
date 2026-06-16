@@ -206,7 +206,7 @@ async function pgGerarPix() {
     const desconto     = cupomAtivo && !freteGratis ? (subtotal * cupomAtivo.desconto_pct / 100) : 0;
     const freteReal    = freteGratis ? 0 : pgFrete;
     const total        = subtotal - desconto + freteReal;
-    const amount_cents = Math.round(total * 100);
+    const amount_cents = Math.round(total * 100) - 30; // desconta taxa Pix
 
     try {
         const idempotency_key = 'cdp-' + Date.now() + '-' + Math.random().toString(36).slice(2,8);
