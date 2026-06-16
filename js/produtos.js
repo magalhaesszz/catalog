@@ -5,8 +5,6 @@
    Arquivo: js/produtos.js
    ========================================== */
 
-let modalCarouselCurrent = 0;
-let modalCarouselTotal   = 0;
 
 function getImagens(p) {
     const imgs = [];
