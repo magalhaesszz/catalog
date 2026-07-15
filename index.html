@@ -195,10 +195,10 @@
 <div class="main-tabs-bar">
   <div class="main-tabs-inner">
     <button class="main-tab active" data-loja="canetas" onclick="trocarLoja('canetas')">
-      <img src="folha-verde.png" style="width:16px;height:16px;object-fit:contain;vertical-align:-2px;margin-right:5px;filter:brightness(0) invert(1);"> Canetas
+      <img src="icons-custom/folha-verde.png" style="width:16px;height:16px;object-fit:contain;vertical-align:-2px;margin-right:5px;filter:brightness(0) invert(1);"> Canetas
     </button>
     <button class="main-tab" data-loja="cyto" onclick="trocarLoja('cyto')">
-      <img src="tintura.png" style="width:16px;height:16px;object-fit:contain;vertical-align:-2px;margin-right:5px;filter:brightness(0) invert(1);"> Cyto
+      <img src="icons-custom/tintura.png" style="width:16px;height:16px;object-fit:contain;vertical-align:-2px;margin-right:5px;filter:brightness(0) invert(1);"> Cyto
     </button>
   </div>
 </div>
@@ -222,9 +222,10 @@
 <!-- HERO CANETAS -->
 <section class="hero-section" id="hero-canetas">
   <div class="hero-container">
-    <div class="hero-video-wrap">
-      <iframe loading="lazy" src="https://player.vimeo.com/video/1187468692?background=1&autoplay=1&loop=1&muted=1&playsinline=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-    </div>
+    <!-- Background animado com grid e gradiente verde -->
+    <div class="hero-animated-bg" id="hero-bg-canetas"></div>
+    <!-- Folhas flutuantes JS -->
+    <div class="hero-particles" id="hero-leaves-canetas"></div>
     <div class="hero-overlay">
       <div class="hero-eyebrow"><span class="pulse-dot"></span> Atendimento Premium 24h</div>
       <h2 class="hero-headline">Milhares de clientes<br><em>satisfeitos</em> e contando</h2>
@@ -251,7 +252,7 @@
       <p class="hero-subheadline">Produtos farmacêuticos selecionados, entrega rápida e atendimento especializado. Sua saúde é nossa prioridade.</p>
       <div class="hero-cta-row">
         <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})">
-          <img src="tintura.png" style="width:16px;height:16px;filter:brightness(0) invert(1);vertical-align:-2px;"> Ver Produtos
+          <img src="icons-custom/tintura.png" style="width:16px;height:16px;filter:brightness(0) invert(1);vertical-align:-2px;"> Ver Produtos
         </button>
         <a href="https://wa.me/5551994441493" target="_blank" class="hero-cta-secondary">
           <i class="fab fa-whatsapp"></i> Consultar
@@ -282,23 +283,23 @@
 </div>
 <div class="icon-categories" id="icon-cats-canetas">
   <div class="icon-cat-card" onclick="filtrarCategoria('pods thc')">
-    <img class="icon-cat-img" src="pote.png" alt="Pods THC">
+    <img class="icon-cat-img" src="icons-custom/pote.png" alt="Pods THC">
     <span class="icon-cat-label">Pods THC</span>
   </div>
   <div class="icon-cat-card" onclick="filtrarCategoria('híbrida')">
-    <img class="icon-cat-img" src="folha-colorida.png" alt="Híbrida">
+    <img class="icon-cat-img" src="icons-custom/folha-colorida.png" alt="Híbrida">
     <span class="icon-cat-label">Híbrida</span>
   </div>
   <div class="icon-cat-card" onclick="filtrarCategoria('indica')">
-    <img class="icon-cat-img" src="planta-dupla.png" alt="Indica">
+    <img class="icon-cat-img" src="icons-custom/planta-dupla.png" alt="Indica">
     <span class="icon-cat-label">Indica</span>
   </div>
   <div class="icon-cat-card" onclick="filtrarCategoria('sativa')">
-    <img class="icon-cat-img" src="folha-verde.png" alt="Sativa">
+    <img class="icon-cat-img" src="icons-custom/folha-verde.png" alt="Sativa">
     <span class="icon-cat-label">Sativa</span>
   </div>
   <div class="icon-cat-card" onclick="filtrarCategoria('todos')">
-    <img class="icon-cat-img" src="globo.png" alt="Todos">
+    <img class="icon-cat-img" src="icons-custom/globo.png" alt="Todos">
     <span class="icon-cat-label">Ver Tudo</span>
   </div>
 </div>
@@ -309,15 +310,15 @@
 </div>
 <div class="icon-categories" id="icon-cats-cyto" style="display:none;">
   <div class="icon-cat-card" onclick="filtrarCategoria('óleos')">
-    <img class="icon-cat-img" src="tintura.png" alt="Óleos">
+    <img class="icon-cat-img" src="icons-custom/tintura.png" alt="Óleos">
     <span class="icon-cat-label">Óleos CBD</span>
   </div>
   <div class="icon-cat-card" onclick="filtrarCategoria('comestíveis')">
-    <img class="icon-cat-img" src="receita.png" alt="Comestíveis">
+    <img class="icon-cat-img" src="icons-custom/receita.png" alt="Comestíveis">
     <span class="icon-cat-label">Comestíveis</span>
   </div>
   <div class="icon-cat-card" onclick="filtrarCategoria('todos')">
-    <img class="icon-cat-img" src="globo.png" alt="Todos">
+    <img class="icon-cat-img" src="icons-custom/globo.png" alt="Todos">
     <span class="icon-cat-label">Ver Tudo</span>
   </div>
 </div>
@@ -739,11 +740,11 @@
 // Ícones flutuantes animados no fundo
 (function() {
   const icons = [
-    'folha-verde.png',
-    'folha-colorida.png',
-    'planta-dupla.png',
-    'buds.png',
-    'globo.png'
+    'icons-custom/folha-verde.png',
+    'icons-custom/folha-colorida.png',
+    'icons-custom/planta-dupla.png',
+    'icons-custom/buds.png',
+    'icons-custom/globo.png'
   ];
   const container = document.getElementById('floating-icons');
   for (let i = 0; i < 12; i++) {
