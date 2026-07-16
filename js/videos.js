@@ -82,6 +82,16 @@ function trocarLoja(loja) {
     if (provaCyto)    provaCyto.style.display     = loja === 'cyto'    ? 'grid'  : 'none';
     if (videosCyto)   videosCyto.style.display    = loja === 'cyto'    ? 'grid'  : 'none';
 
+    // Seções de categorias com ícones
+    const catsCanetas     = document.getElementById('cats-canetas');
+    const catsCyto        = document.getElementById('cats-cyto');
+    const iconCatsCanetas = document.getElementById('icon-cats-canetas');
+    const iconCatsCyto    = document.getElementById('icon-cats-cyto');
+    if (catsCanetas)     catsCanetas.style.display     = loja === 'canetas' ? 'block' : 'none';
+    if (catsCyto)        catsCyto.style.display        = loja === 'cyto'    ? 'block' : 'none';
+    if (iconCatsCanetas) iconCatsCanetas.style.display = loja === 'canetas' ? 'grid'  : 'none';
+    if (iconCatsCyto)    iconCatsCyto.style.display    = loja === 'cyto'    ? 'grid'  : 'none';
+
     categoriaAtiva = 'todos';
     ordenacaoAtual = 'none';
     document.querySelectorAll('.btn-price-sort').forEach(b => b.classList.remove('ativo'));
