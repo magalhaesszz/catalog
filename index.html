@@ -82,11 +82,6 @@
   }
 
   /* ── SEÇÃO DE ÍCONES/CATEGORIAS VISUAIS ── */
-  #cats-cyto,
-  #icon-cats-cyto { display: none !important; }
-  #cats-cyto.loja-ativa,
-  #icon-cats-cyto.loja-ativa { display: block !important; }
-  #icon-cats-cyto.loja-ativa { display: grid !important; }
   #cats-cyto[style*="none"],
   #icon-cats-cyto[style*="none"] {
     display: none !important;
@@ -286,7 +281,7 @@
 </section>
 
 <!-- CATEGORIAS COM ÍCONES ANIMADOS -->
-<div class="section-divider" id="cats-canetas">
+<div class="section-divider" id="cats-canetas" style="position:relative; background-image:url('banner-cats-bg.png'); background-size:cover; background-position:center; border-radius:20px; overflow:hidden;">
   <span class="section-eyebrow">Navegue por categoria</span>
   <h2 class="section-title" style="font-family:'Playfair Display',serif;">Encontre o que <em>precisa</em></h2>
 </div>
@@ -313,11 +308,11 @@
   </div>
 </div>
 
-<div class="section-divider" id="cats-cyto">
+<div class="section-divider" id="cats-cyto" style="display:none !important;">
   <span class="section-eyebrow">Navegue por categoria</span>
   <h2 class="section-title" style="font-family:'Playfair Display',serif;">Nossos <em>produtos</em></h2>
 </div>
-<div class="icon-categories" id="icon-cats-cyto">
+<div class="icon-categories" id="icon-cats-cyto" style="display:none !important;">
   <div class="icon-cat-card" onclick="filtrarCategoria('óleos')">
     <img class="icon-cat-img" src="tintura.png" alt="Óleos">
     <span class="icon-cat-label">Óleos CBD</span>
@@ -373,6 +368,204 @@
 </section>
 
 <!-- CATÁLOGO -->
+
+<!-- Arte 3: Card de destaque -->
+<div style="max-width:1100px; margin:0 auto var(--spacing-3xl); padding:0 var(--spacing-lg); display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+  <div style="flex:1; min-width:280px;">
+    <span style="font-size:0.62rem; color:var(--accent); text-transform:uppercase; letter-spacing:2px; font-weight:700; display:block; margin-bottom:12px;">Destaque da semana</span>
+    <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; color:#fff; margin:0 0 12px; line-height:1.15;">Produtos <em style="color:var(--accent); font-style:italic;">selecionados</em><br>pra você</h2>
+    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.7; margin:0 0 20px;">Curadoria exclusiva. Qualidade garantida. Entrega discreta pra todo o Brasil.</p>
+    <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})"><i class="fas fa-bolt"></i> Ver Catálogo</button>
+  </div>
+  <div style="flex-shrink:0; border-radius:16px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+    <style><style>
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.04); }
+    }
+    @keyframes rayShimmer {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+    @keyframes glintSpin {
+      0% { transform: rotate(0deg) scale(1); opacity: 0.7; }
+      50% { transform: rotate(180deg) scale(1.2); opacity: 1; }
+      100% { transform: rotate(360deg) scale(1); opacity: 0.7; }
+    }
+  </style></style>
+    <div style="width:400px; height:500px; position:relative; overflow:hidden; border-radius:10px; flex-shrink:0; box-shadow:0 30px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(40,120,50,0.12)">
+
+  <!-- Base gradient -->
+  <div style="position:absolute; inset:0; background:linear-gradient(170deg, #081a0e 0%, #050f08 45%, #040c06 100%)"></div>
+
+  <!-- Subtle mid-tone texture gradient -->
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 120% 80% at 50% 100%, #060e08 0%, transparent 60%)"></div>
+
+  <!-- Main center glow — large, soft, emerald -->
+  <div style="position:absolute; inset:0; animation:glowPulse 5s ease-in-out infinite; background:radial-gradient(ellipse 75% 60% at 50% 58%, rgba(18,130,55,0.30) 0%, rgba(10,70,28,0.16) 42%, transparent 68%)"></div>
+
+  <!-- Inner hot glow — brighter core -->
+  <div style="position:absolute; inset:0; animation:glowPulse 5s ease-in-out infinite 0.8s; background:radial-gradient(ellipse 32% 26% at 50% 57%, rgba(35,210,90,0.12) 0%, rgba(20,150,55,0.06) 50%, transparent 70%)"></div>
+
+  <!-- Light rays — conic from top-right -->
+  <div style="position:absolute; inset:0; animation:rayShimmer 4s ease-in-out infinite; background:conic-gradient(from 192deg at 104% -3%,
+    transparent 0deg,
+    transparent 3.5deg,
+    rgba(212,175,55,0.03) 5deg,
+    rgba(212,175,55,0.16) 7deg,
+    rgba(240,205,80,0.20) 8.2deg,
+    rgba(212,175,55,0.13) 9.5deg,
+    rgba(212,175,55,0.03) 11deg,
+    transparent 14deg,
+    transparent 18.5deg,
+    rgba(212,175,55,0.02) 20deg,
+    rgba(212,175,55,0.10) 21.8deg,
+    rgba(212,175,55,0.02) 23.5deg,
+    transparent 26deg,
+    transparent 30deg,
+    rgba(130,230,100,0.015) 31.5deg,
+    rgba(130,230,100,0.065) 33deg,
+    rgba(130,230,100,0.015) 34.5deg,
+    transparent 37deg
+  )"></div>
+
+  <!-- Ray source glint — top-right corner -->
+  <div style="position:absolute; top:-14px; right:-14px; width:72px; height:72px; border-radius:50%; background:radial-gradient(circle, rgba(255,235,120,0.28) 0%, rgba(212,175,55,0.10) 40%, transparent 70%); filter:blur(6px); animation:glowPulse 4s ease-in-out infinite"></div>
+
+  <!-- Secondary green bokeh -->
+  <div style="position:absolute; top:28%; left:18%; width:70px; height:70px; border-radius:50%; background:rgba(30,160,70,0.055); filter:blur(18px)"></div>
+  <div style="position:absolute; top:55%; left:72%; width:50px; height:50px; border-radius:50%; background:rgba(212,175,55,0.04); filter:blur(14px)"></div>
+  <div style="position:absolute; top:15%; left:58%; width:35px; height:35px; border-radius:50%; background:rgba(30,160,70,0.04); filter:blur(10px)"></div>
+  <div style="position:absolute; top:72%; left:30%; width:45px; height:45px; border-radius:50%; background:rgba(212,175,55,0.03); filter:blur(12px)"></div>
+
+  <!-- Canvas — floating leaf particles -->
+  <canvas id="leaf-canvas" width="400" height="500" style="position:absolute; inset:0; pointer-events:none"></canvas>
+
+  <!-- Edge vignette -->
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 105% 105% at 50% 50%, transparent 44%, rgba(2,6,3,0.55) 80%, rgba(1,4,2,0.80) 100%)"></div>
+
+  <!-- Subtle top-edge fade for depth -->
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(2,6,3,0.45) 0%, transparent 22%, transparent 75%, rgba(2,6,3,0.35) 100%)"></div>
+
+</div>
+  </div>
+</div>
+
+
+<!-- Arte 4: Como funciona -->
+<div style="max-width:900px; margin:var(--spacing-3xl) auto; padding:0 var(--spacing-lg); text-align:center;">
+  <span style="font-size:0.62rem; color:var(--accent); text-transform:uppercase; letter-spacing:2px; font-weight:700; display:block; margin-bottom:12px;">Simples assim</span>
+  <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:800; color:#fff; margin:0 0 var(--spacing-2xl); line-height:1.2;">Como <em style="color:var(--accent); font-style:italic;">funciona</em></h2>
+  <style><style>
+    body { margin: 0; background: #080e0b; }
+  </style></style>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:flex-start;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 48px; min-height: 100vh; background: #080e0b; padding: 48px; box-sizing: border-box;">
+
+  <!-- ICON 1: Hand selecting leaf -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#22a05a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Cannabis leaf: 5 individual leaflets radiating from center stem -->
+      <!-- Center leaflet (tallest) -->
+      <path d="M100,26 C94,34 93,64 100,74 C107,64 106,34 100,26Z"/>
+      <!-- Upper-right leaflet -->
+      <path d="M104,56 C108,44 120,38 124,46 C116,48 112,54 108,60Z"/>
+      <!-- Upper-left leaflet -->
+      <path d="M96,56 C92,44 80,38 76,46 C84,48 88,54 92,60Z"/>
+      <!-- Lower-right leaflet -->
+      <path d="M108,60 C114,52 128,54 128,64 C120,66 114,66 112,72Z"/>
+      <!-- Lower-left leaflet -->
+      <path d="M92,60 C86,52 72,54 72,64 C80,66 86,66 88,72Z"/>
+      <!-- Stem -->
+      <line x1="100" y1="74" x2="100" y2="88"/>
+      <!-- Fingertip touch dot -->
+      <circle cx="100" cy="89" r="2.5" fill="#22a05a" stroke="none"/>
+      <!-- Index finger: open at base to flow into palm -->
+      <path d="M93,128 L93,93 C93,87 107,87 107,93 L107,128"/>
+      <!-- Fingernail arc -->
+      <path d="M95,94 Q100,89 105,94" stroke-width="1" stroke-opacity="0.7"/>
+      <!-- Palm -->
+      <path d="M93,128 C87,133 85,148 90,160 Q100,166 110,160 C115,148 113,133 107,128"/>
+      <!-- Thumb -->
+      <path d="M85,148 C77,142 71,153 75,161 C78,165 85,163 85,155"/>
+      <!-- Curled middle finger -->
+      <path d="M107,128 C114,118 123,122 120,132"/>
+      <!-- Curled ring + pinky -->
+      <path d="M116,134 C121,124 129,128 126,138"/>
+    </g>
+  </svg>
+
+  <!-- ICON 2: QR Pix Payment -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Finder patterns: three corner squares -->
+    <g stroke="#22a05a" stroke-width="1.8" stroke-linejoin="miter" fill="none">
+      <rect x="24" y="24" width="50" height="50"/>
+      <rect x="31" y="31" width="36" height="36"/>
+      <rect x="38" y="38" width="22" height="22"/>
+      <rect x="126" y="24" width="50" height="50"/>
+      <rect x="133" y="31" width="36" height="36"/>
+      <rect x="140" y="38" width="22" height="22"/>
+      <rect x="24" y="126" width="50" height="50"/>
+      <rect x="31" y="133" width="36" height="36"/>
+      <rect x="38" y="140" width="22" height="22"/>
+    </g>
+    <!-- Data modules -->
+    <g fill="#22a05a">
+      <rect x="82" y="26" width="5" height="5"/><rect x="92" y="26" width="5" height="5"/><rect x="102" y="26" width="5" height="5"/><rect x="112" y="26" width="5" height="5"/>
+      <rect x="82" y="36" width="5" height="5"/><rect x="112" y="36" width="5" height="5"/>
+      <rect x="92" y="46" width="5" height="5"/><rect x="102" y="46" width="5" height="5"/>
+      <rect x="82" y="56" width="5" height="5"/><rect x="102" y="56" width="5" height="5"/>
+      <rect x="92" y="66" width="5" height="5"/><rect x="112" y="66" width="5" height="5"/>
+      <rect x="26" y="82" width="5" height="5"/><rect x="46" y="82" width="5" height="5"/><rect x="66" y="82" width="5" height="5"/>
+      <rect x="36" y="92" width="5" height="5"/><rect x="56" y="92" width="5" height="5"/>
+      <rect x="26" y="102" width="5" height="5"/><rect x="66" y="102" width="5" height="5"/>
+      <rect x="46" y="112" width="5" height="5"/><rect x="56" y="112" width="5" height="5"/>
+      <rect x="26" y="120" width="5" height="5"/><rect x="66" y="120" width="5" height="5"/>
+      <rect x="128" y="82" width="5" height="5"/><rect x="138" y="82" width="5" height="5"/><rect x="158" y="82" width="5" height="5"/>
+      <rect x="148" y="92" width="5" height="5"/><rect x="168" y="92" width="5" height="5"/>
+      <rect x="128" y="102" width="5" height="5"/><rect x="158" y="102" width="5" height="5"/>
+      <rect x="138" y="112" width="5" height="5"/><rect x="168" y="112" width="5" height="5"/>
+      <rect x="128" y="120" width="5" height="5"/><rect x="148" y="120" width="5" height="5"/>
+      <rect x="82" y="128" width="5" height="5"/><rect x="112" y="128" width="5" height="5"/>
+      <rect x="92" y="138" width="5" height="5"/><rect x="120" y="138" width="5" height="5"/>
+      <rect x="82" y="148" width="5" height="5"/><rect x="112" y="148" width="5" height="5"/>
+      <rect x="92" y="158" width="5" height="5"/><rect x="102" y="158" width="5" height="5"/>
+      <rect x="128" y="128" width="5" height="5"/><rect x="148" y="128" width="5" height="5"/>
+      <rect x="138" y="138" width="5" height="5"/><rect x="168" y="138" width="5" height="5"/>
+      <rect x="128" y="148" width="5" height="5"/><rect x="158" y="148" width="5" height="5"/>
+      <rect x="148" y="158" width="5" height="5"/><rect x="168" y="158" width="5" height="5"/>
+    </g>
+    <!-- Pix symbol: 4 solid kite shapes offset from center, creating clear gaps -->
+    <g transform="translate(100,100)" fill="#22a05a" stroke="none">
+      <path d="M5,-5 L17,-17 L23,-11 L11,1Z"/>
+      <path d="M5,5 L17,17 L11,23 L-1,11Z"/>
+      <path d="M-5,5 L-17,17 L-23,11 L-11,-1Z"/>
+      <path d="M-5,-5 L-17,-17 L-11,-23 L1,-11Z"/>
+    </g>
+  </svg>
+
+  <!-- ICON 3: Delivery box with speed lines -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#22a05a" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Speed lines: clearly to the left of the box -->
+      <line x1="10" y1="118" x2="50" y2="118" stroke-width="1.5"/>
+      <line x1="6"  y1="130" x2="50" y2="130" stroke-width="2"/>
+      <line x1="10" y1="142" x2="50" y2="142" stroke-width="1.5"/>
+      <!-- Box body: dominant, tall rectangle -->
+      <rect x="58" y="98" width="90" height="82" rx="2" stroke-width="1.8"/>
+      <!-- Left top flap: folds back upper-left -->
+      <path d="M58,98 L62,76 L103,76 L103,98" stroke-width="1.8"/>
+      <!-- Right top flap: folds back upper-right -->
+      <path d="M103,76 L144,76 L148,98 L103,98" stroke-width="1.8"/>
+      <!-- Tape strip across fold seam -->
+      <rect x="96" y="76" width="14" height="22" rx="1" stroke-width="1.4"/>
+    </g>
+  </svg>
+
+</div>
+  </div>
+</div>
+
 <div class="catalog-header" id="catalogo-anchor">
   <span class="section-eyebrow">Nossos Produtos Atualizados!</span>
   <h2 class="section-title" style="font-family:'Playfair Display',serif;">Nossos <em>produtos</em></h2>
@@ -389,7 +582,115 @@
 <div class="container" id="grade-produtos"></div>
 <div id="msg-vazio" class="empty-message"><i class="fas fa-search" style="font-size:2rem;opacity:0.3;margin-bottom:10px;display:block;"></i> Nenhum produto encontrado.</div>
 
-<div class="footer-trust">
+<div class="footer-trust" style="position:relative; overflow:hidden; border-radius:20px 20px 0 0; margin-top:var(--spacing-3xl);">
+  <div style="position:absolute; inset:0; z-index:0; opacity:0.7; pointer-events:none;">
+    <style><style>
+body { margin: 0; background: #040c06; }
+@keyframes wispA {
+  0%, 100% { opacity: 0.11; transform: translateX(-18px); }
+  50% { opacity: 0.19; transform: translateX(18px); }
+}
+@keyframes wispB {
+  0%, 100% { opacity: 0.07; transform: translateX(12px); }
+  40% { opacity: 0.14; transform: translateX(-14px); }
+  80% { opacity: 0.09; transform: translateX(8px); }
+}
+@keyframes wispC {
+  0%, 100% { opacity: 0.06; transform: translateX(0px); }
+  33% { opacity: 0.13; transform: translateX(-10px); }
+  66% { opacity: 0.08; transform: translateX(10px); }
+}
+@keyframes leafBreathe {
+  0%, 100% { opacity: {{ leafOpacity }}; }
+  50% { opacity: {{ leafOpacityHigh }}; }
+}
+</style></style>
+    <div style="width:1400px;height:300px;overflow:hidden;position:relative;background:#040c06;">
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="300" style="display:block;" overflow="hidden">
+  <defs>
+    <!-- Cannabis leaf silhouette, junction at (0,0) — 5 compound leaflets -->
+    <path id="leaf" d="
+      M 0 12 L 0 2
+      C 22 -3 44 -14 50 -28
+      C 38 -20 20 -11 10 -9
+      C 20 -24 36 -48 30 -72
+      C 18 -48 6 -28 3 -18
+      C 2 -38 0 -62 0 -84
+      C 0 -62 -2 -38 -3 -18
+      C -6 -28 -18 -48 -30 -72
+      C -36 -48 -20 -24 -10 -9
+      C -20 -11 -38 -20 -50 -28
+      C -44 -14 -22 -3 0 2
+      Z
+    "/>
+
+    <!-- Bottom fog gradient -->
+    <linearGradient id="fogBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#040c06" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#060e08" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0a1a0c" stop-opacity="{{ fogIntensity }}"/>
+    </linearGradient>
+
+    <!-- Mist wisp gradient (soft radial fade) -->
+    <radialGradient id="wispGrad" cx="50%" cy="60%" r="50%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#0e2011" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#081408" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#040c06" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Ambient corner glows -->
+    <radialGradient id="glowL" cx="0%" cy="100%" r="35%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#0c2210" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#040c06" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowR" cx="100%" cy="100%" r="35%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#0c2210" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#040c06" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1400" height="300" fill="#040c06"/>
+
+  <!-- Subtle corner ambient glow from leaves -->
+  <rect width="1400" height="300" fill="url(#glowL)"/>
+  <rect width="1400" height="300" fill="url(#glowR)"/>
+
+  <!-- Left cannabis leaf — corner, partially off canvas -->
+  <g transform="translate(58, 286) rotate(-6) scale(2.45)"
+     style="animation: leafBreathe 7s ease-in-out infinite; transform-box: fill-box; transform-origin: 0 0;">
+    <use href="#leaf" fill="#1c3a20"/>
+  </g>
+
+  <!-- Right cannabis leaf — mirrored into right corner -->
+  <g transform="translate(1342, 286) rotate(6) scale(-2.45, 2.45)"
+     style="animation: leafBreathe 7s ease-in-out infinite 3.5s; transform-box: fill-box; transform-origin: 0 0;">
+    <use href="#leaf" fill="#1c3a20"/>
+  </g>
+
+  <!-- Fog wisps — animated soft ellipses -->
+  <ellipse cx="340" cy="288" rx="320" ry="44" fill="url(#wispGrad)"
+           style="animation: wispA 15s ease-in-out infinite;"/>
+  <ellipse cx="1060" cy="292" rx="280" ry="36" fill="url(#wispGrad)"
+           style="animation: wispB 19s ease-in-out infinite 5s;"/>
+  <ellipse cx="700" cy="296" rx="480" ry="52" fill="url(#wispGrad)"
+           style="animation: wispC 23s ease-in-out infinite 10s;"/>
+
+  <!-- Secondary fine wisps -->
+  <ellipse cx="180" cy="295" rx="180" ry="28" fill="url(#wispGrad)"
+           style="animation: wispB 21s ease-in-out infinite 2s;"/>
+  <ellipse cx="1220" cy="295" rx="160" ry="24" fill="url(#wispGrad)"
+           style="animation: wispA 17s ease-in-out infinite 8s;"/>
+
+  <!-- Base fog gradient overlay -->
+  <rect width="1400" height="300" fill="url(#fogBase)"/>
+
+  <!-- Hairline bottom edge -->
+  <rect x="0" y="298" width="1400" height="2" fill="#0d2212" opacity="0.5"/>
+</svg>
+</div>
+  </div>
+  <div style="position:relative; z-index:1;">
   <p class="footer-trust-text" id="footer-texto">Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados</p>
   <div class="footer-trust-icons">
     <i class="fas fa-shield-alt"></i>
@@ -398,6 +699,7 @@
     <i class="fas fa-user-check"></i>
   </div>
 </div>
+  </div>
 
 <div class="connection-indicator" id="conn-indicator"><i class="fas fa-circle"></i> <span id="conn-text">conectando</span></div>
 
