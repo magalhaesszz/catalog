@@ -7,7 +7,7 @@
    Responsável por: telefone do WhatsApp, chaves do Supabase
    ========================================== */
 
-const TELEFONE = "5551994441493"; // NÚMERO DESTINO DOS PEDIDOS
+const TELEFONE = "5517991301373"; // NÚMERO DESTINO DOS PEDIDOS
 const STORAGE_KEY = 'cdp_supabase_config';
 
 const CONFIG_DEFAULT = {
