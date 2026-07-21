@@ -17,7 +17,7 @@ const LOJAS_CONFIG = {
         prova_subtitle: 'Veja o que nossos clientes têm dito sobre os produtos. Print é coisa séria — qualidade é nosso compromisso.',
         catalogo_subtitle: 'Selecionados a dedo. Cada item passa por curadoria rigorosa antes de chegar até você.',
         footer: 'Compra 100% segura • Entrega discreta • Suporte WhatsApp 24h<br>Canetas da Paz © 2025 — Todos os direitos reservados',
-        instagram: 'https://www.instagram.com/canetasdapaz'
+        instagram: 'https://www.instagram.com/canetinhasthc'
     },
     cyto: {
         titulo: 'Cyto',
@@ -25,7 +25,7 @@ const LOJAS_CONFIG = {
         prova_subtitle: 'Resultados reais de quem confiou em nós. Veja depoimentos e prints dos nossos clientes satisfeitos.',
         catalogo_subtitle: 'Suplementos selecionados para emagrecimento e bem-estar. Qualidade e confiança em cada item.',
         footer: 'Produtos selecionados • Entrega rápida • Atendimento especializado<br>Cyto © 2025 — Todos os direitos reservados',
-        instagram: 'https://www.instagram.com/canetasdapaz'
+        instagram: 'https://www.instagram.com/canetinhasthc'
     }
 };
 
