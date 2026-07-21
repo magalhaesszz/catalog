@@ -238,7 +238,7 @@
         <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})">
           <i class="fas fa-bolt"></i> Ver os Produtos
         </button>
-        <a href="https://wa.me/5551994441493" target="_blank" class="hero-cta-secondary">
+        <a href="https://wa.me/5517991301373" target="_blank" class="hero-cta-secondary">
           <i class="fab fa-whatsapp"></i> Falar Agora
         </a>
       </div>
@@ -258,7 +258,7 @@
         <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})">
           <img src="tintura.png" style="width:16px;height:16px;filter:brightness(0) invert(1);vertical-align:-2px;"> Ver Produtos
         </button>
-        <a href="https://wa.me/5551994441493" target="_blank" class="hero-cta-secondary">
+        <a href="https://wa.me/5517991301373" target="_blank" class="hero-cta-secondary">
           <i class="fab fa-whatsapp"></i> Consultar
         </a>
       </div>
@@ -368,6 +368,203 @@
 </section>
 
 <!-- CATÁLOGO -->
+
+<!-- Arte 3: Card de destaque -->
+<div style="max-width:1100px; margin:0 auto var(--spacing-3xl); padding:0 var(--spacing-lg); display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+  <div style="flex:1; min-width:280px;">
+    <span style="font-size:0.62rem; color:var(--accent); text-transform:uppercase; letter-spacing:2px; font-weight:700; display:block; margin-bottom:12px;">Destaque da semana</span>
+    <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.4rem); font-weight:800; color:#fff; margin:0 0 12px; line-height:1.15;">Produtos <em style="color:var(--accent); font-style:italic;">selecionados</em><br>pra você</h2>
+    <p style="color:var(--text-muted); font-size:0.88rem; line-height:1.7; margin:0 0 20px;">Curadoria exclusiva. Qualidade garantida. Entrega discreta pra todo o Brasil.</p>
+    <button class="hero-cta-primary" onclick="document.getElementById('catalogo-anchor').scrollIntoView({behavior:'smooth'})"><i class="fas fa-bolt"></i> Ver Catálogo</button>
+  </div>
+  <div style="flex-shrink:0; border-radius:16px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+    <style><style>
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.04); }
+    }
+    @keyframes rayShimmer {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+    @keyframes glintSpin {
+      0% { transform: rotate(0deg) scale(1); opacity: 0.7; }
+      50% { transform: rotate(180deg) scale(1.2); opacity: 1; }
+      100% { transform: rotate(360deg) scale(1); opacity: 0.7; }
+    }
+  </style></style>
+    <div style="width:400px; height:500px; position:relative; overflow:hidden; border-radius:10px; flex-shrink:0; box-shadow:0 30px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(40,120,50,0.12)">
+
+  <!-- Base gradient -->
+  <div style="position:absolute; inset:0; background:linear-gradient(170deg, #081a0e 0%, #050f08 45%, #040c06 100%)"></div>
+
+  <!-- Subtle mid-tone texture gradient -->
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 120% 80% at 50% 100%, #060e08 0%, transparent 60%)"></div>
+
+  <!-- Main center glow — large, soft, emerald -->
+  <div style="position:absolute; inset:0; animation:glowPulse 5s ease-in-out infinite; background:radial-gradient(ellipse 75% 60% at 50% 58%, rgba(18,130,55,0.30) 0%, rgba(10,70,28,0.16) 42%, transparent 68%)"></div>
+
+  <!-- Inner hot glow — brighter core -->
+  <div style="position:absolute; inset:0; animation:glowPulse 5s ease-in-out infinite 0.8s; background:radial-gradient(ellipse 32% 26% at 50% 57%, rgba(35,210,90,0.12) 0%, rgba(20,150,55,0.06) 50%, transparent 70%)"></div>
+
+  <!-- Light rays — conic from top-right -->
+  <div style="position:absolute; inset:0; animation:rayShimmer 4s ease-in-out infinite; background:conic-gradient(from 192deg at 104% -3%,
+    transparent 0deg,
+    transparent 3.5deg,
+    rgba(212,175,55,0.03) 5deg,
+    rgba(212,175,55,0.16) 7deg,
+    rgba(240,205,80,0.20) 8.2deg,
+    rgba(212,175,55,0.13) 9.5deg,
+    rgba(212,175,55,0.03) 11deg,
+    transparent 14deg,
+    transparent 18.5deg,
+    rgba(212,175,55,0.02) 20deg,
+    rgba(212,175,55,0.10) 21.8deg,
+    rgba(212,175,55,0.02) 23.5deg,
+    transparent 26deg,
+    transparent 30deg,
+    rgba(130,230,100,0.015) 31.5deg,
+    rgba(130,230,100,0.065) 33deg,
+    rgba(130,230,100,0.015) 34.5deg,
+    transparent 37deg
+  )"></div>
+
+  <!-- Ray source glint — top-right corner -->
+  <div style="position:absolute; top:-14px; right:-14px; width:72px; height:72px; border-radius:50%; background:radial-gradient(circle, rgba(255,235,120,0.28) 0%, rgba(212,175,55,0.10) 40%, transparent 70%); filter:blur(6px); animation:glowPulse 4s ease-in-out infinite"></div>
+
+  <!-- Secondary green bokeh -->
+  <div style="position:absolute; top:28%; left:18%; width:70px; height:70px; border-radius:50%; background:rgba(30,160,70,0.055); filter:blur(18px)"></div>
+  <div style="position:absolute; top:55%; left:72%; width:50px; height:50px; border-radius:50%; background:rgba(212,175,55,0.04); filter:blur(14px)"></div>
+  <div style="position:absolute; top:15%; left:58%; width:35px; height:35px; border-radius:50%; background:rgba(30,160,70,0.04); filter:blur(10px)"></div>
+  <div style="position:absolute; top:72%; left:30%; width:45px; height:45px; border-radius:50%; background:rgba(212,175,55,0.03); filter:blur(12px)"></div>
+
+  <!-- Canvas — floating leaf particles -->
+  <canvas id="leaf-canvas" width="400" height="500" style="position:absolute; inset:0; pointer-events:none"></canvas>
+
+  <!-- Edge vignette -->
+  <div style="position:absolute; inset:0; background:radial-gradient(ellipse 105% 105% at 50% 50%, transparent 44%, rgba(2,6,3,0.55) 80%, rgba(1,4,2,0.80) 100%)"></div>
+
+  <!-- Subtle top-edge fade for depth -->
+  <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(2,6,3,0.45) 0%, transparent 22%, transparent 75%, rgba(2,6,3,0.35) 100%)"></div>
+
+</div>
+  </div>
+</div>
+
+
+<!-- Arte 4: Como funciona -->
+<div style="max-width:900px; margin:var(--spacing-3xl) auto; padding:0 var(--spacing-lg); text-align:center;">
+  <span style="font-size:0.62rem; color:var(--accent); text-transform:uppercase; letter-spacing:2px; font-weight:700; display:block; margin-bottom:12px;">Simples assim</span>
+  <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:800; color:#fff; margin:0 0 var(--spacing-2xl); line-height:1.2;">Como <em style="color:var(--accent); font-style:italic;">funciona</em></h2>
+  <style><style>
+    body { margin: 0; background: #080e0b; }
+  </style></style>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; align-items:flex-start;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 48px; min-height: 100vh; background: #080e0b; padding: 48px; box-sizing: border-box;">
+
+  <!-- ICON 1: Hand selecting leaf -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#22a05a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Cannabis leaf: 5 individual leaflets radiating from center stem -->
+      <!-- Center leaflet (tallest) -->
+      <path d="M100,26 C94,34 93,64 100,74 C107,64 106,34 100,26Z"/>
+      <!-- Upper-right leaflet -->
+      <path d="M104,56 C108,44 120,38 124,46 C116,48 112,54 108,60Z"/>
+      <!-- Upper-left leaflet -->
+      <path d="M96,56 C92,44 80,38 76,46 C84,48 88,54 92,60Z"/>
+      <!-- Lower-right leaflet -->
+      <path d="M108,60 C114,52 128,54 128,64 C120,66 114,66 112,72Z"/>
+      <!-- Lower-left leaflet -->
+      <path d="M92,60 C86,52 72,54 72,64 C80,66 86,66 88,72Z"/>
+      <!-- Stem -->
+      <line x1="100" y1="74" x2="100" y2="88"/>
+      <!-- Fingertip touch dot -->
+      <circle cx="100" cy="89" r="2.5" fill="#22a05a" stroke="none"/>
+      <!-- Index finger: open at base to flow into palm -->
+      <path d="M93,128 L93,93 C93,87 107,87 107,93 L107,128"/>
+      <!-- Fingernail arc -->
+      <path d="M95,94 Q100,89 105,94" stroke-width="1" stroke-opacity="0.7"/>
+      <!-- Palm -->
+      <path d="M93,128 C87,133 85,148 90,160 Q100,166 110,160 C115,148 113,133 107,128"/>
+      <!-- Thumb -->
+      <path d="M85,148 C77,142 71,153 75,161 C78,165 85,163 85,155"/>
+      <!-- Curled middle finger -->
+      <path d="M107,128 C114,118 123,122 120,132"/>
+      <!-- Curled ring + pinky -->
+      <path d="M116,134 C121,124 129,128 126,138"/>
+    </g>
+  </svg>
+
+  <!-- ICON 2: QR Pix Payment -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Finder patterns: three corner squares -->
+    <g stroke="#22a05a" stroke-width="1.8" stroke-linejoin="miter" fill="none">
+      <rect x="24" y="24" width="50" height="50"/>
+      <rect x="31" y="31" width="36" height="36"/>
+      <rect x="38" y="38" width="22" height="22"/>
+      <rect x="126" y="24" width="50" height="50"/>
+      <rect x="133" y="31" width="36" height="36"/>
+      <rect x="140" y="38" width="22" height="22"/>
+      <rect x="24" y="126" width="50" height="50"/>
+      <rect x="31" y="133" width="36" height="36"/>
+      <rect x="38" y="140" width="22" height="22"/>
+    </g>
+    <!-- Data modules -->
+    <g fill="#22a05a">
+      <rect x="82" y="26" width="5" height="5"/><rect x="92" y="26" width="5" height="5"/><rect x="102" y="26" width="5" height="5"/><rect x="112" y="26" width="5" height="5"/>
+      <rect x="82" y="36" width="5" height="5"/><rect x="112" y="36" width="5" height="5"/>
+      <rect x="92" y="46" width="5" height="5"/><rect x="102" y="46" width="5" height="5"/>
+      <rect x="82" y="56" width="5" height="5"/><rect x="102" y="56" width="5" height="5"/>
+      <rect x="92" y="66" width="5" height="5"/><rect x="112" y="66" width="5" height="5"/>
+      <rect x="26" y="82" width="5" height="5"/><rect x="46" y="82" width="5" height="5"/><rect x="66" y="82" width="5" height="5"/>
+      <rect x="36" y="92" width="5" height="5"/><rect x="56" y="92" width="5" height="5"/>
+      <rect x="26" y="102" width="5" height="5"/><rect x="66" y="102" width="5" height="5"/>
+      <rect x="46" y="112" width="5" height="5"/><rect x="56" y="112" width="5" height="5"/>
+      <rect x="26" y="120" width="5" height="5"/><rect x="66" y="120" width="5" height="5"/>
+      <rect x="128" y="82" width="5" height="5"/><rect x="138" y="82" width="5" height="5"/><rect x="158" y="82" width="5" height="5"/>
+      <rect x="148" y="92" width="5" height="5"/><rect x="168" y="92" width="5" height="5"/>
+      <rect x="128" y="102" width="5" height="5"/><rect x="158" y="102" width="5" height="5"/>
+      <rect x="138" y="112" width="5" height="5"/><rect x="168" y="112" width="5" height="5"/>
+      <rect x="128" y="120" width="5" height="5"/><rect x="148" y="120" width="5" height="5"/>
+      <rect x="82" y="128" width="5" height="5"/><rect x="112" y="128" width="5" height="5"/>
+      <rect x="92" y="138" width="5" height="5"/><rect x="120" y="138" width="5" height="5"/>
+      <rect x="82" y="148" width="5" height="5"/><rect x="112" y="148" width="5" height="5"/>
+      <rect x="92" y="158" width="5" height="5"/><rect x="102" y="158" width="5" height="5"/>
+      <rect x="128" y="128" width="5" height="5"/><rect x="148" y="128" width="5" height="5"/>
+      <rect x="138" y="138" width="5" height="5"/><rect x="168" y="138" width="5" height="5"/>
+      <rect x="128" y="148" width="5" height="5"/><rect x="158" y="148" width="5" height="5"/>
+      <rect x="148" y="158" width="5" height="5"/><rect x="168" y="158" width="5" height="5"/>
+    </g>
+    <!-- Pix symbol: 4 solid kite shapes offset from center, creating clear gaps -->
+    <g transform="translate(100,100)" fill="#22a05a" stroke="none">
+      <path d="M5,-5 L17,-17 L23,-11 L11,1Z"/>
+      <path d="M5,5 L17,17 L11,23 L-1,11Z"/>
+      <path d="M-5,5 L-17,17 L-23,11 L-11,-1Z"/>
+      <path d="M-5,-5 L-17,-17 L-11,-23 L1,-11Z"/>
+    </g>
+  </svg>
+
+  <!-- ICON 3: Delivery box with speed lines -->
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#22a05a" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Speed lines: clearly to the left of the box -->
+      <line x1="10" y1="118" x2="50" y2="118" stroke-width="1.5"/>
+      <line x1="6"  y1="130" x2="50" y2="130" stroke-width="2"/>
+      <line x1="10" y1="142" x2="50" y2="142" stroke-width="1.5"/>
+      <!-- Box body: dominant, tall rectangle -->
+      <rect x="58" y="98" width="90" height="82" rx="2" stroke-width="1.8"/>
+      <!-- Left top flap: folds back upper-left -->
+      <path d="M58,98 L62,76 L103,76 L103,98" stroke-width="1.8"/>
+      <!-- Right top flap: folds back upper-right -->
+      <path d="M103,76 L144,76 L148,98 L103,98" stroke-width="1.8"/>
+      <!-- Tape strip across fold seam -->
+      <rect x="96" y="76" width="14" height="22" rx="1" stroke-width="1.4"/>
+    </g>
+  </svg>
+
+</div>
+  </div>
+</div>
 
 <div class="catalog-header" id="catalogo-anchor">
   <span class="section-eyebrow">Nossos Produtos Atualizados!</span>
@@ -507,7 +704,7 @@ body { margin: 0; background: #040c06; }
 <div class="connection-indicator" id="conn-indicator"><i class="fas fa-circle"></i> <span id="conn-text">conectando</span></div>
 
 <div class="social-float">
-  <a href="https://wa.me/5551994441493" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://wa.me/5517991301373" target="_blank" class="btn-social" style="background:var(--zap-color)"><i class="fab fa-whatsapp"></i></a>
   <a href="https://www.instagram.com/canetasdapaz" target="_blank" class="btn-social" id="btn-instagram" style="background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%)"><i class="fab fa-instagram"></i></a>
 </div>
 
@@ -810,7 +1007,7 @@ body { margin: 0; background: #040c06; }
             <div style="font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px;"><i class="fas fa-copy" style="margin-right:5px;"></i> Ou copie o código</div>
             <div style="display:flex;gap:8px;"><input id="pg-pix-code" class="admin-input" readonly style="font-family:monospace;font-size:0.7rem;flex:1;"><button class="pg-btn-copiar btn-action primary" onclick="pgCopiarCodigo()" style="padding:10px 14px;border-radius:12px;white-space:nowrap;"><i class="fas fa-copy"></i> Copiar</button></div>
           </div>
-          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px;font-size:0.72rem;color:var(--text-muted);text-align:center;margin-bottom:12px;"><i class="fas fa-credit-card" style="margin-right:5px;"></i> Pagamento via <strong style="color:var(--text-main);">cartão</strong>? <a href="https://wa.me/5551994441493" target="_blank" style="color:var(--accent);text-decoration:none;">Consulte no WhatsApp</a></div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 14px;font-size:0.72rem;color:var(--text-muted);text-align:center;margin-bottom:12px;"><i class="fas fa-credit-card" style="margin-right:5px;"></i> Pagamento via <strong style="color:var(--text-main);">cartão</strong>? <a href="https://wa.me/5517991301373" target="_blank" style="color:var(--accent);text-decoration:none;">Consulte no WhatsApp</a></div>
           <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text-muted);font-size:0.75rem;"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulseDot 1.5s infinite;"></div>Aguardando pagamento...</div>
         </div>
       </div>
