@@ -7,7 +7,7 @@
    Etapas: 1) Formulário  2) Frete  3) Pix  4) Sucesso
    ========================================== */
 
-const TELEFONE_PIX    = "5551994441493";
+const TELEFONE_PIX    = "5517991301373";
 const SUPABASE_URL_P  = "https://vlosjvsxjmhksncmqmpk.supabase.co";
 const SUPABASE_ANON_P = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsb3NqdnN4am1oa3NuY21xbXBrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjU0ODEsImV4cCI6MjA5MjkwMTQ4MX0.GFQC14TlZDIaubZL8iKYPOrF46tamDXFlnPJAxZN2Aw";
 const EDGE_URL_PIX    = `${SUPABASE_URL_P}/functions/v1/criar-pix`;
